@@ -161,6 +161,13 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 
+
+        Collective\Html\HtmlServiceProvider::class,
+
+        Laracasts\Utilities\JavaScript\JavaScriptServiceProvider::class,
+        Laracasts\Flash\FlashServiceProvider::class,
+
+
     ],
 
     /*
@@ -206,6 +213,16 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+
+        // addons
+
+
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
+
+        'Flash' => Laracasts\Flash\Flash::class,
+
+        'JavaScript'=>\Laracasts\Utilities\JavaScript\JavaScriptFacade::class,
 
     ],
 

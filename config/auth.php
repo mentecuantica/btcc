@@ -67,7 +67,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => Btcc\User::class,
+            'model' => Btcc\Models\User::class,
         ],
 
         // 'users' => [

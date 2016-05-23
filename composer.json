@@ -10,7 +10,7 @@
         "laravelcollective/html": "5.2.*",
         "doctrine/dbal": "~2.5",
         "laracasts/utilities": "~2.0",
-        "laracasts/flash": ""
+        "laracasts/flash":"~2.0"
 
     },
     "require-dev": {

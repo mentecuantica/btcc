@@ -16,6 +16,9 @@ Route::get('/', function () {
 });
 
 
+Route::get('/account', '\Btcc\Http\Controllers\AccountController@index');
+
+
 Route::get('users/{user}', function (Btcc\Models\User $user) {
     return $user;
 });
