@@ -1,7 +1,9 @@
 <?php
 
-namespace Btcc;
+namespace Btcc\Models;
 
+use Btcc\Models\Profile;
+use Btcc\Models\UserWallet;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -23,4 +25,16 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function profile()
+    {
+        return $this->hasOne(Profile::class);
+    }
+
+    public function wallet()
+    {
+        return $this->hasOne(UserWallet::class);
+    }
+
+
 }

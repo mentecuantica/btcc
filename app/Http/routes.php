@@ -15,3 +15,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+Route::get('users/{user}', function (Btcc\Models\User $user) {
+    return $user;
+});
+
+Route::auth();
+
+Route::get('/home', 'HomeController@index');
