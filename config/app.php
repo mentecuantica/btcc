@@ -167,7 +167,7 @@ return [
         Laracasts\Utilities\JavaScript\JavaScriptServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
 
-
+      //  \Clockwork\Support\Laravel\ClockworkServiceProvider::class,
     ],
 
     /*
@@ -223,7 +223,7 @@ return [
         'Flash' => Laracasts\Flash\Flash::class,
 
         'JavaScript'=>\Laracasts\Utilities\JavaScript\JavaScriptFacade::class,
-
+        //'Clockwork'=>\Clockwork\Support\Laravel\Facade::class
     ],
 
 ];
