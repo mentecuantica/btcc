@@ -2,6 +2,8 @@
 
 namespace Btcc\Providers;
 
+use Btcc\Events\ProfileWasUpdated;
+use Btcc\Listeners\ProfileUpdateListener;
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -16,6 +18,11 @@ class EventServiceProvider extends ServiceProvider
         'Btcc\Events\SomeEvent' => [
             'Btcc\Listeners\EventListener',
         ],
+        ProfileWasUpdated::class=>[
+            ProfileUpdateListener::class
+        ],
+
+
     ];
 
     /**

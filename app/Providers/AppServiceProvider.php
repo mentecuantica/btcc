@@ -25,6 +25,10 @@ class AppServiceProvider extends ServiceProvider
     {
         if ($this->app->environment() == 'local') {
             $this->app->register(\Laracasts\Generators\GeneratorsServiceProvider::class);
+            $this->app->register(\Clockwork\Support\Laravel\ClockworkServiceProvider::class);
+
+            
+            $this->app->alias('Clockwork',\Clockwork\Support\Laravel\Facade::class);
         }
     }
 }

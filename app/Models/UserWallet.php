@@ -5,11 +5,17 @@ namespace Btcc\Models;
 use Btcc\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Btcc\Models\UserWallet
+ *
+ * @property-read \Btcc\Models\User $user
+ * @mixin \Eloquent
+ */
 class UserWallet extends Model
 {
     /**
      *
-     * @return \Btcc\User
+     * @return \Btcc\Models\User
      */
     public function user()
     {
