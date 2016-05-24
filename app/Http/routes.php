@@ -17,6 +17,7 @@ Route::get('/', function () {
 
 
 Route::get('/account', '\Btcc\Http\Controllers\AccountController@index');
+Route::get('/invite', 'InviteController@index');
 
 
 Route::post('profile/update',['as'=>'profile.update', 'uses' => 'AccountController@profileUpdate']);
