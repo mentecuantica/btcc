@@ -21,6 +21,7 @@ Route::get('/invite', 'InviteController@index');
 Route::post('/invite/create', 'InviteController@create');
 Route::get('/invite/list', 'InviteController@list');
 
+Route::resource('/transaction', 'TransactionController');
 
 Route::post('profile/update',['as'=>'profile.update', 'uses' => 'AccountController@profileUpdate']);
 

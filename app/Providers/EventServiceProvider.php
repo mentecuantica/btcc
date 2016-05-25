@@ -15,10 +15,7 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'Btcc\Events\SomeEvent' => [
-            'Btcc\Listeners\EventListener',
-        ],
-        ProfileWasUpdated::class=>[
+          ProfileWasUpdated::class=>[
             ProfileUpdateListener::class
         ],
 
