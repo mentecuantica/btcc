@@ -7,7 +7,8 @@
  * Filename: SystemWallet.php
  */
 
-namespace app\Services;
+namespace Btcc\Services;
+use Illuminate\Foundation\Auth\User;
 
 /**
  * @todo Use it as singleton via App::??
@@ -17,5 +18,49 @@ namespace app\Services;
  * @package app\Services
  */
 class SystemWallet {
+
+    protected $totalAmount = 0;
+
+    /**
+     * SystemWallet constructor.
+     *
+     * @param int $initial
+     */
+    public function __construct($initial = 100)
+    {
+        $this->add($initial, \Auth::user());
+    }
+
+    /**
+     * @return int
+     */
+    public function getBalance()
+    {
+        return $this->totalAmount;
+    }
+
+    /**
+     *
+     * @param integer                                 $amount
+     * @param \Illuminate\Foundation\Auth\User $from
+     */
+    public function add($amount,User $from)
+    {
+        $this->totalAmount = $amount + $this->totalAmount;
+    }
+
+    /**
+     * @param  integer                                $amount
+     * @param \Illuminate\Foundation\Auth\User $from
+     */
+    public function withdraw($amount,User $from)
+    {
+        $this->totalAmount = $this->totalAmount - $amount;
+    }
+
+    function __toString()
+    {
+        return json_encode(['balance'=>$this->getBalance()]);
+    }
 
 }

@@ -65,6 +65,7 @@
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="{{ url('/invite') }}"><i class="fa fa-btn fa-sign-out"></i>Invite</a></li>
                                 <li><a href="{{ url('/account') }}"><i class="fa fa-btn fa-sign-out"></i>Account</a></li>
+                                <li><a href="{{ route('transaction.create') }}"><i class="fa fa-btn fa-sign-out"></i>New Transaction</a></li>
                                 <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
                             </ul>
                         </li>

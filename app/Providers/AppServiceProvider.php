@@ -2,6 +2,7 @@
 
 namespace Btcc\Providers;
 
+use Btcc\Services\SystemWallet;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +24,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->singleton('SystemWallet', function ($app) {
+            return new SystemWallet(1250);
+        });
+
+        /**
+         * For dev only
+         */
         if ($this->app->environment() == 'local') {
             $this->app->register(\Laracasts\Generators\GeneratorsServiceProvider::class);
             $this->app->register(\Clockwork\Support\Laravel\ClockworkServiceProvider::class);

@@ -13,11 +13,32 @@
                 <div class="col-md-6">
 
                     {!! Form::model($newInvite, ['url'=>['/invite/create']]) !!}
+                    <legend>Invite</legend>
 
-                    {!! Form::text('email',$newInvite->email, ['class' => 'form-control']) !!}
-                    @if ($errors->has('email'))<p style="color:red;">{!!$errors->first('email')!!}</p>@endif
 
-                    @if (count($errors) > 0)
+
+                <div class="form-group">
+
+                    {!! Form::label('package_id',trans('Package type')) !!}
+                    {!! Form::select('package_id', \Btcc\Models\Package::getPackagesOptions(), ['class' => 'form-control']) !!}
+                @if ($errors->has('package_id'))<p style="color:red;">{!!$errors->first('package_id')!!}</p>@endif
+                </div>
+                    <div class="form-group">
+
+                    {!! Form::label('type',trans('Email of person to invite')) !!}
+                    {!! Form::email('email',$newInvite->email, ['class' => 'form-control']) !!}
+                @if ($errors->has('email'))<p style="color:red;">{!!$errors->first('email')!!}</p>@endif
+                    </div>
+                        <div class="form-group">
+
+                    {!! Form::label('type',trans('Invite type')) !!}
+                    {!! Form::text('type',$newInvite->type, ['class' => 'form-control']) !!}
+                    @if ($errors->has('type'))<p style="color:red;">{!!$errors->first('type')!!}</p>@endif
+
+        </div>
+
+
+                @if (count($errors) > 0)
                         <div class="alert alert-danger">
                             <ul>
                                 @foreach ($errors->all() as $error)

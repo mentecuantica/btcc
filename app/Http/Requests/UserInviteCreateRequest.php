@@ -23,9 +23,12 @@ class UserInviteCreateRequest extends Request
      */
     public function rules()
     {
+
+
+
         return [
             'email'=>'required|email',
-            'user_id'=>'required',
+          //  'user_id'=>'required',
             'package_id'=>'required',
             'type'=>'required',
         ];

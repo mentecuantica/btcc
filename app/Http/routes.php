@@ -23,6 +23,8 @@ Route::get('/invite/list', 'InviteController@list');
 
 Route::resource('/transaction', 'TransactionController');
 
+
+
 Route::post('profile/update',['as'=>'profile.update', 'uses' => 'AccountController@profileUpdate']);
 
 Route::get('users/{user}', function (Btcc\Models\User $user) {
@@ -32,6 +34,26 @@ Route::get('users/{user}', function (Btcc\Models\User $user) {
 Route::auth();
 
 Route::get('/home', 'HomeController@index');
+
+/**
+ * For edu and test
+ */
+
+Route::any('test/gsb', 'TempController@globalSingletonBinding');
+Route::any('test/gdisb', 'TempController@globalDISingletonBinding');
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Instead, you could have a handy list of patterns and reuse them everywhere:
 // Patterns

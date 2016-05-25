@@ -167,7 +167,11 @@ return [
         Laracasts\Utilities\JavaScript\JavaScriptServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
 
-      //  \Clockwork\Support\Laravel\ClockworkServiceProvider::class,
+
+
+        Kris\LaravelFormBuilder\FormBuilderServiceProvider::class
+
+        //  \Clockwork\Support\Laravel\ClockworkServiceProvider::class,
     ],
 
     /*
@@ -219,11 +223,14 @@ return [
 
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+        'FormBuilder' => Kris\LaravelFormBuilder\Facades\FormBuilder::class,
+
 
         'Flash' => Laracasts\Flash\Flash::class,
 
         'JavaScript'=>\Laracasts\Utilities\JavaScript\JavaScriptFacade::class,
         //'Clockwork'=>\Clockwork\Support\Laravel\Facade::class
+
     ],
 
 ];

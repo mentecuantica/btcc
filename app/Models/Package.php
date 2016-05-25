@@ -2,6 +2,7 @@
 
 namespace Btcc\Models;
 
+use Collective\Html\HtmlFacade;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -23,5 +24,20 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Package extends Model
 {
-    //
+
+
+
+    public static function getPackagesOptions()
+    {
+
+        $packages = Package::all();
+
+        $options = [];
+        foreach ($packages as $package) {
+
+            $options[$package->id]=$package->name;
+        }
+
+        return $options;
+    }
 }

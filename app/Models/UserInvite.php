@@ -6,15 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Btcc\Models\UserInvite
- *
- * @property integer $id
- * @property integer $user_id
- * @property integer $package_id
- * @property string $email
- * @property integer $type
- * @property integer $status
- * @property integer $sender
- * @property string $comment
+ * @property integer        $id
+ * @property integer        $user_id
+ * @property integer        $package_id
+ * @property string         $email
+ * @property integer        $type
+ * @property integer        $status
+ * @property integer        $sender
+ * @property string         $comment
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\UserInvite whereId($value)
@@ -29,8 +28,20 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\UserInvite whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class UserInvite extends Model
-{
+class UserInvite extends Model {
+    const NEW = 1;
+    const SENT = 2;
+    const RESPONDED = 3;
+    const FINISHED = 4;
+
+    public static $statuses
+        = [
+            1 => 'NEW',
+            2 => 'SENT',
+            3 => 'RESPONDED',
+            4 => 'FINISHED'
+        ];
+
     protected $fillable = ['email'];
 
     public function owner()

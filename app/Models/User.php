@@ -58,4 +58,18 @@ class User extends Authenticatable
     }
 
 
+    public function invitesIssued()
+    {
+        return $this->hasMany(UserInvite::class);
+    }
+
+
+    public function transactionIssued()
+    {
+        return $this->hasMany(UsersTransaction::class,'user_id');
+    }
+
+
+
+
 }

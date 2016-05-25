@@ -25,8 +25,9 @@ class InviteController extends Controller
 
         $newInvite = new UserInvite();
         $newInvite->user_id = $user->id;
-        $newInvite->package_id = 0;
+        $newInvite->package_id = $request->package_id;
         $newInvite->type = 0;
+        $newInvite->status = UserInvite::NEW;
         $newInvite->email = $request->email;
 
         if ($newInvite->save()) {
@@ -42,9 +43,9 @@ class InviteController extends Controller
 
     public function list(\Session $session) {
         $invite = null;
-        if ($session->has('new')) {
+ /*       if ($session->has('new')) {
             $invite = $session->get('new');
-        }
+        }*/
 
         $invites = UserInvite::all()->where('user_id',\Auth::id());
 
