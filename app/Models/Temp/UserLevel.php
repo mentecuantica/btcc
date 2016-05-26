@@ -1,20 +1,27 @@
 <?php
 
-namespace Btcc\Models;
+namespace Btcc\Models\Temp;
 use Baum\Node;
+use Btcc\Models\User;
 
 /**
 * UserBasicHierachy
 */
-class UserBasicHierachy extends Node {
+class UserLevel extends Node {
 
   /**
    * Table name.
    *
    * @var string
    */
-  protected $table = 'user_basic_hierachies';
+  protected $table = 'test_user_basic_hierachies';
 
+  protected $fillable = ['user_id','binary_flag'];
+
+  public function user()
+  {
+    return $this->hasOne(User::class);
+  }
   //////////////////////////////////////////////////////////////////////////////
 
   //

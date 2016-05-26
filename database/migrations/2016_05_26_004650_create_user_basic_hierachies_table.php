@@ -11,7 +11,7 @@ class CreateUserBasicHierachiesTable extends Migration {
      */
     public function up()
     {
-        Schema::create('user_basic_hierachies', function (Blueprint $table) {
+        Schema::create('test_user_basic_hierachies', function (Blueprint $table) {
             // These columns are needed for Baum's Nested Set implementation to work.
             // Column names may be changed, but they *must* all exist and be modified
             // in the model.
@@ -26,6 +26,8 @@ class CreateUserBasicHierachiesTable extends Migration {
             // Add needed columns here (f.ex: name, slug, path, etc.)
             // $table->string('name', 255);
 
+            $table->integer('user_id')->unique()->index();
+            $table->enum('binary_flag',['L','R']);
             $table->timestamps();
         });
     }

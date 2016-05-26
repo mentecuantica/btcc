@@ -9,6 +9,7 @@
 
 namespace Btcc\Http\Controllers;
 use Btcc\Http\Controllers\Controller;
+use Btcc\Models\Temp\UserLevel;
 use Btcc\Services\SystemWallet;
 
 /**
@@ -17,6 +18,14 @@ use Btcc\Services\SystemWallet;
  */
 class TempController extends Controller {
 
+    public function initTree()
+    {
+        $root = UserLevel::create(['user_id' => \Auth::id(), 'binary_flag' =>'L']);
+
+        return $root;
+    }
+    
+    
     /**
      * App singleton returns only instance
      *
