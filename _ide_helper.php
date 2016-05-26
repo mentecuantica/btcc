@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.2.32 on 2016-05-24.
+ * Generated for Laravel 5.2.32 on 2016-05-26.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -11863,6 +11863,36 @@ namespace {
          */
         public static function componentCall($method, $parameters){
             return \Collective\Html\HtmlBuilder::componentCall($method, $parameters);
+        }
+        
+    }
+
+
+    class FormBuilder extends \Kris\LaravelFormBuilder\Facades\FormBuilder{
+        
+        /**
+         * 
+         *
+         * @param $formClass
+         * @param $options
+         * @param $data
+         * @return \Kris\LaravelFormBuilder\Form 
+         * @static 
+         */
+        public static function create($formClass, $options = array(), $data = array()){
+            return \Kris\LaravelFormBuilder\FormBuilder::create($formClass, $options, $data);
+        }
+        
+        /**
+         * Get instance of the empty form which can be modified
+         *
+         * @param array $options
+         * @param array $data
+         * @return \Kris\LaravelFormBuilder\Form 
+         * @static 
+         */
+        public static function plain($options = array(), $data = array()){
+            return \Kris\LaravelFormBuilder\FormBuilder::plain($options, $data);
         }
         
     }

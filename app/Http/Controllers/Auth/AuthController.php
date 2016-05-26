@@ -2,14 +2,20 @@
 
 namespace Btcc\Http\Controllers\Auth;
 
-use Btcc\User;
+use Btcc\Models\User;
+use Illuminate\Foundation\Auth\RegistersUsers;
 use Validator;
 use Btcc\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
-use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+
 
 class AuthController extends Controller
 {
+    use AuthenticatesUsers, RegistersUsers {
+        AuthenticatesUsers::redirectPath insteadof RegistersUsers;
+        AuthenticatesUsers::getGuard insteadof RegistersUsers;
+    }
     /*
     |--------------------------------------------------------------------------
     | Registration & Login Controller
@@ -21,7 +27,7 @@ class AuthController extends Controller
     |
     */
 
-    use AuthenticatesAndRegistersUsers, ThrottlesLogins;
+    use ThrottlesLogins;
 
     /**
      * Where to redirect users after login / registration.
@@ -37,7 +43,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
+       // $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
     }
 
     /**
@@ -63,10 +69,14 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $newUser =  User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+
+        return $newUser->makeChildOf(\Auth::user());
+
+
     }
 }

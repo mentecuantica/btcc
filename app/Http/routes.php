@@ -15,23 +15,46 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::group(['middleware'=>'auth'], function () {
+    Route::get('users/{user}', function (Btcc\Models\User $user) {
+        return $user;
+    });
 
-Route::get('/account', '\Btcc\Http\Controllers\AccountController@index');
-Route::get('/invite', 'InviteController@index');
-Route::post('/invite/create', 'InviteController@create');
-Route::get('/invite/list', 'InviteController@list');
+    Route::get('/account', '\Btcc\Http\Controllers\AccountController@index');
 
-Route::resource('/transaction', 'TransactionController');
+    Route::resource('/transaction', 'TransactionController');
+
+    Route::post('profile/update',['as'=>'profile.update', 'uses' => 'AccountController@profileUpdate']);
+
+    Route::get('/invite', 'InviteController@index');
+    Route::post('/invite/create', 'InviteController@create');
+    Route::get('/invite/list', 'InviteController@list');
+
+
+    // Registration Routes...
+    Route::get('register', 'Auth\AuthController@showRegistrationForm');
+    Route::post('register', 'Auth\AuthController@register');
+    Route::get('logout', 'Auth\AuthController@logout');
 
 
 
-Route::post('profile/update',['as'=>'profile.update', 'uses' => 'AccountController@profileUpdate']);
-
-Route::get('users/{user}', function (Btcc\Models\User $user) {
-    return $user;
+    Route::any('test/initTree', 'TempController@initTree');
+    Route::any('test/gsb', 'TempController@globalSingletonBinding');
+    Route::any('test/gdisb', 'TempController@globalDISingletonBinding');
 });
 
-Route::auth();
+
+
+
+
+// Authentication Routes...
+$this->get('login', 'Auth\AuthController@showLoginForm');
+$this->post('login', 'Auth\AuthController@login');
+
+// Password Reset Routes...
+$this->get('password/reset/{token?}', 'Auth\PasswordController@showResetForm');
+$this->post('password/email', 'Auth\PasswordController@sendResetLinkEmail');
+$this->post('password/reset', 'Auth\PasswordController@reset');
 
 Route::get('/home', 'HomeController@index');
 
@@ -39,8 +62,7 @@ Route::get('/home', 'HomeController@index');
  * For edu and test
  */
 
-Route::any('test/gsb', 'TempController@globalSingletonBinding');
-Route::any('test/gdisb', 'TempController@globalDISingletonBinding');
+
 
 
 
