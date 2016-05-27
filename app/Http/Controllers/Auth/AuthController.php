@@ -1,10 +1,10 @@
 <?php
 
 namespace Btcc\Http\Controllers\Auth;
+use \Illuminate\Http\Request;
 
 use Btcc\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Validator;
 use Btcc\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -16,6 +16,10 @@ class AuthController extends Controller
         AuthenticatesUsers::redirectPath insteadof RegistersUsers;
         AuthenticatesUsers::getGuard insteadof RegistersUsers;
     }
+
+    public $registerView = 'partner.create';
+
+
     /*
     |--------------------------------------------------------------------------
     | Registration & Login Controller
@@ -36,15 +40,6 @@ class AuthController extends Controller
      */
     protected $redirectTo = '/';
 
-    /**
-     * Create a new authentication controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-       // $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
-    }
 
     /**
      * Get a validator for an incoming registration request.
@@ -54,7 +49,7 @@ class AuthController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
+        return \Validator::make($data, [
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
@@ -64,6 +59,9 @@ class AuthController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
+     * @todo Make as single transaction
+     * @todo Add statuses
+     * 
      * @param  array  $data
      * @return User
      */
@@ -79,4 +77,32 @@ class AuthController extends Controller
 
 
     }
+
+
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function register(Request $request)
+    {
+        $validator = $this->validator($request->all());
+
+        if ($validator->fails()) {
+            $this->throwValidationException(
+                $request, $validator
+            );
+        }
+
+        if ($this->create($request->all())) {
+            \Session::flash('status', 'Partner successfully added!');
+            return redirect('partners');
+        }
+
+
+
+        return redirect($this->redirectPath());
+    }
+
 }

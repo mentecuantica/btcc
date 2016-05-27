@@ -17,7 +17,7 @@
     @else
         <div class="alert alert-info">
         	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        	<strong>You have transactions</strong> Alert body ...
+        	<strong>You have no transactions</strong>
         </div>
     @endif
 @stop

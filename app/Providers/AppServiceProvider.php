@@ -14,7 +14,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+
     }
 
     /**
@@ -24,6 +24,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+
+        $this->app->register(ComposerServiceProvicer::class);
+        
         $this->app->singleton('SystemWallet', function ($app) {
             return new SystemWallet(1250);
         });

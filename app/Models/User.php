@@ -6,6 +6,7 @@ use Btcc\Models\Profile;
 use Btcc\Models\Temp\UserLevel;
 use Btcc\Models\UserWallet;
 
+use Btcc\Traits\UserHierachiable;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Foundation\Auth\Access\Authorizable;
@@ -35,6 +36,8 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
  */
 class User extends \Baum\Node implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract {
     use Authenticatable, Authorizable, CanResetPassword;
+
+    use UserHierachiable;
 
     /**
      * The attributes that are mass assignable.
@@ -77,9 +80,6 @@ class User extends \Baum\Node implements AuthenticatableContract, AuthorizableCo
         return $this->hasMany(UsersTransaction::class, 'user_id');
     }
 
-    public function hierarchy()
-    {
-        return $this->hasOne(UserLevel::class);
-    }
+
 
 }

@@ -4,7 +4,7 @@
     <div class="container">
     <h1>{!! trans('Create transaction') !!}</h1>
 
-    {!! Form::model($transaction,['route'=>'transaction.store']) !!}
+    {!! Form::model($transaction,['route'=>'transactions.store']) !!}
 
     <div class="form-group">
         {{ Form::label('Type')}}

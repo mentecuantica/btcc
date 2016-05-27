@@ -40,7 +40,7 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    Btcc
+                    Btcc - partners:  {{ $partnersCount or  'No partners'}}
                 </a>
             </div>
 
@@ -49,7 +49,7 @@
                 <ul class="nav navbar-nav">
                     @if (Auth::user())
                     <li><a href="{{ url('/home') }}">Home</a></li>
-                    <li><a href="{{ url('/register') }}">Register</a></li>
+                    <li><a href="{{ url('/register') }}">{{ trans('Add partner') }}</a></li>
                     @endif
                 </ul>
 
@@ -75,8 +75,19 @@
                     @endif
                 </ul>
             </div>
+
+
+
         </div>
     </nav>
+    @if (isset($submenu))
+        <menu>
+            @foreach($submenu as $elements)
+                {{$elements}}
+            @endforeach
+        </menu>
+
+    @endif
 
     @yield('content')
 

@@ -12,13 +12,28 @@ class InviteController extends Controller
 {
     public function index()
     {
-       $user = \Auth::user();
+
+        $invite = null;
+        /*       if ($session->has('new')) {
+                   $invite = $session->get('new');
+               }*/
+
+        $invites = UserInvite::all()->where('user_id',\Auth::id());
+
+
+        return view('invite.list',compact('invites','invite'));
+
+    }
+
+    public function create()
+    {
+        $user = \Auth::user();
 
         $newInvite = new UserInvite();
         return view('invite.index',compact('user','newInvite'));
     }
 
-    public function create(Requests\UserInviteCreateRequest $request)
+    public function store(Requests\UserInviteCreateRequest $request)
     {
 
        $user = \Auth::user();
@@ -42,15 +57,7 @@ class InviteController extends Controller
 
 
     public function list(\Session $session) {
-        $invite = null;
- /*       if ($session->has('new')) {
-            $invite = $session->get('new');
-        }*/
 
-        $invites = UserInvite::all()->where('user_id',\Auth::id());
-
-
-        return view('invite.list',compact('invites','invite'));
 
     }
 }

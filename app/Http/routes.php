@@ -12,7 +12,11 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    if (Auth::guest()) {
+        return view('landing.index');
+    }
+
+    return view('dashboard.index');
 });
 
 Route::group(['middleware'=>'auth'], function () {
@@ -22,7 +26,8 @@ Route::group(['middleware'=>'auth'], function () {
 
     Route::get('/account', '\Btcc\Http\Controllers\AccountController@index');
 
-    Route::resource('/transaction', 'TransactionController');
+    Route::resource('transaction', 'TransactionController');
+    Route::resource('partner', 'PartnerController');
 
     Route::post('profile/update',['as'=>'profile.update', 'uses' => 'AccountController@profileUpdate']);
 
@@ -56,7 +61,8 @@ $this->get('password/reset/{token?}', 'Auth\PasswordController@showResetForm');
 $this->post('password/email', 'Auth\PasswordController@sendResetLinkEmail');
 $this->post('password/reset', 'Auth\PasswordController@reset');
 
-Route::get('/home', 'HomeController@index');
+//Route::get('/home', 'HomeController@index');
+
 
 /**
  * For edu and test
