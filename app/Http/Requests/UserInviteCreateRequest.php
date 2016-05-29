@@ -7,13 +7,40 @@ use Btcc\Http\Requests\Request;
 class UserInviteCreateRequest extends Request
 {
     /**
+     * The URI to redirect to if validation fails.
+     *
+     * @var string
+     */
+    protected $redirect;
+
+    /**
+     * The route to redirect to if validation fails.
+     *
+     * @var string
+     */
+    protected $redirectRoute;
+
+    /**
+     * The controller action to redirect to if validation fails.
+     *
+     * @var string
+     */
+    protected $redirectAction;
+
+    /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
     public function authorize()
     {
-        return true;
+        $idFromRoute = $this->route()->parameter('id');
+
+        if (\Auth::id() == $idFromRoute) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

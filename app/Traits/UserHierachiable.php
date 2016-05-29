@@ -14,7 +14,7 @@ trait UserHierachiable {
     /**
      * @return bool
      */
-    public function isSuperUser()
+    public function isTopUser()
     {
         return $this->isRoot();
     }
@@ -26,6 +26,7 @@ trait UserHierachiable {
     {
         return !$this->isLeaf();
     }
+
 
     public function allPartners()
     {

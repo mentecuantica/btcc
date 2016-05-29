@@ -1,3 +1,4 @@
+
 @extends('layouts.app')
 
 @section('content')
@@ -11,11 +12,23 @@
                         {{ csrf_field() }}
 
 
+
+
+
                         <div class="form-group">
 
                             {!! Form::label('package_id',trans('Package type')) !!}
-                            {!! Form::select('package_id', \Btcc\Models\Package::getPackagesOptions(), ['class' => 'form-control']) !!}
+                            {!! Form::select('package_id', \Btcc\Models\Package::lists('name','id'), ['class' => 'form-control']) !!}
                             @if ($errors->has('package_id'))<p style="color:red;">{!!$errors->first('package_id')!!}</p>@endif
+                        </div>
+
+
+                        <div class="form-group">
+
+                            {!! Form::label('binary_position',trans('Binary pos')) !!}
+                            {!! Form::select('binary_position', ['L'=>'Left','R'=>'Right'], ['class' => 'form-control']) !!}
+                            @if ($errors->has('binary_position'))<p style="color:red;">{!!$errors->first('binary_position')!!}</p>@endif
+                        </div>
 
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Name</label>

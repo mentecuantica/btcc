@@ -1,6 +1,6 @@
 <?php
 
-namespace Btcc\Models;
+namespace Btcc\Models\Wallet;
 
 use Btcc\Models\User;
 use Illuminate\Database\Eloquent\Model;
@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \Btcc\Models\User $user
  * @mixin \Eloquent
  */
-class UserWallet extends Model
+class Wallet extends Model
 {
     /**
      *

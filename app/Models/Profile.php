@@ -2,6 +2,7 @@
 
 namespace Btcc\Models;
 
+use Btcc\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 /**

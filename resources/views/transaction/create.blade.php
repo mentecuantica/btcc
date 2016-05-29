@@ -8,7 +8,7 @@
 
     <div class="form-group">
         {{ Form::label('Type')}}
-        {{ Form::select('type', \Btcc\Models\UsersTransaction::getTransactionTypesValues(), ['class' => 'form-control']) }}
+        {{ Form::select('type', \Btcc\Models\Transaction::getTransactionTypesValues(), ['class' => 'form-control']) }}
     </div>
 
 

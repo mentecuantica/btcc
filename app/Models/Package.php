@@ -27,17 +27,4 @@ class Package extends Model
 
 
 
-    public static function getPackagesOptions()
-    {
-
-        $packages = Package::all();
-
-        $options = [];
-        foreach ($packages as $package) {
-
-            $options[$package->id]=$package->name;
-        }
-
-        return $options;
-    }
 }

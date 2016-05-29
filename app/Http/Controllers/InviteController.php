@@ -3,7 +3,7 @@
 namespace Btcc\Http\Controllers;
 
 use Btcc\Models\User;
-use Btcc\Models\UserInvite;
+use Btcc\Models\Invite;
 use Illuminate\Http\Request;
 
 use Btcc\Http\Requests;
@@ -18,7 +18,7 @@ class InviteController extends Controller
                    $invite = $session->get('new');
                }*/
 
-        $invites = UserInvite::all()->where('user_id',\Auth::id());
+        $invites = Invite::all()->where('user_id',\Auth::id());
 
 
         return view('invite.list',compact('invites','invite'));
@@ -29,7 +29,7 @@ class InviteController extends Controller
     {
         $user = \Auth::user();
 
-        $newInvite = new UserInvite();
+        $newInvite = new Invite();
         return view('invite.index',compact('user','newInvite'));
     }
 
@@ -38,11 +38,11 @@ class InviteController extends Controller
 
        $user = \Auth::user();
 
-        $newInvite = new UserInvite();
+        $newInvite = new Invite();
         $newInvite->user_id = $user->id;
         $newInvite->package_id = $request->package_id;
         $newInvite->type = 0;
-        $newInvite->status = UserInvite::NEW;
+        $newInvite->status = Invite::NEW;
         $newInvite->email = $request->email;
 
         if ($newInvite->save()) {

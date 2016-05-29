@@ -3,7 +3,7 @@
 namespace Btcc\Listeners;
 
 use Btcc\Events\UserRegisteredPartner;
-use Btcc\Models\UsersTransaction;
+use Btcc\Models\Transaction;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -34,10 +34,10 @@ class FundingTransaction
         $newPartner = $event->newPartner;
 
         \Log::info('New transaction for partner created',['partner'=>$newPartner]);
-        $ut = new UsersTransaction();
+        $ut = new Transaction();
         $ut->user_id = \Auth::id();
         $ut->amount = 100;
-        $ut->type = UsersTransaction::TYPE_REGISTER_FUNDING;
+        $ut->type = Transaction::TYPE_REGISTER_FUNDING;
         $ut->status = 0;
         $ut->sender = $newPartner->getParentId();
         $ut->reciever = $newPartner->id;

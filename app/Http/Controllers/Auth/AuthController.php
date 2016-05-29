@@ -2,9 +2,10 @@
 
 namespace Btcc\Http\Controllers\Auth;
 use Btcc\Events\UserRegisteredPartner;
+use Btcc\Models\User;
+use Btcc\Models\Profile;
 use \Illuminate\Http\Request;
 
-use Btcc\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Btcc\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -53,7 +54,9 @@ class AuthController extends Controller
         return \Validator::make($data, [
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed',
+           // 'password' => 'required|min:6|confirmed',
+            'binary_position' => 'required|in:L,R',
+           // 'package_id'=>'required|exists:packages',
         ]);
     }
 
@@ -68,13 +71,43 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        $newUser =  User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+        \DB::beginTransaction();
+        try {
 
-        return $newUser->makeChildOf(\Auth::user());
+            $newUser =  User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => bcrypt('888888'),
+                'binary_position' => $data['binary_position'],
+            ]);
+
+            $profile  =new Profile();
+            $profile->name = 'Name';
+            $profile->surname = 'Surname';
+
+
+            $newUser->profile()->save($profile);
+
+             $newUser->makeChildOf(\Auth::user());
+
+            \DB::commit();
+
+            \Debugbar::addMessage('New user plus profile, and child');
+        }
+        catch (\Exception $e) {
+
+
+            \DB::rollBack();
+            \Debugbar::addMessage('Nothing in the base!');
+        }
+
+
+
+
+
+
+
+
 
 
     }
