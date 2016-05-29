@@ -11,6 +11,7 @@ namespace Btcc\Http\ViewComposers;
 
 
 use Illuminate\Contracts\View\View;
+use Illuminate\Routing\Route;
 
 /**
  * Class ViewComposers
@@ -20,16 +21,20 @@ class SubmenuComposer {
 
 
     protected $items = [];
+    protected $route;
 
     public function __construct()
     {
+       // $this->route = app(Route::class);
+       // $this->route = app(Route::class);
 
     }
 
     public function compose(View $view)
     {
-        
+
         $view->with([
+            'router'=>$this->route,
             'submenu'=>[],
 
 

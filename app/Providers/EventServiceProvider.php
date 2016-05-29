@@ -15,11 +15,24 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
+        'Btcc\Events\UserRegistration'=>[
+          'Btcc\Listeners\EmailNotification',
+          'Btcc\Listeners\FundingTransaction'
+        ],
           ProfileWasUpdated::class=>[
             ProfileUpdateListener::class
         ],
 
 
+    ];
+
+    /**
+     * The subscriber classes to register.
+     *
+     * @var array
+     */
+    protected $subscribe = [
+        \Btcc\Listeners\UserEventListener::class,
     ];
 
     /**

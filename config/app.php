@@ -229,7 +229,7 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
         'FormBuilder' => Kris\LaravelFormBuilder\Facades\FormBuilder::class,
 
-
+        'Debugbar'=>Barryvdh\Debugbar\Facade::class,
         'Flash' => Laracasts\Flash\Flash::class,
 
         'JavaScript'=>\Laracasts\Utilities\JavaScript\JavaScriptFacade::class,

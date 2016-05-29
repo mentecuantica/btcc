@@ -2,6 +2,8 @@
 
 namespace Btcc\Http\Controllers;
 
+use Btcc\Events\Event;
+use Btcc\Events\UserRegisteredPartner;
 use Btcc\Models\User;
 use Illuminate\Http\Request;
 
@@ -60,16 +62,15 @@ class PartnerController extends Controller
 
         $input = $request->all();
 
-        $userTransaction = new UsersTransaction();
-        $userTransaction->fill($input);
-        $userTransaction->user_id = \Auth::id();
-        $userTransaction->sender = \Auth::id();
-        $userTransaction->debit_flag = true;
-        $userTransaction->status  = 0;
+        $newUser = new User();
+        $newUser->fill($input);
 
-        if ($userTransaction->save()) {
+
+        if ($newUser->save()) {
+            //event(new UserRegistration(\Auth::user(),$newUser ));
+            \Event::fire(new UserRegisteredPartner(\Auth::user(),$newUser));
             Session::flash('flash_message', 'Transaction successfully added!');
-            return redirect('transaction');
+            return redirect('partner.index');
 
         };
 

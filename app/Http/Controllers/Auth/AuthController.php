@@ -97,7 +97,7 @@ class AuthController extends Controller
 
         if ($this->create($request->all())) {
             \Session::flash('status', 'Partner successfully added!');
-            return redirect('partners');
+            return redirect(route('partner.index'));
         }
 
 

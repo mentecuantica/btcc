@@ -8,7 +8,7 @@
  */
 
 namespace Btcc\Services;
-use Illuminate\Foundation\Auth\User;
+use Btcc\Models\User;
 
 /**
  * @todo Use it as singleton via App::??
@@ -28,7 +28,7 @@ class SystemWallet {
      */
     public function __construct($initial = 100)
     {
-        $this->add($initial, \Auth::user());
+        $this->add($initial, \Auth::guest() ? (new User()) : \Auth::user() );
     }
 
     /**
