@@ -24,8 +24,9 @@ class UserRegisteredPartner extends Event
         $this->user = $user;
         $this->newPartner = $newPartner;
 
-        \Log::info('UserRegisteredPartner event: ',compact('user','newPartner'));
-        Debugbar::info('UserRegisteredPartner event called: ',compact('user','newPartner'));
+     //   \Debugbar::addMessage('UserRegisteredPartner event fired ');
+        \Log::info('UserRegisteredPartner event fired: ',compact('user','newPartner'));
+       // \Debugbar::info('UserRegisteredPartner event called: ',compact('user','newPartner'));
     }
 
     /**

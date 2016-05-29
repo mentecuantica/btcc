@@ -3,6 +3,7 @@
 namespace Btcc\Listeners;
 
 use Btcc\Events\UserRegisteredPartner;
+use Btcc\Models\UsersTransaction;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -28,7 +29,25 @@ class FundingTransaction
      */
     public function handle(UserRegisteredPartner $event)
     {
-        \Log::info('New transaction for partner created',['partner'=>$event->newPartner]);
-        Debugbar::info('New transaction for partner created',['partner'=>$event->newPartner]);
+
+        $user = $event->user;
+        $newPartner = $event->newPartner;
+
+        \Log::info('New transaction for partner created',['partner'=>$newPartner]);
+        $ut = new UsersTransaction();
+        $ut->user_id = \Auth::id();
+        $ut->amount = 100;
+        $ut->type = UsersTransaction::TYPE_REGISTER_FUNDING;
+        $ut->status = 0;
+        $ut->sender = $newPartner->getParentId();
+        $ut->reciever = $newPartner->id;
+        $ut->debit_flag = true;
+        if ($ut->save()) {
+            logger('New register funding transaction created',compact('ut','newPartner','user'));
+
+        }
+
+
+
     }
 }

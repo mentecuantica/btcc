@@ -32,7 +32,7 @@ class EmailNotification
        $newPartner = $event->newPartner;
 
 
-        \Log::info('Email to new partner goes: ',['email',$newPartner->email]);
+        \Debugbar::addMessage('Email to new partner goes: '.$newPartner->email);
 
 
         

@@ -1,6 +1,7 @@
 <?php
 
 namespace Btcc\Http\Controllers\Auth;
+use Btcc\Events\UserRegisteredPartner;
 use \Illuminate\Http\Request;
 
 use Btcc\Models\User;
@@ -95,7 +96,10 @@ class AuthController extends Controller
             );
         }
 
-        if ($this->create($request->all())) {
+        $newPartner = $this->create($request->all());
+        if ($newPartner) {
+            \Event::fire(new UserRegisteredPartner(\Auth::user(),$newPartner));
+
             \Session::flash('status', 'Partner successfully added!');
             return redirect(route('partner.index'));
         }

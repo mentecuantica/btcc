@@ -3,6 +3,7 @@
 namespace Btcc\Providers;
 
 use Btcc\Events\ProfileWasUpdated;
+use Btcc\Events\UserRegisteredPartner;
 use Btcc\Listeners\ProfileUpdateListener;
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -15,10 +16,15 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'Btcc\Events\UserRegistration'=>[
+        UserRegisteredPartner::class=>[
+           \Btcc\Listeners\EmailNotification::class,
+            \Btcc\Listeners\FundingTransaction::class
+        ],
+
+       /* 'Btcc\Events\UserRegistration'=>[
           'Btcc\Listeners\EmailNotification',
           'Btcc\Listeners\FundingTransaction'
-        ],
+        ],*/
           ProfileWasUpdated::class=>[
             ProfileUpdateListener::class
         ],
@@ -33,6 +39,7 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $subscribe = [
         \Btcc\Listeners\UserEventListener::class,
+        \Btcc\Listeners\TransactionEventListener::class,
     ];
 
     /**

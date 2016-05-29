@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.2.32 on 2016-05-26.
+ * Generated for Laravel 5.2.32 on 2016-05-29.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -10972,6 +10972,642 @@ namespace {
     }
 
 
+    class Activation extends \Cartalyst\Sentinel\Laravel\Facades\Activation{
+        
+        /**
+         * {@inheritDoc}
+         *
+         * @static 
+         */
+        public static function create($user){
+            return \Cartalyst\Sentinel\Activations\IlluminateActivationRepository::create($user);
+        }
+        
+        /**
+         * {@inheritDoc}
+         *
+         * @static 
+         */
+        public static function exists($user, $code = null){
+            return \Cartalyst\Sentinel\Activations\IlluminateActivationRepository::exists($user, $code);
+        }
+        
+        /**
+         * {@inheritDoc}
+         *
+         * @static 
+         */
+        public static function complete($user, $code){
+            return \Cartalyst\Sentinel\Activations\IlluminateActivationRepository::complete($user, $code);
+        }
+        
+        /**
+         * {@inheritDoc}
+         *
+         * @static 
+         */
+        public static function completed($user){
+            return \Cartalyst\Sentinel\Activations\IlluminateActivationRepository::completed($user);
+        }
+        
+        /**
+         * {@inheritDoc}
+         *
+         * @static 
+         */
+        public static function remove($user){
+            return \Cartalyst\Sentinel\Activations\IlluminateActivationRepository::remove($user);
+        }
+        
+        /**
+         * {@inheritDoc}
+         *
+         * @static 
+         */
+        public static function removeExpired(){
+            return \Cartalyst\Sentinel\Activations\IlluminateActivationRepository::removeExpired();
+        }
+        
+        /**
+         * Create a new instance of the model.
+         *
+         * @param array $data
+         * @return mixed 
+         * @static 
+         */
+        public static function createModel($data = array()){
+            return \Cartalyst\Sentinel\Activations\IlluminateActivationRepository::createModel($data);
+        }
+        
+        /**
+         * Returns the model.
+         *
+         * @return string 
+         * @static 
+         */
+        public static function getModel(){
+            return \Cartalyst\Sentinel\Activations\IlluminateActivationRepository::getModel();
+        }
+        
+        /**
+         * Runtime override of the model.
+         *
+         * @param string $model
+         * @return $this 
+         * @static 
+         */
+        public static function setModel($model){
+            return \Cartalyst\Sentinel\Activations\IlluminateActivationRepository::setModel($model);
+        }
+        
+    }
+
+
+    class Reminder extends \Cartalyst\Sentinel\Laravel\Facades\Reminder{
+        
+        /**
+         * {@inheritDoc}
+         *
+         * @static 
+         */
+        public static function create($user){
+            return \Cartalyst\Sentinel\Reminders\IlluminateReminderRepository::create($user);
+        }
+        
+        /**
+         * {@inheritDoc}
+         *
+         * @static 
+         */
+        public static function exists($user, $code = null){
+            return \Cartalyst\Sentinel\Reminders\IlluminateReminderRepository::exists($user, $code);
+        }
+        
+        /**
+         * {@inheritDoc}
+         *
+         * @static 
+         */
+        public static function complete($user, $code, $password){
+            return \Cartalyst\Sentinel\Reminders\IlluminateReminderRepository::complete($user, $code, $password);
+        }
+        
+        /**
+         * {@inheritDoc}
+         *
+         * @static 
+         */
+        public static function removeExpired(){
+            return \Cartalyst\Sentinel\Reminders\IlluminateReminderRepository::removeExpired();
+        }
+        
+        /**
+         * Create a new instance of the model.
+         *
+         * @param array $data
+         * @return mixed 
+         * @static 
+         */
+        public static function createModel($data = array()){
+            return \Cartalyst\Sentinel\Reminders\IlluminateReminderRepository::createModel($data);
+        }
+        
+        /**
+         * Returns the model.
+         *
+         * @return string 
+         * @static 
+         */
+        public static function getModel(){
+            return \Cartalyst\Sentinel\Reminders\IlluminateReminderRepository::getModel();
+        }
+        
+        /**
+         * Runtime override of the model.
+         *
+         * @param string $model
+         * @return $this 
+         * @static 
+         */
+        public static function setModel($model){
+            return \Cartalyst\Sentinel\Reminders\IlluminateReminderRepository::setModel($model);
+        }
+        
+    }
+
+
+    class Sentinel extends \Cartalyst\Sentinel\Laravel\Facades\Sentinel{
+        
+        /**
+         * Registers a user. You may provide a callback to occur before the user
+         * is saved, or provide a true boolean as a shortcut to activation.
+         *
+         * @param array $credentials
+         * @param \Closure|bool $callback
+         * @return \Cartalyst\Sentinel\Users\UserInteface|bool 
+         * @throws \InvalidArgumentException
+         * @static 
+         */
+        public static function register($credentials, $callback = null){
+            return \Cartalyst\Sentinel\Sentinel::register($credentials, $callback);
+        }
+        
+        /**
+         * Registers and activates the user.
+         *
+         * @param array $credentials
+         * @return \Cartalyst\Sentinel\Users\UserInteface|bool 
+         * @static 
+         */
+        public static function registerAndActivate($credentials){
+            return \Cartalyst\Sentinel\Sentinel::registerAndActivate($credentials);
+        }
+        
+        /**
+         * Activates the given user.
+         *
+         * @param mixed $user
+         * @return bool 
+         * @throws \InvalidArgumentException
+         * @static 
+         */
+        public static function activate($user){
+            return \Cartalyst\Sentinel\Sentinel::activate($user);
+        }
+        
+        /**
+         * Checks to see if a user is logged in.
+         *
+         * @return \Cartalyst\Sentinel\Users\UserInterface|bool 
+         * @static 
+         */
+        public static function check(){
+            return \Cartalyst\Sentinel\Sentinel::check();
+        }
+        
+        /**
+         * Checks to see if a user is logged in, bypassing checkpoints
+         *
+         * @return \Cartalyst\Sentinel\Users\UserInterface|bool 
+         * @static 
+         */
+        public static function forceCheck(){
+            return \Cartalyst\Sentinel\Sentinel::forceCheck();
+        }
+        
+        /**
+         * Checks if we are currently a guest.
+         *
+         * @return bool 
+         * @static 
+         */
+        public static function guest(){
+            return \Cartalyst\Sentinel\Sentinel::guest();
+        }
+        
+        /**
+         * Authenticates a user, with "remember" flag.
+         *
+         * @param \Cartalyst\Sentinel\Users\UserInterface|array $credentials
+         * @param bool $remember
+         * @param bool $login
+         * @return \Cartalyst\Sentinel\Users\UserInterface|bool 
+         * @static 
+         */
+        public static function authenticate($credentials, $remember = false, $login = true){
+            return \Cartalyst\Sentinel\Sentinel::authenticate($credentials, $remember, $login);
+        }
+        
+        /**
+         * Authenticates a user, with the "remember" flag.
+         *
+         * @param \Cartalyst\Sentinel\Users\UserInterface|array $credentials
+         * @return \Cartalyst\Sentinel\Users\UserInterface|bool 
+         * @static 
+         */
+        public static function authenticateAndRemember($credentials){
+            return \Cartalyst\Sentinel\Sentinel::authenticateAndRemember($credentials);
+        }
+        
+        /**
+         * Forces an authentication to bypass checkpoints.
+         *
+         * @param \Cartalyst\Sentinel\Users\UserInterface|array $credentials
+         * @param bool $remember
+         * @return \Cartalyst\Sentinel\Users\UserInterface|bool 
+         * @static 
+         */
+        public static function forceAuthenticate($credentials, $remember = false){
+            return \Cartalyst\Sentinel\Sentinel::forceAuthenticate($credentials, $remember);
+        }
+        
+        /**
+         * Forces an authentication to bypass checkpoints, with the "remember" flag.
+         *
+         * @param \Cartalyst\Sentinel\Users\UserInterface|array $credentials
+         * @return \Cartalyst\Sentinel\Users\UserInterface|bool 
+         * @static 
+         */
+        public static function forceAuthenticateAndRemember($credentials){
+            return \Cartalyst\Sentinel\Sentinel::forceAuthenticateAndRemember($credentials);
+        }
+        
+        /**
+         * Attempt a stateless authentication.
+         *
+         * @param \Cartalyst\Sentinel\Users\UserInterface|array $credentials
+         * @return \Cartalyst\Sentinel\Users\UserInterface|bool 
+         * @static 
+         */
+        public static function stateless($credentials){
+            return \Cartalyst\Sentinel\Sentinel::stateless($credentials);
+        }
+        
+        /**
+         * Attempt to authenticate using HTTP Basic Auth.
+         *
+         * @return mixed 
+         * @static 
+         */
+        public static function basic(){
+            return \Cartalyst\Sentinel\Sentinel::basic();
+        }
+        
+        /**
+         * Returns the request credentials.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function getRequestCredentials(){
+            return \Cartalyst\Sentinel\Sentinel::getRequestCredentials();
+        }
+        
+        /**
+         * Sets the closure which resolves the request credentials.
+         *
+         * @param \Closure $requestCredentials
+         * @return void 
+         * @static 
+         */
+        public static function setRequestCredentials($requestCredentials){
+            \Cartalyst\Sentinel\Sentinel::setRequestCredentials($requestCredentials);
+        }
+        
+        /**
+         * Sends a response when HTTP basic authentication fails.
+         *
+         * @return mixed 
+         * @throws \RuntimeException
+         * @static 
+         */
+        public static function getBasicResponse(){
+            return \Cartalyst\Sentinel\Sentinel::getBasicResponse();
+        }
+        
+        /**
+         * Sets the callback which creates a basic response.
+         *
+         * @param \Closure $basicResonse
+         * @return void 
+         * @static 
+         */
+        public static function creatingBasicResponse($basicResponse){
+            \Cartalyst\Sentinel\Sentinel::creatingBasicResponse($basicResponse);
+        }
+        
+        /**
+         * Persists a login for the given user.
+         *
+         * @param \Cartalyst\Sentinel\Users\UserInterface $user
+         * @param bool $remember
+         * @return \Cartalyst\Sentinel\Users\UserInterface|bool 
+         * @static 
+         */
+        public static function login($user, $remember = false){
+            return \Cartalyst\Sentinel\Sentinel::login($user, $remember);
+        }
+        
+        /**
+         * Persists a login for the given user, with the "remember" flag.
+         *
+         * @param \Cartalyst\Sentinel\Users\UserInterface $user
+         * @return \Cartalyst\Sentinel\Users\UserInterface|bool 
+         * @static 
+         */
+        public static function loginAndRemember($user){
+            return \Cartalyst\Sentinel\Sentinel::loginAndRemember($user);
+        }
+        
+        /**
+         * Logs the current user out.
+         *
+         * @param \Cartalyst\Sentinel\Users\UserInterface $user
+         * @param bool $everywhere
+         * @return bool 
+         * @static 
+         */
+        public static function logout($user = null, $everywhere = false){
+            return \Cartalyst\Sentinel\Sentinel::logout($user, $everywhere);
+        }
+        
+        /**
+         * Pass a closure to Sentinel to bypass checkpoints.
+         *
+         * @param \Closure $callback
+         * @param array $checkpoints
+         * @return mixed 
+         * @static 
+         */
+        public static function bypassCheckpoints($callback, $checkpoints = array()){
+            return \Cartalyst\Sentinel\Sentinel::bypassCheckpoints($callback, $checkpoints);
+        }
+        
+        /**
+         * Checks if checkpoints are enabled.
+         *
+         * @return bool 
+         * @static 
+         */
+        public static function checkpointsStatus(){
+            return \Cartalyst\Sentinel\Sentinel::checkpointsStatus();
+        }
+        
+        /**
+         * Enables checkpoints.
+         *
+         * @return void 
+         * @static 
+         */
+        public static function enableCheckpoints(){
+            \Cartalyst\Sentinel\Sentinel::enableCheckpoints();
+        }
+        
+        /**
+         * Disables checkpoints.
+         *
+         * @return void 
+         * @static 
+         */
+        public static function disableCheckpoints(){
+            \Cartalyst\Sentinel\Sentinel::disableCheckpoints();
+        }
+        
+        /**
+         * Add a new checkpoint to Sentinel.
+         *
+         * @param string $key
+         * @param \Cartalyst\Sentinel\Checkpoints\CheckpointInterface $checkpoint
+         * @return void 
+         * @static 
+         */
+        public static function addCheckpoint($key, $checkpoint){
+            \Cartalyst\Sentinel\Sentinel::addCheckpoint($key, $checkpoint);
+        }
+        
+        /**
+         * Removes a checkpoint.
+         *
+         * @param string $key
+         * @return void 
+         * @static 
+         */
+        public static function removeCheckpoint($key){
+            \Cartalyst\Sentinel\Sentinel::removeCheckpoint($key);
+        }
+        
+        /**
+         * Returns the currently logged in user, lazily checking for it.
+         *
+         * @param bool $check
+         * @return \Cartalyst\Sentinel\Users\UserInterface 
+         * @static 
+         */
+        public static function getUser($check = true){
+            return \Cartalyst\Sentinel\Sentinel::getUser($check);
+        }
+        
+        /**
+         * Sets the user associated with Sentinel (does not log in).
+         *
+         * @param \Cartalyst\Sentinel\Users\UserInterface $user
+         * @return void 
+         * @static 
+         */
+        public static function setUser($user){
+            \Cartalyst\Sentinel\Sentinel::setUser($user);
+        }
+        
+        /**
+         * Returns the user repository.
+         *
+         * @return \Cartalyst\Sentinel\Users\UserRepositoryInterface 
+         * @static 
+         */
+        public static function getUserRepository(){
+            return \Cartalyst\Sentinel\Sentinel::getUserRepository();
+        }
+        
+        /**
+         * Sets the user repository.
+         *
+         * @param \Cartalyst\Sentinel\Users\UserRepositoryInterface $users
+         * @return void 
+         * @static 
+         */
+        public static function setUserRepository($users){
+            \Cartalyst\Sentinel\Sentinel::setUserRepository($users);
+        }
+        
+        /**
+         * Returns the role repository.
+         *
+         * @return \Cartalyst\Sentinel\Roles\RoleRepositoryInterface 
+         * @static 
+         */
+        public static function getRoleRepository(){
+            return \Cartalyst\Sentinel\Sentinel::getRoleRepository();
+        }
+        
+        /**
+         * Sets the role repository.
+         *
+         * @param \Cartalyst\Sentinel\Roles\RoleRepositoryInterface $roles
+         * @return void 
+         * @static 
+         */
+        public static function setRoleRepository($roles){
+            \Cartalyst\Sentinel\Sentinel::setRoleRepository($roles);
+        }
+        
+        /**
+         * Returns the persistences repository.
+         *
+         * @return \Cartalyst\Sentinel\Persistences\PersistenceRepositoryInterface 
+         * @static 
+         */
+        public static function getPersistenceRepository(){
+            return \Cartalyst\Sentinel\Sentinel::getPersistenceRepository();
+        }
+        
+        /**
+         * Sets the persistences repository.
+         *
+         * @param \Cartalyst\Sentinel\Persistences\PersistenceRepositoryInterface $persistences
+         * @return void 
+         * @static 
+         */
+        public static function setPersistenceRepository($persistences){
+            \Cartalyst\Sentinel\Sentinel::setPersistenceRepository($persistences);
+        }
+        
+        /**
+         * Returns the activations repository.
+         *
+         * @return \Cartalyst\Sentinel\Activations\ActivationRepositoryInterface 
+         * @static 
+         */
+        public static function getActivationRepository(){
+            return \Cartalyst\Sentinel\Sentinel::getActivationRepository();
+        }
+        
+        /**
+         * Sets the activations repository.
+         *
+         * @param \Cartalyst\Sentinel\Activations\ActivationRepositoryInterface $activations
+         * @return void 
+         * @static 
+         */
+        public static function setActivationRepository($activations){
+            \Cartalyst\Sentinel\Sentinel::setActivationRepository($activations);
+        }
+        
+        /**
+         * Returns the reminders repository.
+         *
+         * @return \Cartalyst\Sentinel\Reminders\ReminderRepositoryInterface 
+         * @static 
+         */
+        public static function getReminderRepository(){
+            return \Cartalyst\Sentinel\Sentinel::getReminderRepository();
+        }
+        
+        /**
+         * Sets the reminders repository.
+         *
+         * @param \Cartalyst\Sentinel\Reminders\ReminderRepositoryInterface $reminders
+         * @return void 
+         * @static 
+         */
+        public static function setReminderRepository($reminders){
+            \Cartalyst\Sentinel\Sentinel::setReminderRepository($reminders);
+        }
+        
+        /**
+         * Returns the event dispatcher.
+         *
+         * @return \Illuminate\Events\Dispatcher 
+         * @static 
+         */
+        public static function getDispatcher(){
+            return \Cartalyst\Sentinel\Sentinel::getDispatcher();
+        }
+        
+        /**
+         * Sets the event dispatcher instance.
+         *
+         * @param \Illuminate\Events\Dispatcher $dispatcher
+         * @return $this 
+         * @static 
+         */
+        public static function setDispatcher($dispatcher){
+            return \Cartalyst\Sentinel\Sentinel::setDispatcher($dispatcher);
+        }
+        
+        /**
+         * Returns the event dispatcher status.
+         *
+         * @return bool 
+         * @static 
+         */
+        public static function getDispatcherStatus(){
+            return \Cartalyst\Sentinel\Sentinel::getDispatcherStatus();
+        }
+        
+        /**
+         * Sets the event dispatcher status.
+         *
+         * @param bool $status
+         * @return $this 
+         * @static 
+         */
+        public static function setDispatcherStatus($status){
+            return \Cartalyst\Sentinel\Sentinel::setDispatcherStatus($status);
+        }
+        
+        /**
+         * Enables the event dispatcher.
+         *
+         * @return $this 
+         * @static 
+         */
+        public static function enableDispatcher(){
+            return \Cartalyst\Sentinel\Sentinel::enableDispatcher();
+        }
+        
+        /**
+         * Disables the event dispatcher.
+         *
+         * @return $this 
+         * @static 
+         */
+        public static function disableDispatcher(){
+            return \Cartalyst\Sentinel\Sentinel::disableDispatcher();
+        }
+        
+    }
+
+
     class Form extends \Collective\Html\FormFacade{
         
         /**
@@ -11893,6 +12529,475 @@ namespace {
          */
         public static function plain($options = array(), $data = array()){
             return \Kris\LaravelFormBuilder\FormBuilder::plain($options, $data);
+        }
+        
+    }
+
+
+    class Debugbar extends \Barryvdh\Debugbar\Facade{
+        
+        /**
+         * Enable the Debugbar and boot, if not already booted.
+         *
+         * @static 
+         */
+        public static function enable(){
+            return \Barryvdh\Debugbar\LaravelDebugbar::enable();
+        }
+        
+        /**
+         * Boot the debugbar (add collectors, renderer and listener)
+         *
+         * @static 
+         */
+        public static function boot(){
+            return \Barryvdh\Debugbar\LaravelDebugbar::boot();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function shouldCollect($name, $default = false){
+            return \Barryvdh\Debugbar\LaravelDebugbar::shouldCollect($name, $default);
+        }
+        
+        /**
+         * Starts a measure
+         *
+         * @param string $name Internal name, used to stop the measure
+         * @param string $label Public name
+         * @static 
+         */
+        public static function startMeasure($name, $label = null){
+            return \Barryvdh\Debugbar\LaravelDebugbar::startMeasure($name, $label);
+        }
+        
+        /**
+         * Stops a measure
+         *
+         * @param string $name
+         * @static 
+         */
+        public static function stopMeasure($name){
+            return \Barryvdh\Debugbar\LaravelDebugbar::stopMeasure($name);
+        }
+        
+        /**
+         * Adds an exception to be profiled in the debug bar
+         *
+         * @param \Barryvdh\Debugbar\Exception $e
+         * @static 
+         */
+        public static function addException($e){
+            return \Barryvdh\Debugbar\LaravelDebugbar::addException($e);
+        }
+        
+        /**
+         * Returns a JavascriptRenderer for this instance
+         *
+         * @param string $baseUrl
+         * @param string $basePathng
+         * @return \Barryvdh\Debugbar\JavascriptRenderer 
+         * @static 
+         */
+        public static function getJavascriptRenderer($baseUrl = null, $basePath = null){
+            return \Barryvdh\Debugbar\LaravelDebugbar::getJavascriptRenderer($baseUrl, $basePath);
+        }
+        
+        /**
+         * Modify the response and inject the debugbar (or data in headers)
+         *
+         * @param \Symfony\Component\HttpFoundation\Request $request
+         * @param \Symfony\Component\HttpFoundation\Response $response
+         * @return \Symfony\Component\HttpFoundation\Response 
+         * @static 
+         */
+        public static function modifyResponse($request, $response){
+            return \Barryvdh\Debugbar\LaravelDebugbar::modifyResponse($request, $response);
+        }
+        
+        /**
+         * Check if the Debugbar is enabled
+         *
+         * @return boolean 
+         * @static 
+         */
+        public static function isEnabled(){
+            return \Barryvdh\Debugbar\LaravelDebugbar::isEnabled();
+        }
+        
+        /**
+         * Collects the data from the collectors
+         *
+         * @return array 
+         * @static 
+         */
+        public static function collect(){
+            return \Barryvdh\Debugbar\LaravelDebugbar::collect();
+        }
+        
+        /**
+         * Injects the web debug toolbar into the given Response.
+         *
+         * @param \Symfony\Component\HttpFoundation\Response $response A Response instance
+         * Based on https://github.com/symfony/WebProfilerBundle/blob/master/EventListener/WebDebugToolbarListener.php
+         * @static 
+         */
+        public static function injectDebugbar($response){
+            return \Barryvdh\Debugbar\LaravelDebugbar::injectDebugbar($response);
+        }
+        
+        /**
+         * Disable the Debugbar
+         *
+         * @static 
+         */
+        public static function disable(){
+            return \Barryvdh\Debugbar\LaravelDebugbar::disable();
+        }
+        
+        /**
+         * Adds a measure
+         *
+         * @param string $label
+         * @param float $start
+         * @param float $end
+         * @static 
+         */
+        public static function addMeasure($label, $start, $end){
+            return \Barryvdh\Debugbar\LaravelDebugbar::addMeasure($label, $start, $end);
+        }
+        
+        /**
+         * Utility function to measure the execution of a Closure
+         *
+         * @param string $label
+         * @param \Closure $closure
+         * @static 
+         */
+        public static function measure($label, $closure){
+            return \Barryvdh\Debugbar\LaravelDebugbar::measure($label, $closure);
+        }
+        
+        /**
+         * Collect data in a CLI request
+         *
+         * @return array 
+         * @static 
+         */
+        public static function collectConsole(){
+            return \Barryvdh\Debugbar\LaravelDebugbar::collectConsole();
+        }
+        
+        /**
+         * Adds a message to the MessagesCollector
+         * 
+         * A message can be anything from an object to a string
+         *
+         * @param mixed $message
+         * @param string $label
+         * @static 
+         */
+        public static function addMessage($message, $label = 'info'){
+            return \Barryvdh\Debugbar\LaravelDebugbar::addMessage($message, $label);
+        }
+        
+        /**
+         * Adds a data collector
+         *
+         * @param \DebugBar\DataCollectorInterface $collector
+         * @throws DebugBarException
+         * @return $this 
+         * @static 
+         */
+        public static function addCollector($collector){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::addCollector($collector);
+        }
+        
+        /**
+         * Checks if a data collector has been added
+         *
+         * @param string $name
+         * @return boolean 
+         * @static 
+         */
+        public static function hasCollector($name){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::hasCollector($name);
+        }
+        
+        /**
+         * Returns a data collector
+         *
+         * @param string $name
+         * @return \DebugBar\DataCollectorInterface 
+         * @static 
+         */
+        public static function getCollector($name){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::getCollector($name);
+        }
+        
+        /**
+         * Returns an array of all data collectors
+         *
+         * @return \DebugBar\array[DataCollectorInterface] 
+         * @static 
+         */
+        public static function getCollectors(){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::getCollectors();
+        }
+        
+        /**
+         * Sets the request id generator
+         *
+         * @param \DebugBar\RequestIdGeneratorInterface $generator
+         * @static 
+         */
+        public static function setRequestIdGenerator($generator){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::setRequestIdGenerator($generator);
+        }
+        
+        /**
+         * 
+         *
+         * @return \DebugBar\RequestIdGeneratorInterface 
+         * @static 
+         */
+        public static function getRequestIdGenerator(){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::getRequestIdGenerator();
+        }
+        
+        /**
+         * Returns the id of the current request
+         *
+         * @return string 
+         * @static 
+         */
+        public static function getCurrentRequestId(){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::getCurrentRequestId();
+        }
+        
+        /**
+         * Sets the storage backend to use to store the collected data
+         *
+         * @param \DebugBar\StorageInterface $storage
+         * @static 
+         */
+        public static function setStorage($storage = null){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::setStorage($storage);
+        }
+        
+        /**
+         * 
+         *
+         * @return \DebugBar\StorageInterface 
+         * @static 
+         */
+        public static function getStorage(){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::getStorage();
+        }
+        
+        /**
+         * Checks if the data will be persisted
+         *
+         * @return boolean 
+         * @static 
+         */
+        public static function isDataPersisted(){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::isDataPersisted();
+        }
+        
+        /**
+         * Sets the HTTP driver
+         *
+         * @param \DebugBar\HttpDriverInterface $driver
+         * @static 
+         */
+        public static function setHttpDriver($driver){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::setHttpDriver($driver);
+        }
+        
+        /**
+         * Returns the HTTP driver
+         * 
+         * If no http driver where defined, a PhpHttpDriver is automatically created
+         *
+         * @return \DebugBar\HttpDriverInterface 
+         * @static 
+         */
+        public static function getHttpDriver(){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::getHttpDriver();
+        }
+        
+        /**
+         * Returns collected data
+         * 
+         * Will collect the data if none have been collected yet
+         *
+         * @return array 
+         * @static 
+         */
+        public static function getData(){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::getData();
+        }
+        
+        /**
+         * Returns an array of HTTP headers containing the data
+         *
+         * @param string $headerName
+         * @param integer $maxHeaderLength
+         * @return array 
+         * @static 
+         */
+        public static function getDataAsHeaders($headerName = 'phpdebugbar', $maxHeaderLength = 4096, $maxTotalHeaderLength = 250000){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::getDataAsHeaders($headerName, $maxHeaderLength, $maxTotalHeaderLength);
+        }
+        
+        /**
+         * Sends the data through the HTTP headers
+         *
+         * @param bool $useOpenHandler
+         * @param string $headerName
+         * @param integer $maxHeaderLength
+         * @static 
+         */
+        public static function sendDataInHeaders($useOpenHandler = null, $headerName = 'phpdebugbar', $maxHeaderLength = 4096){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::sendDataInHeaders($useOpenHandler, $headerName, $maxHeaderLength);
+        }
+        
+        /**
+         * Stacks the data in the session for later rendering
+         *
+         * @static 
+         */
+        public static function stackData(){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::stackData();
+        }
+        
+        /**
+         * Checks if there is stacked data in the session
+         *
+         * @return boolean 
+         * @static 
+         */
+        public static function hasStackedData(){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::hasStackedData();
+        }
+        
+        /**
+         * Returns the data stacked in the session
+         *
+         * @param boolean $delete Whether to delete the data in the session
+         * @return array 
+         * @static 
+         */
+        public static function getStackedData($delete = true){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::getStackedData($delete);
+        }
+        
+        /**
+         * Sets the key to use in the $_SESSION array
+         *
+         * @param string $ns
+         * @static 
+         */
+        public static function setStackDataSessionNamespace($ns){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::setStackDataSessionNamespace($ns);
+        }
+        
+        /**
+         * Returns the key used in the $_SESSION array
+         *
+         * @return string 
+         * @static 
+         */
+        public static function getStackDataSessionNamespace(){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::getStackDataSessionNamespace();
+        }
+        
+        /**
+         * Sets whether to only use the session to store stacked data even
+         * if a storage is enabled
+         *
+         * @param boolean $enabled
+         * @static 
+         */
+        public static function setStackAlwaysUseSessionStorage($enabled = true){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::setStackAlwaysUseSessionStorage($enabled);
+        }
+        
+        /**
+         * Checks if the session is always used to store stacked data
+         * even if a storage is enabled
+         *
+         * @return boolean 
+         * @static 
+         */
+        public static function isStackAlwaysUseSessionStorage(){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::isStackAlwaysUseSessionStorage();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function offsetSet($key, $value){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::offsetSet($key, $value);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function offsetGet($key){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::offsetGet($key);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function offsetExists($key){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::offsetExists($key);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function offsetUnset($key){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::offsetUnset($key);
         }
         
     }

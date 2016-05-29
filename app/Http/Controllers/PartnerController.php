@@ -69,7 +69,7 @@ class PartnerController extends Controller
         if ($newUser->save()) {
             //event(new UserRegistration(\Auth::user(),$newUser ));
             \Event::fire(new UserRegisteredPartner(\Auth::user(),$newUser));
-            Session::flash('flash_message', 'Transaction successfully added!');
+            Session::flash('flash_message', 'Partner successfully added!');
             return redirect('partner.index');
 
         };

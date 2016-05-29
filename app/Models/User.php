@@ -75,9 +75,14 @@ class User extends \Baum\Node implements AuthenticatableContract, AuthorizableCo
         return $this->hasMany(UserInvite::class);
     }
 
-    public function transactionIssued()
+    public function transactionsSent()
     {
-        return $this->hasMany(UsersTransaction::class, 'user_id');
+        return $this->hasMany(UsersTransaction::class, 'sender');
+    }
+
+    public function transactionsRecieved()
+    {
+        return $this->hasMany(UsersTransaction::class, 'reciever');
     }
 
 
