@@ -17,6 +17,10 @@
           integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
 
+
+    @stack('scripts')
+    @stack('stylesheets')
+
     <style>
         body {
             font-family: 'Lato';
@@ -53,6 +57,8 @@
                 @if (Auth::user())
                     <li><a href="{{ url('/home') }}">Home</a></li>
                     <li><a href="{{ url('/register') }}">{{ trans('Add partner') }}</a></li>
+                    <li><a href="{{ url('/partner') }}">{{ trans('View partners') }}</a></li>
+                    <li><a href="{{ url('/tree') }}">{{ trans('Binary') }}</a></li>
                 @endif
             </ul>
 

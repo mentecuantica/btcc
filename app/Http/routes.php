@@ -25,6 +25,9 @@ Route::group(['middleware'=>'auth'], function () {
     });
 
     Route::get('/account', '\Btcc\Http\Controllers\AccountController@index');
+    Route::get('/tree', '\Btcc\Http\Controllers\TreeController@index');
+    Route::get('/tree/binaryJson', 'TreeController@binaryTree');
+    Route::get('/tree/show/{id}', 'TreeController@show');
 
     Route::resource('transaction', 'TransactionController');
     Route::resource('partner', 'PartnerController');

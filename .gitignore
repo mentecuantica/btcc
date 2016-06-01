@@ -85,3 +85,6 @@ Homestead.json
 .env
 /.idea
 clockwork
+/public/static/js/temp.js
+/public/static/js/functions.js
+/tmp/

@@ -1,0 +1,74 @@
+[
+  {
+    "parent_id": 1,
+    "child_id": 2,
+    "placement": "L",
+    "depth": 1,
+    "id": "2",
+    "name": "Yota23",
+    "text": {
+      "name": "Yota23"
+    },
+    "children": [
+      {
+        "parent_id": 2,
+        "child_id": 4,
+        "placement": "L",
+        "depth": 2,
+        "id": "4",
+        "name": "Evegeny",
+        "text": {
+          "name": "Evegeny"
+        },
+        "children": [
+          {
+            "parent_id": 4,
+            "child_id": 7,
+            "placement": "L",
+            "depth": 3,
+            "id": "7",
+            "name": "EveryRider",
+            "text": {
+              "name": "EveryRider"
+            }
+          }
+        ]
+      },
+      {
+        "parent_id": 2,
+        "child_id": 5,
+        "placement": "R",
+        "depth": 2,
+        "id": "5",
+        "name": "JohnEkb",
+        "text": {
+          "name": "JohnEkb"
+        }
+      }
+    ]
+  },
+  {
+    "parent_id": 1,
+    "child_id": 3,
+    "placement": "R",
+    "depth": 1,
+    "id": "3",
+    "name": "Ivansv",
+    "text": {
+      "name": "Ivansv"
+    },
+    "children": [
+      {
+        "parent_id": 3,
+        "child_id": 6,
+        "placement": "R",
+        "depth": 2,
+        "id": "6",
+        "name": "Rom3179",
+        "text": {
+          "name": "Rom3179"
+        }
+      }
+    ]
+  }
+]
