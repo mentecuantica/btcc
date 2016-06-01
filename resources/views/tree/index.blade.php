@@ -14,26 +14,29 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="binary-tree-chart" id="tree-container"></div>
+            <div class="col-md-12">
+                <div class="binary-tree-chart" id="tree-container"></div>
 
 
-            <script>
+                <script>
 
-                var binary_tree_config = {
-                    chart: {
-                        container: "#tree-container"
-                    },
+                    var binary_tree_config = {
+                        chart: {
+                            container: "#tree-container"
+                        },
 
-                    nodeStructure: {
-                        text: { name: "Parent node"},
-                        children:  {!! $jsonNodes !!}
+                        nodeStructure: {
+                            text: { name: "Parent node"},
+                            children:  {!! $jsonNodes !!}
 
-                    },
+                        },
 
 
-                };
+                    };
                     new Treant(binary_tree_config);
-            </script>
+                </script>
+            </div>
+
         </div>
 
     </div>
