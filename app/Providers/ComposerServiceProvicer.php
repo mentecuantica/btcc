@@ -39,7 +39,7 @@ class ComposerServiceProvicer extends ServiceProvider{
 
         // Using Closure based composers...
         view()->composer('dashboard', function ($view) {
-
+                
         });
     }
 

@@ -9,6 +9,7 @@
 
 namespace Btcc\Services;
 
+use Btcc\Models\User;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -103,6 +104,14 @@ class BinaryTree {
 
         return json_encode(static::buildTree($items, $parentId));
 
+    }
+
+    /**
+     *
+     */
+    public static function addBinaryRelation(User $user,User $parent,string $position)
+    {
+        
     }
 
 

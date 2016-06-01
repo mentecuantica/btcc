@@ -19,7 +19,7 @@ class TreeController extends Controller
     {
         $rows =  BinaryTree::getUserTree(7);
 
-        $jsonNodes = BinaryTree::formNestedJson($rows);
+        $jsonNodes = BinaryTree::formNestedJson($rows,7);
 
 
       

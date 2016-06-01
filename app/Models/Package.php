@@ -25,6 +25,17 @@ use Illuminate\Database\Eloquent\Model;
 class Package extends Model
 {
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     *
+     *
+     * @todo Not working
+     */
+    public function users()
+    {
+        return $this->hasManyThrough(User::class, Profile::class,'package_id','user_id');
+    }
+
 
 
 }

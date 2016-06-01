@@ -86,6 +86,12 @@ class User extends \Baum\Node implements AuthenticatableContract, AuthorizableCo
         return $this->hasMany(Transaction::class, 'reciever');
     }
 
+    public function binaryTree()
+    {
+        return $this->hasMany(UserBinaryTree::class,'parent_id','id');
+    }
+
+
     /**
      * @return User
      */
