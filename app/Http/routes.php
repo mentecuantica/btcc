@@ -12,14 +12,21 @@
 */
 
 Route::get('/', function () {
-    if (Auth::guest()) {
+    //if (Auth::guest()) {
         return view('landing.index');
-    }
+  //  }
 
-    return view('dashboard.index');
+   // return view('dashboard.index');
 });
 
-Route::group(['middleware'=>'auth'], function () {
+Route::group(['middleware'=>'auth.next'], function() {
+
+    Route::any('/next', function(Request $request) {
+        return $request;
+    });
+});
+//Route::group(['middleware'=>'web'], function () {
+
     Route::get('users/{user}', function (Btcc\Models\User $user) {
         return $user;
     });
@@ -42,22 +49,34 @@ Route::group(['middleware'=>'auth'], function () {
     // Registration Routes...
     Route::get('register', 'Auth\AuthController@showRegistrationForm');
     Route::post('register', 'Auth\AuthController@register');
-    Route::get('logout', 'Auth\AuthController@logout');
 
 
 
     Route::any('test/initTree', 'TempController@initTree');
     Route::any('test/gsb', 'TempController@globalSingletonBinding');
     Route::any('test/gdisb', 'TempController@globalDISingletonBinding');
-});
-
+//});
 
 
 
 
 // Authentication Routes...
-$this->get('login', 'Auth\AuthController@showLoginForm');
-$this->post('login', 'Auth\AuthController@login');
+//Route::get('login', 'AccountController@login');
+
+
+
+
+Route::get('/login', function() {
+    return view('account.login');
+});
+Route::post('/login', 'AccountController@postLogin');
+Route::get('/logout',function() {
+    \Sentinel::logout(\Sentinel::getUser());
+
+    return redirect('/');
+});
+
+
 
 // Password Reset Routes...
 $this->get('password/reset/{token?}', 'Auth\PasswordController@showResetForm');

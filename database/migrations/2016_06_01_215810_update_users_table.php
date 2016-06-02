@@ -27,11 +27,15 @@ class UpdateUsersTable extends Migration
      */
     public function down()
     {
+  
+   
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('parent_id');
             $table->dropColumn('lft');
             $table->dropColumn('rgt');
             $table->dropColumn('depth');
         });
+        
+
     }
 }

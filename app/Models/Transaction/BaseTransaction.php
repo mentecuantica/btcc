@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Btcc\Models\UsersTransaction
+ *
  * @property integer $id
  * @property integer $user_id
  * @property integer $amount
@@ -34,6 +35,11 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\Transaction\BaseTransaction whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\Transaction\BaseTransaction whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Btcc\Models\User $parentUser
+ * @property-read \Btcc\Models\User $recieverUser
+ * @property-read \Btcc\Models\User $senderUser
+ * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\Transaction\BaseTransaction ofType($type)
+ * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\Transaction\BaseTransaction processed()
  */
 class BaseTransaction extends Model
 {

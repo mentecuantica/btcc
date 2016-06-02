@@ -26,13 +26,13 @@ class AccountComposer {
     public function __construct()
     {
 
-        if (\Auth::user()) {
+        /*if (\Auth::user()) {
             $this->user = \Auth::user();
             $this->partnersCount = \Auth::user()->descendants()->count();
 
             //        $this->partners2 = \Auth::user()->partners;
 
-        }
+        } */
     }
 
     public function compose(View $view)

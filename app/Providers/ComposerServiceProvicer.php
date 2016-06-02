@@ -30,17 +30,17 @@ class ComposerServiceProvicer extends ServiceProvider{
 
 
 
-            view()->composer('*', SubmenuComposer::class);
+           // view()->composer('*', SubmenuComposer::class);
 
-            view()->composer(
+           /* view()->composer(
                 '*', AccountComposer::class
 
-            );
+            );*/
 
         // Using Closure based composers...
-        view()->composer('dashboard', function ($view) {
+      /*  view()->composer('dashboard', function ($view) {
                 
-        });
+        });*/
     }
 
 

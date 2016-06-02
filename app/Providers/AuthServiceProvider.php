@@ -2,6 +2,8 @@
 
 namespace Btcc\Providers;
 
+use Btcc\Http\Guard\SentinelGuard;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -24,6 +26,10 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(GateContract $gate)
     {
+
+        Auth::extend('sent', function() {
+           return new SentinelGuard();
+        });
         $this->registerPolicies($gate);
 
         //

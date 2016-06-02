@@ -46,6 +46,7 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware = [
         'auth' => \Btcc\Http\Middleware\Authenticate::class,
+        'auth.next' => \Btcc\Http\Middleware\AuthenticateSentinel::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'can' => \Illuminate\Foundation\Http\Middleware\Authorize::class,
         'guest' => \Btcc\Http\Middleware\RedirectIfAuthenticated::class,

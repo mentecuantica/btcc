@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.2.32 on 2016-05-29.
+ * Generated for Laravel 5.2.32 on 2016-06-01.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -2208,23 +2208,23 @@ namespace {
          *
          * @param string $key
          * @param mixed $value
-         * @return int 
+         * @return int|bool 
          * @static 
          */
         public static function increment($key, $value = 1){
-            return \Illuminate\Cache\FileStore::increment($key, $value);
+            return \Illuminate\Cache\DatabaseStore::increment($key, $value);
         }
         
         /**
-         * Decrement the value of an item in the cache.
+         * Increment the value of an item in the cache.
          *
          * @param string $key
          * @param mixed $value
-         * @return int 
+         * @return int|bool 
          * @static 
          */
         public static function decrement($key, $value = 1){
-            return \Illuminate\Cache\FileStore::decrement($key, $value);
+            return \Illuminate\Cache\DatabaseStore::decrement($key, $value);
         }
         
         /**
@@ -2234,27 +2234,27 @@ namespace {
          * @static 
          */
         public static function flush(){
-            \Illuminate\Cache\FileStore::flush();
+            \Illuminate\Cache\DatabaseStore::flush();
         }
         
         /**
-         * Get the Filesystem instance.
+         * Get the underlying database connection.
          *
-         * @return \Illuminate\Filesystem\Filesystem 
+         * @return \Illuminate\Database\PostgresConnection 
          * @static 
          */
-        public static function getFilesystem(){
-            return \Illuminate\Cache\FileStore::getFilesystem();
+        public static function getConnection(){
+            return \Illuminate\Cache\DatabaseStore::getConnection();
         }
         
         /**
-         * Get the working directory of the cache.
+         * Get the encrypter instance.
          *
-         * @return string 
+         * @return \Illuminate\Contracts\Encryption\Encrypter 
          * @static 
          */
-        public static function getDirectory(){
-            return \Illuminate\Cache\FileStore::getDirectory();
+        public static function getEncrypter(){
+            return \Illuminate\Cache\DatabaseStore::getEncrypter();
         }
         
         /**
@@ -2264,7 +2264,7 @@ namespace {
          * @static 
          */
         public static function getPrefix(){
-            return \Illuminate\Cache\FileStore::getPrefix();
+            return \Illuminate\Cache\DatabaseStore::getPrefix();
         }
         
     }

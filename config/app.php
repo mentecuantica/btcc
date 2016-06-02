@@ -155,7 +155,7 @@ return [
         Btcc\Providers\AuthServiceProvider::class,
         Btcc\Providers\EventServiceProvider::class,
         Btcc\Providers\RouteServiceProvider::class,
-
+        Cartalyst\Sentinel\Laravel\SentinelServiceProvider::class,
 
         
         Barryvdh\Debugbar\ServiceProvider::class,
@@ -167,7 +167,7 @@ return [
         Laracasts\Utilities\JavaScript\JavaScriptServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
 
-        Cartalyst\Sentinel\Laravel\SentinelServiceProvider::class,
+
         Baum\Providers\BaumServiceProvider::class,
 
 
@@ -225,6 +225,8 @@ return [
         'Activation' => Cartalyst\Sentinel\Laravel\Facades\Activation::class,
         'Reminder'   => Cartalyst\Sentinel\Laravel\Facades\Reminder::class,
         'Sentinel'   => Cartalyst\Sentinel\Laravel\Facades\Sentinel::class,
+        //'Auth'            => 'Cartalyst\Sentinel\Laravel\Facades\Sentinel',
+
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'FormBuilder' => Kris\LaravelFormBuilder\Facades\FormBuilder::class,

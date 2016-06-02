@@ -22,6 +22,7 @@ class CreateUsersTransactionsTable extends Migration
             $table->integer('sender');
             $table->integer('reciever');
             $table->boolean('debit_flag');
+            $table->boolean('credit_flag');
             $table->string('comment')->nullable();
             $table->string('hash')->nullable();
             $table->timestamps();

@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\Profile whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\Profile whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Btcc\Models\Package $package
  */
 class Profile extends Model
 {
