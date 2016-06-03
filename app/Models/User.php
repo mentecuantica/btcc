@@ -19,6 +19,17 @@ use Illuminate\Contracts\Auth\Authenticatable;
  */
 class User extends SentinelUser  implements Authenticatable {
 
+    protected $fillable = [
+        'email',
+        'username',
+        'password',
+        'last_name',
+        'first_name',
+        'permissions',
+    ];
+
+    protected $loginNames = ['email','username'];
+
 
     public function getAuthIdentifierName()
     {

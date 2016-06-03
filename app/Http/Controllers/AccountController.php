@@ -78,7 +78,7 @@ class AccountController extends Controller {
 
         if ($loginValidator->valid()) {
             if (\Sentinel::authenticate($credentials)) {
-                return redirect('/dashboard')->with('message', 'Welcome');
+                return redirect('/')->with('message', 'Welcome');
 
             }
 

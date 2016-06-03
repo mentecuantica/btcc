@@ -52,6 +52,7 @@ class Transaction extends BaseTransaction {
 
     protected $table = 'users_transactions';
 
+  
 
     public static function totalAmount()
     {
