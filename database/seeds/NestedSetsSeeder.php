@@ -2,14 +2,13 @@
 
 use Illuminate\Database\Seeder;
 use Btcc\Models\User;
-class UsersSecondSeeder extends Seeder
-{
+
+class UsersSecondSeeder extends Seeder {
     /**
      * Run the database seeds.
-     *
      * @return void
      */
-       public function run()
+    public function run()
     {
         // Helper function to populate model attributes
         $node = function () {
@@ -19,22 +18,23 @@ class UsersSecondSeeder extends Seeder
         };
 
         // Create first level nodes
-        foreach(range('A', 'F') as $letter)
-        {
+        foreach (range('A', 'F') as $letter) {
             $node0 = User::create($node($letter));
 
             // Create second level nodes
-            foreach(range(1, 3) as $number)
-            {
+            foreach (range(1, 3) as $number) {
                 $node1 = $node0->children()->create($node($letter, $number));
 
                 // Create third level nodes
-                foreach(['Δ', 'Σ', 'Ω'] as $greek)
-                {
+                foreach ([
+                             'Δ',
+                             'Σ',
+                             'Ω'
+                         ] as $greek) {
                     $node2 = $node1->children()->create($node($letter, $number, $greek));
                 }
             }
         }
-    
+
     }
 }
