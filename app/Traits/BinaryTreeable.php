@@ -9,14 +9,13 @@
 
 namespace Btcc\Traits;
 
-trait UserHierachiable {
+trait BinaryTreeable  {
 
     /**
      * @return bool
      */
     public function isTopUser()
     {
-        return $this->isRoot();
     }
 
     /**
@@ -24,13 +23,11 @@ trait UserHierachiable {
      */
     public function hasPartners()
     {
-        return !$this->isLeaf();
     }
 
 
     public function allPartners()
     {
-        return $this->descendants();
     }
 
 
@@ -41,7 +38,6 @@ trait UserHierachiable {
      */
     public function subPartners($depthLimit =5 )
     {
-        return $this->descendants()->limitDepth($depthLimit)->get();
     }
 
 
@@ -53,6 +49,5 @@ trait UserHierachiable {
      */
     public function directPartners()
     {
-        return $this->children()->get();
     }
 }

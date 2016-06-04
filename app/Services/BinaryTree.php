@@ -26,7 +26,10 @@ class BinaryTree {
     public static function getUserTree($userId)
     {
         //$children = \DB::select('select * from getChildren(:id)',['id'=>$userId]);
-        $children = \DB::select('SELECT gc.*,tc.name,tc.id as uid FROM getDescendants(:id) as gc, users as tc WHERE gc.child_id = tc.id', ['id' => $userId]);
+        $children = \DB::select(
+        /** @lang SQL */
+            'SELECT bu.*,bu.bt_position AS placement, u.email AS name,u.id as uid FROM bt_get_descendants(:id) as bu LEFT JOIN users u ON (bu.child_id=u.id)
+', ['id' => $userId]);
         \Debugbar::addMessage('Loaded raw:',$children);
 
         return $children;
@@ -41,7 +44,8 @@ class BinaryTree {
     public static function getUser($userId)
     {
         //$children = \DB::select('select * from getChildren(:id)',['id'=>$userId]);
-        $children = \DB::select('SELECT gc.*,tc.name,tc.id FROM getDescendants(:id) as gc, users as tc WHERE gc.child_id = tc.id', ['id' => $userId]);
+        $children = \DB::select('SELECT bu.*,u.email,u.id as uid FROM bt_get_descendants(:id) as bu LEFT JOIN users u ON (bu.child_id=u.id)
+', ['id' => $userId]);
 
         return $children;
     }

@@ -2,11 +2,11 @@
 
 namespace Btcc\Models\Wallet;
 
-use Btcc\Models\User;
+use Btcc\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Btcc\Models\UserWallet
+ * Btcc\Models\Wallet
  *
  * @property-read \Btcc\Models\User $user
  * @mixin \Eloquent

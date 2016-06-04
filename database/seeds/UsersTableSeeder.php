@@ -3,7 +3,26 @@ use Illuminate\Database\Seeder;
 
 class UsersTableSeeder extends Seeder {
 
+
+
 	public function run()
+	{
+		$faker = Faker\Factory::create();
+
+		for($i=0;$i<40;$i++){
+
+			$credentials = [
+				'email'    => $faker->email,
+				'password' => 'demo123',
+			];
+
+			Sentinel::registerAndActivate($credentials);
+
+		}
+
+	}
+
+	public function run1()
 	{
 		/*DB::table('users')->truncate();
 		DB::table('roles')->truncate();

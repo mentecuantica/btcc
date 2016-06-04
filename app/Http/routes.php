@@ -35,7 +35,7 @@ Route::group(['middleware'=>'auth.next'], function() {
 
     Route::get('/tree', '\Btcc\Http\Controllers\TreeController@index');
     Route::get('/tree/linear', '\Btcc\Http\Controllers\TreeController@showLinear');
-    Route::get('/tree/binary', '\Btcc\Http\Controllers\TreeController@showBinary');
+    Route::get('/tree/binary/{id}', '\Btcc\Http\Controllers\TreeController@showBinary');
     Route::get('/tree/ternary', '\Btcc\Http\Controllers\TreeController@showTernary');
     Route::get('/tree/binaryJson', 'TreeController@binaryTree');
     Route::get('/tree/show/{id}', 'TreeController@show');

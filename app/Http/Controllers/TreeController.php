@@ -15,7 +15,7 @@ class TreeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function indexBinary()
     {
         $rows =  BinaryTree::getUserTree(7);
 
@@ -31,7 +31,7 @@ class TreeController extends Controller
 
     }
 
-    public function show($id)
+    public function showBinary($id)
     {
         
         $rows =  BinaryTree::getUserTree($id);
@@ -48,9 +48,9 @@ class TreeController extends Controller
      */
     public function binaryTree()
     {
-        $rows =  BinaryTree::getUserTree(7);
+        $rows =  BinaryTree::getUserTree(\Sentinel::getUser()->getUserId());
 
-        $jsonNodes = BinaryTree::formNestedJson($rows,7);
+        $jsonNodes = BinaryTree::formNestedJson($rows,\Sentinel::getUser()->getUserId());
 
 
         return $jsonNodes;
