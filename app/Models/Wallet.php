@@ -1,6 +1,6 @@
 <?php
 
-namespace Btcc\Models\Wallet;
+namespace Btcc\Models;
 
 use Btcc\Models;
 use Illuminate\Database\Eloquent\Model;

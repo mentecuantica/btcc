@@ -115,3 +115,16 @@ $factory->define(Itabletki\DrugRating::class, function (Faker\Generator $faker) 
 
     ];
 });
+/*
+|--------------------------------------------------------------------------
+| Transaction Factory
+|--------------------------------------------------------------------------
+*/
+
+$factory->define(Btcc\Repositories\Users\Transaction\Transaction::class, function (Faker\Generator $faker) {
+    return [
+
+        // Transaction table data
+
+    ];
+});

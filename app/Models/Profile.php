@@ -29,7 +29,7 @@ class Profile extends Model
 {
     use ValidatingTrait;
     
-    protected $fillable = ['name','surname','package_id'];
+    protected $fillable = ['name','surname','package_id','phone'];
 
     /**
      * New inline validation from
@@ -38,9 +38,10 @@ class Profile extends Model
      * @var array
      */
     protected $rules = [
-        'title'   => 'required',
-        'slug'    => 'required|unique:posts,slug',
-        'content' => 'required'
+        //'name'   => 'required',
+        'phone'   => 'required',
+        //'surname'    => 'required|unique:posts,slug',
+        'package_id' => 'required|exists:packages,id'
     ];
     
     public function user()

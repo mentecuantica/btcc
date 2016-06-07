@@ -8,19 +8,51 @@ use Btcc\Traits\LinearTreeable;
 
 /**
  * TreeLinear
+ *
+ * @property integer $id
+ * @property integer $user_id
+ * @property integer $parent_id
+ * @property integer $lft
+ * @property integer $rgt
+ * @property integer $depth
+ * @property string $comment
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property-read \Btcc\Models\User $user
+ * @property-read \Btcc\Models\Tree\TreeLinear $parent
+ * @property-read \Baum\Extensions\Eloquent\Collection|\Btcc\Models\Tree\TreeLinear[] $children
+ * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\Tree\TreeLinear whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\Tree\TreeLinear whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\Tree\TreeLinear whereParentId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\Tree\TreeLinear whereLft($value)
+ * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\Tree\TreeLinear whereRgt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\Tree\TreeLinear whereDepth($value)
+ * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\Tree\TreeLinear whereComment($value)
+ * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\Tree\TreeLinear whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\Tree\TreeLinear whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Baum\Node withoutNode($node)
+ * @method static \Illuminate\Database\Query\Builder|\Baum\Node withoutSelf()
+ * @method static \Illuminate\Database\Query\Builder|\Baum\Node withoutRoot()
+ * @method static \Illuminate\Database\Query\Builder|\Baum\Node limitDepth($limit)
+ * @mixin \Eloquent
  */
 class TreeLinear extends Node implements UserTreeable {
-    use LinearTreeable;
+    //use LinearTreeable;
 
     /**
      * Table name.
      * @var string
      */
-    protected $table = 'tree_linear';
+    protected $table = 'linear_tree';
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'parent_id');   // TODO: Implement user() method.
+        return $this->belongsTo(User::class, 'user_id');   // TODO: Implement user() method.
+    }
+
+    public function getParentUser()
+    {
+       return $this->parent()->get()->user;
     }
 
 
@@ -34,19 +66,7 @@ class TreeLinear extends Node implements UserTreeable {
     //  */
     // protected $parentColumn = 'parent_id';
 
-    // /**
-    //  * Column name for the left index.
-    //  *
-    //  * @var string
-    //  */
-    // protected $leftColumn = 'lft';
 
-    // /**
-    //  * Column name for the right index.
-    //  *
-    //  * @var string
-    //  */
-    // protected $rightColumn = 'rgt';
 
     // /**
     //  * Column name for the depth field.
@@ -68,7 +88,7 @@ class TreeLinear extends Node implements UserTreeable {
     // *
     // * @var array
     // */
-    // protected $guarded = array('id', 'parent_id', 'lft', 'rgt', 'depth');
+     protected $guarded = array('id', 'parent_id', 'lft', 'rgt', 'depth');
 
     //
     // This is to support "scoping" which may allow to have multiple nested
@@ -84,5 +104,51 @@ class TreeLinear extends Node implements UserTreeable {
     //  * @var array
     //  */
     // protected $scoped = array();
+
+
+    /**
+     * @return bool
+     */
+    public function isTopUser()
+    {
+        return $this->isRoot();
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasPartners()
+    {
+        return !$this->isLeaf();
+    }
+
+
+    public function allPartners()
+    {
+        return $this->descendants()->get();
+    }
+
+
+    /**
+     * Returns those who on level $depthLimit below this user
+     *
+     * @return mixed
+     */
+    public function subPartners($depthLimit =5 )
+    {
+        return $this->descendants()->limitDepth($depthLimit)->get();
+    }
+
+
+
+    /**
+     * Returns those who on level 1 below this user
+     *
+     * @return mixed
+     */
+    public function directPartners()
+    {
+        return $this->children()->get();
+    }
 
 }

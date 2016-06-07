@@ -20,6 +20,11 @@ interface UserTreeable {
 
 
     /**
+     * @return User
+     */
+    public function getParentUser();
+
+    /**
      * @return bool
      */
     public function isTopUser();

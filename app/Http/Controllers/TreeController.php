@@ -9,7 +9,23 @@ use Illuminate\Http\Request;
 class TreeController extends Controller
 {
 
+    public function showLinear()
+    {
+        /**
+         * 1. Выбрать
+         *
+         * $user->linear->getDescendants
+         *
+         *
+         *
+         */
 
+        $currentUser = \Sentinel::getUser();
+
+
+    }
+    
+    
     /**
      * Show the application dashboard.
      *

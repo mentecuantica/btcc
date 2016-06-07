@@ -11,76 +11,102 @@
 |
 */
 
-Route::get('/', function () {
-    //if (Auth::guest()) {
-        return view('landing.index');
-  //  }
+Route::get('/userrepo/', function () {
 
-   // return view('dashboard.index');
+    $email = 'test@repo.ru';
+
+    $oldUser = \Btcc\Models\User::with('linear')->where('email', '=', $email)->first();
+
+    if ($oldUser) {
+        /**@var User $oldUser * */
+        $oldUser->linear->delete();
+        $oldUser->profile->delete();
+        $oldUser->delete();
+    }
+
+
+    $user = ['email'    => 'test@repo.ru',
+             'password' => '123456'
+    ];
+    $package_id = \Btcc\Models\Package::all('id')->random()->id;
+
+    $profile = [
+        'phone'=>'9222222222',
+        'package_id' => $package_id,
+    ];
+
+    $binary = [
+      'parent_id'=>4,
+      'position'=>'R'
+    ];
+
+    \Btcc\Repositories\UserRepository::createNewUserBundle(1, $user, $profile,$binary);
+
+    return view('users.show', []);
 });
 
-Route::group(['middleware'=>'auth.next'], function() {
+Route::get('/', function () {
+    //if (Auth::guest()) {
+    return view('landing.index');
+    //  }
 
-    Route::any('/next', function(Request $request) {
+    // return view('dashboard.index');
+});
+
+Route::group(['middleware' => 'auth.next'], function () {
+
+    Route::any('/next', function (Request $request) {
         return $request;
     });
 });
 //Route::group(['middleware'=>'web'], function () {
 
-    Route::get('users/{user}', function (Btcc\Models\User $user) {
-        return $user;
-    });
+/* Route::get('users/{user}', function (Btcc\Models\User $user) {
+     return $user;
+ });*/
 
-    Route::get('/account', '\Btcc\Http\Controllers\AccountController@index');
+Route::get('/account', '\Btcc\Http\Controllers\AccountController@index');
 
-    Route::get('/tree', '\Btcc\Http\Controllers\TreeController@index');
-    Route::get('/tree/linear', '\Btcc\Http\Controllers\TreeController@showLinear');
-    Route::get('/tree/binary/{id}', '\Btcc\Http\Controllers\TreeController@showBinary');
-    Route::get('/tree/ternary', '\Btcc\Http\Controllers\TreeController@showTernary');
-    Route::get('/tree/binaryJson', 'TreeController@binaryTree');
-    Route::get('/tree/show/{id}', 'TreeController@show');
+Route::get('/tree', '\Btcc\Http\Controllers\TreeController@index');
+Route::get('/tree/linear', '\Btcc\Http\Controllers\TreeController@showLinear');
+Route::get('/tree/binary/{id}', '\Btcc\Http\Controllers\TreeController@showBinary');
+Route::get('/tree/ternary', '\Btcc\Http\Controllers\TreeController@showTernary');
+Route::get('/tree/binaryJson', 'TreeController@binaryTree');
+Route::get('/tree/show/{id}', 'TreeController@show');
 
-    Route::resource('transaction', 'TransactionController');
-    Route::resource('partner', 'PartnerController');
+Route::resource('transaction', 'TransactionController');
+Route::resource('partner', 'PartnerController');
 
-    Route::post('profile/update',['as'=>'profile.update', 'uses' => 'AccountController@profileUpdate']);
+Route::post('profile/update', ['as'   => 'profile.update',
+                               'uses' => 'AccountController@profileUpdate'
+]);
 
-    Route::get('/invite', 'InviteController@index');
-    Route::post('/invite/create', 'InviteController@create');
-    Route::get('/invite/list', 'InviteController@list');
+Route::get('/invite', 'InviteController@index');
+Route::post('/invite/create', 'InviteController@create');
+Route::get('/invite/list', 'InviteController@list');
 
+// Registration Routes...
+Route::get('register', 'Auth\AuthController@showRegistrationForm');
+Route::post('register', 'Auth\AuthController@register');
 
-    // Registration Routes...
-    Route::get('register', 'Auth\AuthController@showRegistrationForm');
-    Route::post('register', 'Auth\AuthController@register');
-
-
-
-    Route::any('test/initTree', 'TempController@initTree');
-    Route::any('test/gsb', 'TempController@globalSingletonBinding');
-    Route::any('test/gdisb', 'TempController@globalDISingletonBinding');
+Route::any('test/initTree', 'TempController@initTree');
+Route::any('test/gsb', 'TempController@globalSingletonBinding');
+Route::any('test/gdisb', 'TempController@globalDISingletonBinding');
 //});
 
-
-
-
+Route::get('/phpinfo', 'TempController@phpinfo');
 // Authentication Routes...
 //Route::get('login', 'AccountController@login');
 
-
-
-
-Route::get('/login', function() {
+Route::get('/login', function () {
     return view('account.login');
 });
 Route::post('/login', 'AccountController@postLogin');
-Route::get('/logout',function() {
+Route::get('/logout', function () {
     \Sentinel::logout(\Sentinel::getUser());
 
     return redirect('/');
 });
-
-
 
 // Password Reset Routes...
 $this->get('password/reset/{token?}', 'Auth\PasswordController@showResetForm');
@@ -89,25 +115,9 @@ $this->post('password/reset', 'Auth\PasswordController@reset');
 
 //Route::get('/home', 'HomeController@index');
 
-
 /**
  * For edu and test
  */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // Instead, you could have a handy list of patterns and reuse them everywhere:
 // Patterns
@@ -118,3 +128,19 @@ Route::pattern('uuid', '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]
 Route::pattern('base', '[a-zA-Z0-9]+');
 Route::pattern('slug', '[a-z0-9-]+');
 Route::pattern('username', '[a-z0-9_-]{3,16}');
+
+Route::group(['namespace'  => 'Users',
+              'prefix'     => 'users',
+              'middleware' => ['web']
+], function () {
+
+    /*
+    |--------------------------------------------------------------------------
+    | Transaction Routes
+    |--------------------------------------------------------------------------
+    */
+
+    Route::resource('transactions', 'TransactionController', ['except' => ['show']]);
+    Route::post('transactions/search', 'TransactionController@search');
+
+});

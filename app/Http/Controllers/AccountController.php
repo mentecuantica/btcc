@@ -22,13 +22,8 @@ class AccountController extends Controller {
     {
         $user = \Auth::getUser();
 
-        $profile = $user->profile;
-        if ($profile == NULL) {
-            $profile = new Profile();
 
-        }
-
-        return view('account.index', compact('user', 'profile'));
+        return view('account.index', []);
     }
 
     public function profileUpdate(ProfileUpdateRequest $request)
@@ -78,12 +73,12 @@ class AccountController extends Controller {
 
         if ($loginValidator->valid()) {
             if (\Sentinel::authenticate($credentials)) {
-                return redirect('/')->with('message', 'Welcome');
+                return redirect('/')->with(['message'=>'Welcome']);
 
             }
 
         }
-        return back()->withErrors($loginValidator)->withInput('email');
+        return back()->withErrors($loginValidator)->withInput(['email']);
 
 
     }

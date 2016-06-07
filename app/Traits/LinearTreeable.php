@@ -16,7 +16,7 @@ trait LinearTreeable  {
      */
     public function isTopUser()
     {
-        return $this->linear()->isRoot();
+        return $this->isRoot();
     }
 
     /**
@@ -24,13 +24,13 @@ trait LinearTreeable  {
      */
     public function hasPartners()
     {
-        return !$this->linear()->isLeaf();
+        return !$this->isLeaf();
     }
 
 
     public function allPartners()
     {
-        return $this->linear()->descendants();
+        return $this->descendants();
     }
 
 
@@ -41,7 +41,7 @@ trait LinearTreeable  {
      */
     public function subPartners($depthLimit =5 )
     {
-        return $this->linear()->descendants()->limitDepth($depthLimit)->get();
+        return $this->descendants()->limitDepth($depthLimit)->get();
     }
 
 

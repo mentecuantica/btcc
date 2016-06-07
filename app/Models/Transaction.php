@@ -47,6 +47,7 @@ use Btcc\Models\Transaction\BaseTransaction;
  * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\Transaction\BaseTransaction ofType($type)
  * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\Transaction\BaseTransaction processed()
  * @mixin \Eloquent
+ * @property-read \Btcc\Models\User $parentUser
  */
 class Transaction extends BaseTransaction {
 

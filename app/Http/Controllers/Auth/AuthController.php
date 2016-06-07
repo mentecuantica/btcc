@@ -34,28 +34,23 @@ class AuthController extends Controller {
      */
     protected $redirectTo = '/';
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array $data
-     *
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
-    {
-        return \Validator::make($data, [
-            'name'            => 'required|max:255',
-            'email'           => 'required|email|max:255|unique:users',
-            // 'password' => 'required|min:6|confirmed',
-           // 'binary_position' => 'required|in:L,R',
-            // 'package_id'=>'required|exists:packages',
-        ]);
-    }
+
 
     /**
-     * Create a new user instance after a valid registration.
-     * @todo Make as single transaction
-     * @todo Add statuses
+     * Create a new user instance afte
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
      *
      * @param  array $data
      *
@@ -69,8 +64,8 @@ class AuthController extends Controller {
             $newUser = User::create([
                 'name'            => $data['name'],
                 'email'           => $data['email'],
-                'password'        => bcrypt('888888'),
-                'binary_position' => $data['binary_position'],
+                'password'        => bcrypt('123456'),
+
             ]);
 
             $profile = new Profile();
@@ -78,6 +73,8 @@ class AuthController extends Controller {
             $profile->surname = 'Surname';
 
             $newUser->profile()->save($profile);
+
+
 
             $newUser->makeChildOf(\Auth::user());
 

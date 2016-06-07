@@ -1,11 +1,12 @@
 <?php
 
-namespace Btcc\Models\Invite;
+namespace Btcc\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Btcc\Models\UserInvite
+ *
  * @property integer        $id
  * @property integer        $user_id
  * @property integer        $package_id
@@ -27,6 +28,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\Invite whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\Invite whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Btcc\Models\User $owner
+ * @property-read \Btcc\Models\Package $package
  */
 class Invite extends Model {
     const NEW = 1;

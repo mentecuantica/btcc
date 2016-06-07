@@ -24,6 +24,11 @@ class TempController extends Controller {
 
         return $root;
     }
+
+    public function phpinfo()
+    {
+      phpinfo();
+    }
     
     
     /**

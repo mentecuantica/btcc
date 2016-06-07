@@ -32,13 +32,13 @@ INSERT INTO public.binary_tree ( parent_id, child_id, bt_position, refer_id, bt_
 --- OTHERS
 INSERT INTO public.binary_tree ( parent_id, child_id, bt_position, refer_id, bt_level) VALUES ( 1, 2, 'L', null, 1);
 INSERT INTO public.binary_tree ( parent_id, child_id, bt_position, refer_id, bt_level) VALUES ( 1, 3, 'R', null, 1);
-INSERT INTO public.binary_tree ( parent_id, child_id, bt_position, refer_id, bt_level) VALUES ( 2, 14, 'L', null, 2);
-INSERT INTO public.binary_tree ( parent_id, child_id, bt_position, refer_id, bt_level) VALUES ( 2, 15, 'R', null, 2);
-INSERT INTO public.binary_tree ( parent_id, child_id, bt_position, refer_id, bt_level) VALUES ( 3, 16, 'R', null, 2);
-INSERT INTO public.binary_tree ( parent_id, child_id, bt_position, refer_id, bt_level) VALUES ( 14, 17, 'L', null, 3);
-INSERT INTO public.binary_tree ( parent_id, child_id, bt_position, refer_id, bt_level) VALUES ( 15, 10, 'L', null, 3);
-INSERT INTO public.binary_tree ( parent_id, child_id, bt_position, refer_id, bt_level) VALUES ( 15, 11, 'R', null, 3);
-INSERT INTO public.binary_tree ( parent_id, child_id, bt_position, refer_id, bt_level) VALUES ( 3, 19, 'L', null, 2);
+INSERT INTO public.binary_tree ( parent_id, child_id, bt_position, refer_id, bt_level) VALUES ( 2, 4, 'L', null, 2);
+INSERT INTO public.binary_tree ( parent_id, child_id, bt_position, refer_id, bt_level) VALUES ( 2, 5, 'R', null, 2);
+INSERT INTO public.binary_tree ( parent_id, child_id, bt_position, refer_id, bt_level) VALUES ( 3, 6, 'R', null, 2);
+INSERT INTO public.binary_tree ( parent_id, child_id, bt_position, refer_id, bt_level) VALUES ( 4, 7, 'L', null, 3);
+INSERT INTO public.binary_tree ( parent_id, child_id, bt_position, refer_id, bt_level) VALUES ( 5, 8, 'L', null, 3);
+INSERT INTO public.binary_tree ( parent_id, child_id, bt_position, refer_id, bt_level) VALUES ( 5, 9, 'R', null, 3);
+INSERT INTO public.binary_tree ( parent_id, child_id, bt_position, refer_id, bt_level) VALUES ( 3, 10, 'L', null, 2);
 
 
 
