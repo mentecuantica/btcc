@@ -4,3 +4,6 @@
 
 @section('content')
 
+{!! \Sentinel::getUser()->getUserLogin() !!}
+
+@endsection;

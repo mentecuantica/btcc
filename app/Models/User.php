@@ -13,7 +13,7 @@ use Btcc\Models\Invite;
 use Btcc\Models\Tree\TreeBinary;
 use Btcc\Models\Tree\TreeLinear;
 use Btcc\Models\Wallet;
-use Btcc\Services\BinaryTree;
+use Btcc\Services\BinaryTreeHelper;
 use Cartalyst\Sentinel\Users\EloquentUser as SentinelUser;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Watson\Validating\ValidatingTrait;
@@ -54,7 +54,7 @@ use Watson\Validating\ValidatingTrait;
  * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\User whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class User extends SentinelUser  implements Authenticatable {
+class User extends SentinelUser  {
 
 
     use ValidatingTrait;
@@ -178,7 +178,7 @@ class User extends SentinelUser  implements Authenticatable {
 
 
 
-
+/*
 
     public function getAuthIdentifier()
     {
@@ -212,6 +212,6 @@ class User extends SentinelUser  implements Authenticatable {
     public function getRememberTokenName()
     {
         return "9888";
-    }
+    }*/
 
 }

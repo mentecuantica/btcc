@@ -89,3 +89,4 @@ clockwork
 /public/static/js/functions.js
 /tmp/
 /.env.local
+/.phpstorm.meta.php

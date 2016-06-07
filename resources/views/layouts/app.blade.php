@@ -55,10 +55,10 @@
             <!-- Left Side Of Navbar -->
             <ul class="nav navbar-nav">
                 @if (\Auth::getUser())
-                    <li><a href="{{ url('/home') }}">Home</a></li>
+                    <li><a href="{{ url('/') }}">Home</a></li>
                     <li><a href="{{ url('/register') }}">{{ trans('Add partner') }}</a></li>
                     <li><a href="{{ url('/partner') }}">{{ trans('View partners') }}</a></li>
-                    <li><a href="{{ url('/tree') }}">{{ trans('Binary') }}</a></li>
+                    <li><a href="{{ url('/tree/binary',['id'=>Sentinel::getUser()->getUserId()]) }}">{{ trans('Binary') }}</a></li>
                 @endif
             </ul>
 
@@ -71,7 +71,7 @@
                 @else
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                           {{-- {{ Auth::user()->name }} --}}<span class="caret"></span>
+                            {{ Sentinel::getUser()->getUserLogin() }} <span class="caret"></span>
                         </a>
 
                         <ul class="dropdown-menu" role="menu">

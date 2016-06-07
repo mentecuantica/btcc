@@ -2,7 +2,7 @@
 
 namespace Btcc\Http\Controllers;
 
-use Btcc\Services\BinaryTree;
+use Btcc\Services\BinaryTreeHelper;
 use Btcc\Http\Requests;
 use Illuminate\Http\Request;
 
@@ -33,9 +33,9 @@ class TreeController extends Controller
      */
     public function indexBinary()
     {
-        $rows =  BinaryTree::getUserTree(7);
+        $rows =  BinaryTreeHelper::getUserTree(7);
 
-        $jsonNodes = BinaryTree::formNestedJson($rows,7);
+        $jsonNodes = BinaryTreeHelper::formNestedJson($rows,7);
 
 
       
@@ -50,9 +50,11 @@ class TreeController extends Controller
     public function showBinary($id)
     {
         
-        $rows =  BinaryTree::getUserTree($id);
+        
+        
+        $rows =  BinaryTreeHelper::getUserTree($id);
 
-        $jsonNodes = BinaryTree::formNestedJson($rows,$id);
+        $jsonNodes = BinaryTreeHelper::formNestedJson($rows,$id);
 
         return view('tree.index',compact('jsonNodes'));
 
@@ -64,9 +66,9 @@ class TreeController extends Controller
      */
     public function binaryTree()
     {
-        $rows =  BinaryTree::getUserTree(\Sentinel::getUser()->getUserId());
+        $rows =  BinaryTreeHelper::getUserTree(\Sentinel::getUser()->getUserId());
 
-        $jsonNodes = BinaryTree::formNestedJson($rows,\Sentinel::getUser()->getUserId());
+        $jsonNodes = BinaryTreeHelper::formNestedJson($rows,\Sentinel::getUser()->getUserId());
 
 
         return $jsonNodes;

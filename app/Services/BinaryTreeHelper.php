@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\DB;
  * Class BinaryTree
  * @package app\Services
  */
-class BinaryTree {
+class BinaryTreeHelper {
 
     /**
      * @param $userId

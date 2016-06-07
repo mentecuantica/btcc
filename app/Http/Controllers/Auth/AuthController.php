@@ -7,7 +7,6 @@ use Btcc\Models\User;
 use Btcc\Models\Profile;
 use \Illuminate\Http\Request;
 
-use Illuminate\Foundation\Auth\RegistersUsers;
 use Btcc\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 

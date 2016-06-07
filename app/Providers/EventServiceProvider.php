@@ -52,6 +52,9 @@ class EventServiceProvider extends ServiceProvider
     {
         parent::boot($events);
 
+        $events->listen('sentinel.authenticated', function ($user) {
+            //\Auth::login($user);
+        });
         //
     }
 }

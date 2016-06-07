@@ -46,53 +46,49 @@ Route::get('/userrepo/', function () {
 });
 
 Route::get('/', function () {
-    //if (Auth::guest()) {
     return view('landing.index');
-    //  }
-
-    // return view('dashboard.index');
 });
 
-Route::group(['middleware' => 'auth.next'], function () {
+Route::group(['middleware' => ['sent.auth']], function () {
+    Route::get('/dashboard', 'DashboardController@index');
+    Route::get('/account', '\Btcc\Http\Controllers\AccountController@index');
 
-    Route::any('/next', function (Request $request) {
-        return $request;
+    Route::get('/tree', '\Btcc\Http\Controllers\TreeController@index');
+    Route::get('/tree/linear', '\Btcc\Http\Controllers\TreeController@showLinear');
+    Route::get('/tree/binary/{id}', 'TreeController@showBinary');
+    Route::get('/tree/ternary', '\Btcc\Http\Controllers\TreeController@showTernary');
+    Route::get('/tree/binaryJson', 'TreeController@binaryTree');
+    Route::get('/tree/show/{id}', 'TreeController@show');
+
+    Route::resource('transaction', 'TransactionController');
+    Route::resource('partner', 'PartnerController');
+
+    Route::post('profile/update', ['as'   => 'profile.update',
+                                   'uses' => 'AccountController@profileUpdate'
+    ]);
+
+    Route::get('/invite', 'InviteController@index');
+    Route::post('/invite/create', 'InviteController@create');
+    Route::get('/invite/list', 'InviteController@list');
+
+    // Registration Routes...
+    Route::get('register', 'Auth\AuthController@showRegistrationForm');
+    Route::post('register', 'Auth\AuthController@register');
+
+    Route::any('test/initTree', 'TempController@initTree');
+    Route::any('test/gsb', 'TempController@globalSingletonBinding');
+    Route::any('test/gdisb', 'TempController@globalDISingletonBinding');
+
+
+    Route::get('/logout', function () {
+        \Sentinel::logout(\Sentinel::getUser());
+
+        return redirect('/');
     });
+
 });
 //Route::group(['middleware'=>'web'], function () {
 
-/* Route::get('users/{user}', function (Btcc\Models\User $user) {
-     return $user;
- });*/
-
-Route::get('/account', '\Btcc\Http\Controllers\AccountController@index');
-
-Route::get('/tree', '\Btcc\Http\Controllers\TreeController@index');
-Route::get('/tree/linear', '\Btcc\Http\Controllers\TreeController@showLinear');
-Route::get('/tree/binary/{id}', '\Btcc\Http\Controllers\TreeController@showBinary');
-Route::get('/tree/ternary', '\Btcc\Http\Controllers\TreeController@showTernary');
-Route::get('/tree/binaryJson', 'TreeController@binaryTree');
-Route::get('/tree/show/{id}', 'TreeController@show');
-
-Route::resource('transaction', 'TransactionController');
-Route::resource('partner', 'PartnerController');
-
-Route::post('profile/update', ['as'   => 'profile.update',
-                               'uses' => 'AccountController@profileUpdate'
-]);
-
-Route::get('/invite', 'InviteController@index');
-Route::post('/invite/create', 'InviteController@create');
-Route::get('/invite/list', 'InviteController@list');
-
-// Registration Routes...
-Route::get('register', 'Auth\AuthController@showRegistrationForm');
-Route::post('register', 'Auth\AuthController@register');
-
-Route::any('test/initTree', 'TempController@initTree');
-Route::any('test/gsb', 'TempController@globalSingletonBinding');
-Route::any('test/gdisb', 'TempController@globalDISingletonBinding');
-//});
 
 Route::get('/phpinfo', 'TempController@phpinfo');
 // Authentication Routes...
@@ -102,11 +98,7 @@ Route::get('/login', function () {
     return view('account.login');
 });
 Route::post('/login', 'AccountController@postLogin');
-Route::get('/logout', function () {
-    \Sentinel::logout(\Sentinel::getUser());
 
-    return redirect('/');
-});
 
 // Password Reset Routes...
 $this->get('password/reset/{token?}', 'Auth\PasswordController@showResetForm');

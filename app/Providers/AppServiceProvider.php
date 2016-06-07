@@ -2,6 +2,7 @@
 
 namespace Btcc\Providers;
 
+use Btcc\Events\Event;
 use Btcc\Services\SystemWallet;
 use Illuminate\Support\ServiceProvider;
 
@@ -14,7 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
+        
     }
 
     /**
