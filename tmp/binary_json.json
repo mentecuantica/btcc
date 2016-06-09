@@ -5,9 +5,9 @@
     "placement": "L",
     "depth": 1,
     "id": "2",
-    "name": "Yota23",
+    "n": "Yota23",
     "text": {
-      "name": "Yota23"
+      "n": "Yota23"
     },
     "children": [
       {
@@ -16,9 +16,9 @@
         "placement": "L",
         "depth": 2,
         "id": "4",
-        "name": "Evegeny",
+        "n": "Evegeny",
         "text": {
-          "name": "Evegeny"
+          "n": "Evegeny"
         },
         "children": [
           {
@@ -27,9 +27,9 @@
             "placement": "L",
             "depth": 3,
             "id": "7",
-            "name": "EveryRider",
+            "n": "EveryRider",
             "text": {
-              "name": "EveryRider"
+              "n": "EveryRider"
             }
           }
         ]
@@ -40,9 +40,9 @@
         "placement": "R",
         "depth": 2,
         "id": "5",
-        "name": "JohnEkb",
+        "n": "JohnEkb",
         "text": {
-          "name": "JohnEkb"
+          "n": "JohnEkb"
         }
       }
     ]
@@ -53,9 +53,9 @@
     "placement": "R",
     "depth": 1,
     "id": "3",
-    "name": "Ivansv",
+    "n": "Ivansv",
     "text": {
-      "name": "Ivansv"
+      "n": "Ivansv"
     },
     "children": [
       {
@@ -64,9 +64,9 @@
         "placement": "R",
         "depth": 2,
         "id": "6",
-        "name": "Rom3179",
+        "n": "Rom3179",
         "text": {
-          "name": "Rom3179"
+          "n": "Rom3179"
         }
       }
     ]

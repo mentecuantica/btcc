@@ -77,23 +77,23 @@ class BaseTransaction extends Model
     public static function getTransactionTypes() {
         $transactionTypes = collect([
             static::TYPE_BINARY_PAYMENT=>[
-                'name'=>'BINARY+',
+                'n'=>'BINARY+',
                 'role'=>'parent',
                 'amount'=>'100'
             ],
             static::TYPE_TERNARY_PAYMENT=>[
-                'name'=>'TERNARY+',
+                'n'=>'TERNARY+',
                 'role'=>'parent',
                 'amount'=>'100'
             ],
             static::TYPE_REGISTER_FUNDING=>[
-                'name'=>'REG+',
+                'n'=>'REG+',
                 'role'=>'parent',
                 'scenario'=>'package',
                 'amount'=>'100'
             ],
             static::TYPE_REGISTER_WITHDRAW=>[
-                'name'=>'REG-',
+                'n'=>'REG-',
                 'role'=>'parent',
                 'scenario'=>'package',
                 'amount'=>'100'
@@ -103,7 +103,7 @@ class BaseTransaction extends Model
 
         return $transactionTypes;
 
-     /*   return $transactionTypes->groupBy('name',true)->map(function ($item,$key) {
+     /*   return $transactionTypes->groupBy('n',true)->map(function ($item,$key) {
             return [$key, $item];
         });*/
 

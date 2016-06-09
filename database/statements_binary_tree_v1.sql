@@ -63,7 +63,7 @@ BEGIN
   --check if root exists
   /*  SELECT COUNT(*)
              FROM binary_tree
-             WHERE parent_id IS NULL AND bt_position = 'N');*/
+             WHERE parent_id IS NULL AND p = 'N');*/
 
   SELECT EXISTS(SELECT 1
                 FROM binary_tree
@@ -75,7 +75,7 @@ BEGIN
     RAISE EXCEPTION 'No root in the table please use bt_add_root()';
 
     RETURN FALSE ;
-    --INSERT INTO binary_tree (parent_id, child_id, bt_position, bt_level) VALUES (NULL ,new_node_parent_id,bt_position,0);
+    --INSERT INTO binary_tree (parent_id, child_id, p, bt_level) VALUES (NULL ,new_node_parent_id,p,0);
 
   END IF;
 
@@ -95,7 +95,7 @@ BEGIN
   ELSE
     RAISE NOTICE 'Parent with id:% exists', new_node_parent_id;
 
-    --INSERT INTO binary_tree (parent_id, child_id, bt_position, bt_level) VALUES (NULL ,new_node_parent_id,bt_position,0);
+    --INSERT INTO binary_tree (parent_id, child_id, p, bt_level) VALUES (NULL ,new_node_parent_id,p,0);
 
     --parent существует, дальше можно ли к нему добавить в нужное место
 
@@ -104,7 +104,7 @@ BEGIN
     --  Если вообще нет - то оба места свободны, можно добавлять
     --  Если парент есть в столбце parent_id то дети у него есть...
 
-    /*SELECT json_object_agg(bt_position,json_build_array(child_id,bt_level,parent_id)) INTO json_result
+    /*SELECT json_object_agg(p,json_build_array(child_id,bt_level,parent_id)) INTO json_result
     FROM binary_tree
     WHERE parent_id = new_node_parent_id;*/
 
@@ -144,7 +144,7 @@ BEGIN
     /*SELECT COUNT(child_id)
     INTO is_free_place
     FROM binary_tree
-    WHERE parent_id = new_node_parent_id AND bt_position = new_position;*/
+    WHERE parent_id = new_node_parent_id AND p = new_position;*/
 
     IF is_free_place IS TRUE
     THEN

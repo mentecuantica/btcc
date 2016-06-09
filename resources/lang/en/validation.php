@@ -87,14 +87,14 @@ return [
     |--------------------------------------------------------------------------
     |
     | Here you may specify custom validation messages for attributes using the
-    | convention "attribute.rule" to name the lines. This makes it quick to
+    | convention "attribute.rule" to n the lines. This makes it quick to
     | specify a specific custom language line for a given attribute rule.
     |
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'attribute-n' => [
+            'rule-n' => 'custom-message',
         ],
     ],
 

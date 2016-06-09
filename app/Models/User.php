@@ -13,7 +13,7 @@ use Btcc\Models\Invite;
 use Btcc\Models\Tree\TreeBinary;
 use Btcc\Models\Tree\TreeLinear;
 use Btcc\Models\Wallet;
-use Btcc\Services\BinaryTreeHelper;
+use Btcc\Services\BinaryTreeTrait;
 use Cartalyst\Sentinel\Users\EloquentUser as SentinelUser;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Watson\Validating\ValidatingTrait;

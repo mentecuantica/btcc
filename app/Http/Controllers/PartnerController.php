@@ -4,6 +4,7 @@ namespace Btcc\Http\Controllers;
 
 use Btcc\Events\Event;
 use Btcc\Events\UserRegisteredPartner;
+use Btcc\Models\Tree\TreeBinary;
 use Btcc\Models\User;
 use Illuminate\Http\Request;
 
@@ -24,12 +25,20 @@ class PartnerController extends Controller
 
 
         //$partners = \Auth::user()->subPartners(5);
-        $partners = \Auth::user()->directPartners();
+        $user = \Sentinel::getUser();
+
+        /**@var User $user **/
+
+
+        // get an nested collection of LinearTree with User inside
+        $linearTree = $user->getLinearTree();
 
 
 
 
-      return view('partner.index',compact('partners'));
+
+
+      return view('partner.index',['partners'=>[]]);
 
     }
 
@@ -41,7 +50,12 @@ class PartnerController extends Controller
     public function create()
     {
 
-        return view('transaction.create',['transaction'=>new UsersTransaction()]);
+        $userId = \Sentinel::getUser()->id;
+
+
+        list($parent, $jsonNodes) = TreeBinary::generateJsonBinary($userId);
+
+        return view('partner.create',compact('parent','jsonNodes'));
     }
 
     /**
@@ -52,32 +66,8 @@ class PartnerController extends Controller
      */
     public function store(Request $request)
     {
-        $request->possibleTypes = (new UsersTransaction)->getPossibleTypes();
-        
-        $this->validate($request, [
-            'reciever' => 'required|numeric|exists:users,id',
-            //'type' => 'required|in_array:possibleTypes',
-            'amount' => 'required|numeric',
-        ]);
+       dd($request);
 
-        $input = $request->all();
-
-        $newUser = new User();
-        $newUser->fill($input);
-
-
-        if ($newUser->save()) {
-            //event(new UserRegistration(\Auth::user(),$newUser ));
-            \Event::fire(new UserRegisteredPartner(\Auth::user(),$newUser));
-            Session::flash('flash_message', 'Partner successfully added!');
-            return redirect('partner.index');
-
-        };
-
-        return redirect()->withErrors()->back();
-
-
-        //
     }
 
     /**

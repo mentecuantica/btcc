@@ -4,10 +4,13 @@ namespace Btcc\Models\Tree;
 
 
 use Btcc\Models\User;
+use Btcc\Traits\BinaryTreeTrait;
 use DB;
 
 class TreeBinary extends BaseTree
 {
+    use BinaryTreeTrait;
+    
     protected $table = 'binary_tree';
 
     public static function addToParent($parentId, $position, $userId)
@@ -47,7 +50,7 @@ class TreeBinary extends BaseTree
      */
     public function getAncestors()
     {
-        $ancestors = DB::select('SELECT ancestor as user_id, bt_position FROM bt_get_ancestors(:id)',['id'=>$this->user()->id]);
+        $ancestors = DB::select('SELECT ancestor as user_id, p FROM bt_get_ancestors(:id)',['id'=>$this->user()->id]);
         return $ancestors;
     }
 

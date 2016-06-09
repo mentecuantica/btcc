@@ -2,13 +2,20 @@
 
 namespace Btcc\Http\Controllers;
 
-use Btcc\Services\BinaryTreeHelper;
+use Btcc\Models\Tree\TreeBinary;
 use Btcc\Http\Requests;
 use Illuminate\Http\Request;
 
 class TreeController extends Controller
 {
 
+    
+
+    public function index()
+    {
+        return view('tree.index',[]);
+    }
+    
     public function showLinear()
     {
         /**
@@ -23,6 +30,7 @@ class TreeController extends Controller
         $currentUser = \Sentinel::getUser();
 
 
+        return view('tree.indexLinear',[]);
     }
     
     
@@ -31,51 +39,41 @@ class TreeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function indexBinary()
+    public function showBinaryAll()
     {
-        $rows =  BinaryTreeHelper::getUserTree(7);
+        $userId = 0;
 
-        $jsonNodes = BinaryTreeHelper::formNestedJson($rows,7);
+        list($parent, $jsonNodes) = TreeBinary::generateJsonBinary($userId);
 
-
-      
-
-
-        //dd(json_encode($treeArray));
-
-        return view('tree.index',compact('jsonNodes'));
+        return view('tree.indexBinary',compact('jsonNodes','parent'));
 
     }
+
+    public function showBinaryJson()
+    {
+
+
+        $userId = 0;
+        $rows =  TreeBinary::getUserTree($userId);
+
+        $jsonNodes = TreeBinary::formNestedJson($rows,$userId);
+
+        return view('tree.indexBinary',compact('jsonNodes'));
+
+    }
+
 
     public function showBinary($id)
     {
         
         
         
-        $rows =  BinaryTreeHelper::getUserTree($id);
+        $rows =  TreeBinary::getUserTree($id);
 
-        $jsonNodes = BinaryTreeHelper::formNestedJson($rows,$id);
+        $jsonNodes = TreeBinary::formNestedJson($rows,$id);
 
-        return view('tree.index',compact('jsonNodes'));
-
-    }
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function binaryTree()
-    {
-        $rows =  BinaryTreeHelper::getUserTree(\Sentinel::getUser()->getUserId());
-
-        $jsonNodes = BinaryTreeHelper::formNestedJson($rows,\Sentinel::getUser()->getUserId());
-
-
-        return $jsonNodes;
-
-        //dd(json_encode($treeArray));
-
-        return view('tree.index',compact('jsonNodes'));
+        return view('tree.indexBinary',compact('jsonNodes'));
 
     }
+
 }

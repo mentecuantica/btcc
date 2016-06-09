@@ -1246,7 +1246,7 @@
 		nodeHTMLclass: 'node',
 
 		textClass: {
-			name:	'node-name',
+			n:	'node-name',
 			title:	'node-title',
 			desc:	'node-desc',
 			contact: 'node-contact'

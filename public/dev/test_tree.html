@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>STATIC TEST TREE</title>
+    <script src="/static/vendor/jquery/dist/jquery.js"></script>
+    <script src="/static/vendor/raphael.js"></script>
+    <script src="/static/vendor/treant/treant.js"></script>
+    <script src="/static/vendor/underscore/underscore.js"></script>
+    <script src="/static/js/binary-tree-functions.js"></script>
+    <script src="/static/js/example_tree2.js"></script>
+    <link rel="stylesheet" href="/static/vendor/treant/treant.css">
+    <link rel="stylesheet" href="/static/css/binary-tree.css">
+</head>
+<body>
+<form action="#">
+    <label for="binary-position">binary_position</label>
+    <input type="text" name="binary_position" id="binary-position" />
+    <label for="binary-parent-id">parent id</label>
+    <input type="text" name="binary_parent_id" id="binary-parent-id" />
+</form>
+<div class="binary-tree-chart" id="tree-container">
+
+    <script type="text/javascript">
+        $( document ).ready(function() {
+            initBinaryTree(binary_tree);
+        });
+    </script>
+</div>
+
+</body>
+</html>

@@ -16,6 +16,12 @@
     border-radius: 3px;
 }
 
+.node.owner {
+    background-color: green;
+}
+.node.partner {
+    background-color:midnightblue;
+}
 .node p {
     font-size: 20px;
     line-height: 20px;

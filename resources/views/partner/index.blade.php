@@ -9,6 +9,9 @@
         </div>
     @endif
 
+    <a href="{!! route('partner.create') !!}">Add partner</a>
+
+
     @if (count($partners)>0)
 
 

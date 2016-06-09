@@ -7,7 +7,7 @@
  * Filename: BinaryTree.php
  */
 
-namespace Btcc\Services;
+namespace Btcc\Traits;
 
 use Btcc\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\DB;
  * Class BinaryTree
  * @package app\Services
  */
-class BinaryTreeHelper {
+trait BinaryTreeTrait {
 
     /**
      * @param $userId
@@ -28,7 +28,7 @@ class BinaryTreeHelper {
         //$children = \DB::select('select * from getChildren(:id)',['id'=>$userId]);
         $children = \DB::select(
         /** @lang SQL */
-            'SELECT bu.*,bu.bt_position AS placement, u.email AS name,u.id as uid FROM bt_get_descendants(:id) as bu LEFT JOIN users u ON (bu.child_id=u.id)
+            'SELECT d.parent_id,d.child_id,d.bt_position,d.level, u.email AS name,u.id FROM bt_get_descendants(:id) as d LEFT JOIN users u ON (d.child_id=u.id)
 ', ['id' => $userId]);
         \Debugbar::addMessage('Loaded raw:',$children);
 
@@ -52,6 +52,25 @@ class BinaryTreeHelper {
 
 
     /**
+     * @param $userId
+     *
+     * @return array
+     */
+    protected static function generateJsonBinary($userId)
+    {
+        $rows = static::getUserTree($userId);
+        $revesedArray = array_reverse($rows, TRUE);
+        $parent = array_pop($revesedArray);
+        unset($rows[0]);
+        $jsonNodes = static::formNestedJson($rows, 1);
+
+        return [
+            $parent,
+            $jsonNodes
+        ];
+    }
+
+    /**
      * @param array $elements
      * @param int   $parentId
      *
@@ -65,16 +84,16 @@ class BinaryTreeHelper {
 
         foreach ($elements as $element) {
             $element['text'] = [
-                'name' => $element['name'],
-                'title'=> $element['uid'],
-                'desc' => $element['placement'],
+                'n' => $element['name'],
+                'title'=> 'ID:'.$element['id'].'Level:'.$element['level'],
+                'desc' => $element['bt_position'],
 
             ];
-            $element['link']=['href'=>url('/tree/show',$element['uid'])];
+            $element['link']=['href'=>url('/tree/show',$element['id'])];
 
 
             if ($element['parent_id'] == $parentId) {
-                $children = static::buildTree($elements, $element['uid']);
+                $children = static::buildTree($elements, $element['id']);
                 if ($children) {
                     $element['children'] = $children;
                 }
@@ -110,13 +129,6 @@ class BinaryTreeHelper {
 
     }
 
-    /**
-     *
-     */
-    public static function addBinaryRelation(User $user,User $parent,string $position)
-    {
-        
-    }
 
 
     /**

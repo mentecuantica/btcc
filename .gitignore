@@ -90,3 +90,4 @@ clockwork
 /tmp/
 /.env.local
 /.phpstorm.meta.php
+/public/static/vendor/

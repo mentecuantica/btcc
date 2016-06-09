@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>STATIC TEST TREE MODIFY</title>
+    <script src="/static/vendor/jquery/dist/jquery.js"></script>
+    <script src="/static/vendor/raphael.js"></script>
+    <script src="/static/vendor/treant/treant.js"></script>
+    <script src="/static/vendor/underscore/underscore.js"></script>
+    <script src="/static/js/binary-tree-functions.js"></script>
+    <script src="/static/js/example_tree2.js"></script>
+    <link rel="stylesheet" href="/static/vendor/treant/treant.css">
+    <link rel="stylesheet" href="/static/css/binary-tree.css">
+</head>
+<body>
+
+<div class="binary-tree-chart" id="tree-container">
+
+    <script type="text/javascript">
+
+        var freeNodes = [];
+        analyzeTree(binary_tree.nodeStructure);
+
+        var nodesToModify = _.map(freeNodes, function (obj) {
+            return obj.searchId;
+        });
+
+        modifyTree(binary_tree.nodeStructure);
+
+       // console.log(binary_tree_config);
+       // console.log(binary_tree);
+        new Treant(binary_tree);
+
+    </script>
+</div>
+
+</body>
+</html>

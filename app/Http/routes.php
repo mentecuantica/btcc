@@ -13,34 +13,8 @@
 
 Route::get('/userrepo/', function () {
 
-    $email = 'test@repo.ru';
 
-    $oldUser = \Btcc\Models\User::with('linear')->where('email', '=', $email)->first();
-
-    if ($oldUser) {
-        /**@var User $oldUser * */
-        $oldUser->linear->delete();
-        $oldUser->profile->delete();
-        $oldUser->delete();
-    }
-
-
-    $user = ['email'    => 'test@repo.ru',
-             'password' => '123456'
-    ];
-    $package_id = \Btcc\Models\Package::all('id')->random()->id;
-
-    $profile = [
-        'phone'=>'9222222222',
-        'package_id' => $package_id,
-    ];
-
-    $binary = [
-      'parent_id'=>4,
-      'position'=>'R'
-    ];
-
-    \Btcc\Repositories\UserRepository::createNewUserBundle(1, $user, $profile,$binary);
+    \Btcc\Repositories\UserRepository::testCreateTreeUserBundle();
 
     return view('users.show', []);
 });
@@ -51,13 +25,14 @@ Route::get('/', function () {
 
 Route::group(['middleware' => ['sent.auth']], function () {
     Route::get('/dashboard', 'DashboardController@index');
-    Route::get('/account', '\Btcc\Http\Controllers\AccountController@index');
+    Route::get('/account', 'AccountController@index');
 
-    Route::get('/tree', '\Btcc\Http\Controllers\TreeController@index');
-    Route::get('/tree/linear', '\Btcc\Http\Controllers\TreeController@showLinear');
+    Route::get('/tree', 'TreeController@index');
+    Route::get('/tree/linear', 'TreeController@showLinear');
     Route::get('/tree/binary/{id}', 'TreeController@showBinary');
-    Route::get('/tree/ternary', '\Btcc\Http\Controllers\TreeController@showTernary');
-    Route::get('/tree/binaryJson', 'TreeController@binaryTree');
+    Route::get('/tree/binary', 'TreeController@showBinaryAll');
+    Route::get('/tree/binary/json', 'TreeController@showBinaryJson');
+    Route::get('/tree/ternary', 'TreeController@showTernary');
     Route::get('/tree/show/{id}', 'TreeController@show');
 
     Route::resource('transaction', 'TransactionController');
@@ -67,12 +42,12 @@ Route::group(['middleware' => ['sent.auth']], function () {
                                    'uses' => 'AccountController@profileUpdate'
     ]);
 
-    Route::get('/invite', 'InviteController@index');
+/*    Route::get('/invite', 'InviteController@index');
     Route::post('/invite/create', 'InviteController@create');
-    Route::get('/invite/list', 'InviteController@list');
+    Route::get('/invite/list', 'InviteController@list');*/
 
     // Registration Routes...
-    Route::get('register', 'Auth\AuthController@showRegistrationForm');
+    //Route::get('register', 'Auth\AuthController@showRegistrationForm');
     Route::post('register', 'Auth\AuthController@register');
 
     Route::any('test/initTree', 'TempController@initTree');
@@ -121,18 +96,12 @@ Route::pattern('base', '[a-zA-Z0-9]+');
 Route::pattern('slug', '[a-z0-9-]+');
 Route::pattern('username', '[a-z0-9_-]{3,16}');
 
-Route::group(['namespace'  => 'Users',
+/*Route::group(['namespace'  => 'Users',
               'prefix'     => 'users',
               'middleware' => ['web']
 ], function () {
 
-    /*
-    |--------------------------------------------------------------------------
-    | Transaction Routes
-    |--------------------------------------------------------------------------
-    */
-
     Route::resource('transactions', 'TransactionController', ['except' => ['show']]);
     Route::post('transactions/search', 'TransactionController@search');
 
-});
+});*/
