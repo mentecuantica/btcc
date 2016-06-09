@@ -39,7 +39,7 @@ class Profile extends Model
      */
     protected $rules = [
         //'name'   => 'required',
-        'phone'   => 'required',
+        'country'   => 'required',
         //'surname'    => 'required|unique:posts,slug',
         'package_id' => 'required|exists:packages,id'
     ];

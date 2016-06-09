@@ -6,6 +6,7 @@ use Btcc\Events\Event;
 use Btcc\Events\UserRegisteredPartner;
 use Btcc\Models\Tree\TreeBinary;
 use Btcc\Models\User;
+use Btcc\Repositories\UserRepository;
 use Illuminate\Http\Request;
 
 use Btcc\Http\Requests;
@@ -68,8 +69,31 @@ class PartnerController extends Controller
      */
     public function store(Request $request)
     {
-       dd($request);
+        $password = \Illuminate\Support\Str::random(8);
 
+
+        $user = [
+            'email'=>$request->email,
+            'password'=>bcrypt($password)
+        ];
+
+
+        $profile = ['country'=>'Netherlands', 'package_id' => $request->package_id];
+        $binary = ['position'=>'L'];
+        $binary['parent_id']= $request->binary_parent_id;
+
+
+        //d($user,$profile,$binary);
+
+       $result = UserRepository::createNewUserBundle(user()->id,$user,$profile, $binary);
+
+       if ($request) {
+           \Session::flash('status', 'Partner successfully added!');
+
+
+           return redirect(route('partner.index'));
+       }
+        return redirect()->back()->withInput()->withErrors();
     }
 
     /**

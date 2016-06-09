@@ -146,7 +146,7 @@ class UserRepository
             \Log::info('Linear nested set update: ', compact('result'));
 
             $newUserProfile = new Profile();
-            $newUserProfile->phone = $profileInput['phone'];
+            $newUserProfile->country = $profileInput['country'];
             $newUserProfile->package_id = $profileInput['package_id'];
 
 
