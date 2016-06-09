@@ -59,9 +59,16 @@ trait BinaryTreeTrait {
     protected static function generateJsonBinary($userId)
     {
         $rows = static::getUserTree($userId);
+
+        /**
+         * If remove first element from rows, to make it parent
+         *      then buildTree fails
+         *
+         */
         $revesedArray = array_reverse($rows, TRUE);
         $parent = array_pop($revesedArray);
-        unset($rows[0]);
+        //unset($rows[0]);
+
         $jsonNodes = static::formNestedJson($rows, 1);
 
         return [
@@ -82,22 +89,23 @@ trait BinaryTreeTrait {
         //\Debugbar::addMessage('Elelement raw:',$elements);
         $branch = [];
 
-        foreach ($elements as $element) {
-            $element['text'] = [
-                'n' => $element['name'],
-                'title'=> 'ID:'.$element['id'].'Level:'.$element['level'],
-                'desc' => $element['bt_position'],
+        foreach ($elements as $node) {
+            $node['text'] = [
+                'name' => $node['name'],
+                'title'=> ''.$node['name'].' ID:'.$node['id'].' Level:'.$node['level'],
+                'desc' => $node['bt_position'],
 
             ];
-            $element['link']=['href'=>url('/tree/show',$element['id'])];
+            $node['link']=['href'=>url('/tree/show',$node['id'])];
+            $node['HTMLclass']='partner';
 
-
-            if ($element['parent_id'] == $parentId) {
-                $children = static::buildTree($elements, $element['id']);
+            if ($node['parent_id'] == $parentId) {
+               // $node['HTMLclass']='boss';
+                $children = static::buildTree($elements, $node['id']);
                 if ($children) {
-                    $element['children'] = $children;
+                    $node['children'] = $children;
                 }
-                $branch[] = $element;
+                $branch[] = $node;
             }
         }
 

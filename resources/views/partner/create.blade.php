@@ -22,8 +22,8 @@
 
             nodeStructure: {
                 text: {
-                    name: "You: " + "<?//=$parent->name;?>",
-                    desc: "ID: " + "<?//=$parent->id;?>",
+                    name: "You: " + "<?=$parent->name;?>",
+                    desc: "ID: " + "<?=$parent->id;?>",
 
                 },
                 children: {!! $jsonNodes !!}
@@ -61,11 +61,17 @@
 
 
                             <div class="form-group">
+                            	<label for="binary-parent-id" class="col-sm-2 control-label">Binary parent ID</label>
+                            	<div class="col-sm-10">
+                            		<input type="text" name="binary_parent_id" id="binary-parent-id" class="form-control" value="" title="" required="required" >
+                            	</div>
+                            </div>
+                            <div class="form-group">
 
-                                {!! Form::label('binary_position',trans('Binary pos')) !!}
-                                {!! Form::select('binary_position', ['L'=>'Left','R'=>'Right'], ['class' => 'form-control']) !!}
-                                @if ($errors->has('binary_position'))<p
-                                        style="color:red;">{!!$errors->first('binary_position')!!}</p>@endif
+                                {!! Form::label('binary-position',trans('Binary pos')) !!}
+                                {!! Form::select('binary-position', ['L'=>'Left','R'=>'Right'], ['class' => 'form-control','id'=>'binary-position']) !!}
+                                @if ($errors->has('binary-position'))<p
+                                        style="color:red;">{!!$errors->first('binary-position')!!}</p>@endif
                             </div>
 
                             <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
