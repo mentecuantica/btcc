@@ -28,7 +28,7 @@ trait BinaryTreeTrait {
         //$children = \DB::select('select * from getChildren(:id)',['id'=>$userId]);
         $children = \DB::select(
         /** @lang SQL */
-            'SELECT d.parent_id,d.child_id,d.bt_position,d.level, u.email AS name,u.id FROM bt_get_descendants(:id) as d LEFT JOIN users u ON (d.child_id=u.id)
+            'SELECT d.parent_id,d.child_id,d.bt_position,d.level, u.email AS name,u.id FROM bt_get_descendants(:id,10) as d LEFT JOIN users u ON (d.child_id=u.id)
 ', ['id' => $userId]);
         \Debugbar::addMessage('Loaded raw:',$children);
 

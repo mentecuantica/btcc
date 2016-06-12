@@ -32,14 +32,14 @@
 
 
         };
-        $( document ).ready(function() {
+        $(document).ready(function () {
             initBinaryTree(binary_tree);
         });
     </script>
 
     <div class="container">
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-md-12">
                 <div class="binary-tree-chart" id="tree-container">
 
 
@@ -47,69 +47,16 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Add partner</div>
                     <div class="panel-body">
-                        <form class="form-horizontal" role="form" method="POST" action="{{ route('partner.store') }}">
-                            {{ csrf_field() }}
+
+                        {!! Form::open(['route' => 'partner.store']) !!}
+
+                        {{ csrf_field() }}
+
+                            @include('partner._form');
 
 
-                            <div class="form-group">
-
-                                {!! Form::label('package_id',trans('Package type')) !!}
-                                {!! Form::select('package_id', \Btcc\Models\Package::pluck('name','id'), ['class' => 'form-control']) !!}
-                                @if ($errors->has('package_id'))<p
-                                        style="color:red;">{!!$errors->first('package_id')!!}</p>@endif
-                            </div>
-
-
-                            <div class="form-group">
-                            	<label for="binary-parent-id" class="col-sm-2 control-label">Binary parent ID</label>
-                            	<div class="col-sm-10">
-                            		<input type="text" name="binary_parent_id" id="binary-parent-id" class="form-control" value="" title="" required="required" >
-                            	</div>
-                            </div>
-                            <div class="form-group">
-
-                                {!! Form::label('binary-position',trans('Binary pos')) !!}
-                                {!! Form::select('binary-position', ['L'=>'Left','R'=>'Right'], ['class' => 'form-control','id'=>'binary-position']) !!}
-                                @if ($errors->has('binary-position'))<p
-                                        style="color:red;">{!!$errors->first('binary-position')!!}</p>@endif
-                            </div>
-
-                            <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                                <label class="col-md-4 control-label">Name</label>
-
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" name="name" value="{{ old('n') }}">
-
-                                    @if ($errors->has('name'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                                <label class="col-md-4 control-label">E-Mail Address</label>
-
-                                <div class="col-md-6">
-                                    <input type="email" class="form-control" name="email" value="{{ old('email') }}">
-
-                                    @if ($errors->has('email'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
-
-
-
-                            <div class="form-group">
-                                <div class="col-md-6 col-md-offset-4">
-                                    {{ Form::submit('Add partner') }}
-                                </div>
-                            </div>
-                        </form>
+                        {!! Form::close() !!}
+                        @include('_partials._errors')
                     </div>
 
                 </div>

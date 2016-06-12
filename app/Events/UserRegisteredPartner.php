@@ -11,21 +11,22 @@ class UserRegisteredPartner extends Event
 {
     use SerializesModels;
 
-    public $user;
+
     public $newPartner;
+    public $passwordPlain;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(User $user, User $newPartner)
+    public function __construct(User $newPartner, string $passwordPlain)
     {
-        $this->user = $user;
+        $this->passwordPlain = $passwordPlain;
         $this->newPartner = $newPartner;
 
      //   \Debugbar::addMessage('UserRegisteredPartner event fired ');
-        \Log::info('UserRegisteredPartner event fired: ',compact('user','newPartner'));
+        \Log::info('UserRegisteredPartner event fired: ',compact('newPartner'));
        // \Debugbar::info('UserRegisteredPartner event called: ',compact('user','newPartner'));
     }
 

@@ -3,6 +3,7 @@
 namespace Btcc\Repositories;
 
 use Btcc\Events\ProfileWasUpdated;
+use Btcc\Http\Requests\Request;
 use Btcc\Models\Profile;
 use Btcc\Models\Tree\TreeBinary;
 use Btcc\Models\User;
@@ -127,33 +128,52 @@ class UserRepository
 
         \DB::beginTransaction();
          try {
+
+            $result = false;
             $newUser = new User();
             $newUser->email = $userInput['email'];
             $newUser->password = $userInput['password'];
+            $newUser->first_name = $userInput['first_name'];
+            $newUser->last_name = $userInput['last_name'];
+
+
+       
 
             if ($newUser->isInvalid()) {
+                \Request::session()->registerBag($newUser->getErrors());
+
+
                 \Log::info('User data invalid: ',['userErrors'=>$newUser->getErrors()->toJson()]);
                 return FALSE;
             }
 
-            $result = $newUser->save();
+            $result =  $newUser->save();
+
+             if (false==$result) {
+                 throw new \Exception('User model havent been saved');
+             }
 
             \Log::info('New user save status: ', compact('result'));
 
             // Update the nested set relation
             $newUser->linear->parent_id = $currentUserId;
             $result = $newUser->linear->save();
+
+
+             if (false==$result) {
+                 throw new \Exception('Linear User link havent been saved');
+             }
             \Log::info('Linear nested set update: ', compact('result'));
 
             $newUserProfile = new Profile();
-            $newUserProfile->country = $profileInput['country'];
+            $newUserProfile->country_id = $profileInput['country_id'];
             $newUserProfile->package_id = $profileInput['package_id'];
 
 
             $result = $newUser->profile()->save($newUserProfile);
-            if ($result) {
-                event(new ProfileWasUpdated($newUserProfile, TRUE));
-            }
+             if (false==$result) {
+                 throw new \Exception('User Profile havent been saved');
+             }
             
             \Log::info('Linear nested set update: ', compact('result'));
             
@@ -162,12 +182,16 @@ class UserRepository
              \Log::info('Added to binary tree: ', compact('result'));
             
              \DB::commit();
+
+             return $newUser;
          }
          catch (\Exception $e) {
              \DB::rollBack();
              \Log::error('Creating user failed');
+             return false;
          }
 
+        return false;
 
 
 

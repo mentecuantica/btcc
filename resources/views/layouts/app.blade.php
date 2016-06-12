@@ -89,7 +89,7 @@
 
     </div>
 </nav>
-
+ @include('flash::message');
 @if (isset($submenu))
     <menu>
         @foreach($submenu as $elements)

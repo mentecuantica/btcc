@@ -1,0 +1,32 @@
+{
+  "name": "btcc",
+  "version": "0.2",
+  "authors": [
+    "Dick <ysadk@gmail.com>"
+  ],
+  "description": "btcc",
+  "main": "index.php",
+  "keywords": [
+    "pgsql"
+  ],
+  "license": "proprietary",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~1.11.*",
+    "chosen": "~1.4.2",
+    "jquery-placeholder": "~2.1.2",
+    "jquery-easing-original": "~1.3.2",
+    "scrollup": "2.4.1",
+    "jquery-ui": "1.11.4",
+    "jQuery": "^2.2.4",
+    "underscore": "^1.8.3",
+    "lodash": "^4.13.1"
+  }
+}

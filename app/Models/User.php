@@ -67,8 +67,9 @@ class User extends SentinelUser  {
      */
     protected $rules =[
         'email'           => 'required|email|max:255|unique:users',
-        //'password'    => 'required',
-      //  'parent_id' => 'required'
+        'password'    => 'required|max:64',
+        'first_name' => 'required',
+        'last_name' => 'required',
     ];
 
 
@@ -160,10 +161,10 @@ class User extends SentinelUser  {
         return $this->hasOne(Wallet::class);
     }
 
-    public function invitesIssued()
+    /*public function invitesIssued()
     {
         return $this->hasMany(Invite::class);
-    }
+    }*/
 
     public function transactionsSent()
     {
