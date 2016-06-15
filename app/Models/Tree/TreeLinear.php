@@ -5,21 +5,21 @@ namespace Btcc\Models\Tree;
 use Baum\Node;
 use Btcc\Models\User;
 use Btcc\Traits\LinearTreeable;
+use Btcc\Traits\Singleton;
 
 /**
  * TreeLinear
- *
- * @property integer $id
- * @property integer $user_id
- * @property integer $parent_id
- * @property integer $lft
- * @property integer $rgt
- * @property integer $depth
- * @property string $comment
- * @property \Carbon\Carbon $created_at
- * @property \Carbon\Carbon $updated_at
- * @property-read \Btcc\Models\User $user
- * @property-read \Btcc\Models\Tree\TreeLinear $parent
+ * @property integer                                                                  $id
+ * @property integer                                                                  $user_id
+ * @property integer                                                                  $parent_id
+ * @property integer                                                                  $lft
+ * @property integer                                                                  $rgt
+ * @property integer                                                                  $depth
+ * @property string                                                                   $comment
+ * @property \Carbon\Carbon                                                           $created_at
+ * @property \Carbon\Carbon                                                           $updated_at
+ * @property-read \Btcc\Models\User                                                   $user
+ * @property-read \Btcc\Models\Tree\TreeLinear                                        $parent
  * @property-read \Baum\Extensions\Eloquent\Collection|\Btcc\Models\Tree\TreeLinear[] $children
  * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\Tree\TreeLinear whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\Tree\TreeLinear whereUserId($value)
@@ -39,6 +39,17 @@ use Btcc\Traits\LinearTreeable;
 class TreeLinear extends Node implements UserTreeable {
     //use LinearTreeable;
 
+    //use Singleton;
+
+    protected $userId;
+    protected $userModel;
+
+    public function initTreeParent(User $user)
+    {
+        $this->userModel = $user;
+        $this->userId = $user->getUserId();
+    }
+
     /**
      * Table name.
      * @var string
@@ -52,58 +63,8 @@ class TreeLinear extends Node implements UserTreeable {
 
     public function getParentUser()
     {
-       return $this->parent()->get()->user;
+        return $this->parent()->get();
     }
-
-
-
-
-
-    // /**
-    //  * Column name which stores reference to parent's node.
-    //  *
-    //  * @var string
-    //  */
-    // protected $parentColumn = 'parent_id';
-
-
-
-    // /**
-    //  * Column name for the depth field.
-    //  *
-    //  * @var string
-    //  */
-    // protected $depthColumn = 'depth';
-
-    // /**
-    //  * Column to perform the default sorting
-    //  *
-    //  * @var string
-    //  */
-    // protected $orderColumn = null;
-
-    // /**
-    // * With Baum, all NestedSet-related fields are guarded from mass-assignment
-    // * by default.
-    // *
-    // * @var array
-    // */
-     protected $guarded = array('id', 'parent_id', 'lft', 'rgt', 'depth');
-
-    //
-    // This is to support "scoping" which may allow to have multiple nested
-    // set trees in the same database table.
-    //
-    // You should provide here the column names which should restrict Nested
-    // Set queries. f.ex: company_id, etc.
-    //
-
-    // /**
-    //  * Columns which restrict what we consider our Nested Set list
-    //  *
-    //  * @var array
-    //  */
-    // protected $scoped = array();
 
 
     /**
@@ -122,33 +83,110 @@ class TreeLinear extends Node implements UserTreeable {
         return !$this->isLeaf();
     }
 
-
-    public function allPartners()
+    public function getPartners()
     {
         return $this->descendants()->get();
     }
 
-
     /**
      * Returns those who on level $depthLimit below this user
-     *
      * @return mixed
      */
-    public function subPartners($depthLimit =5 )
+    public function getPartnersLimit($depthLimit = 5)
     {
         return $this->descendants()->limitDepth($depthLimit)->get();
     }
 
-
-
     /**
      * Returns those who on level 1 below this user
-     *
      * @return mixed
      */
-    public function directPartners()
+    public function getFirstPartners()
     {
         return $this->children()->get();
     }
+
+    public function getParents()
+    {
+        return $this->ancestors()->get();
+    }
+
+    /**
+     * @return int
+     */
+    public function countPartners()
+    {
+        return $this->descendants()->count();
+    }
+
+    /**
+     * @return int
+     */
+    public function countFirstPartners()
+    {
+        return $this->children->count();
+    }
+
+    /**
+     * @return int
+     */
+    public function countParents()
+    {
+        return $this->ancestors()->count();
+    }
+
+
+    // /**
+    // * With Baum, all NestedSet-related fields are guarded from mass-assignment
+    // * by default.
+    // *
+    // * @var array
+    // */
+    protected $guarded
+        = [
+            'id',
+            'parent_id',
+            'lft',
+            'rgt',
+            'depth'
+        ];
+
+
+
+    // /**
+    //  * Column name which stores reference to parent's node.
+    //  *
+    //  * @var string
+    //  */
+    // protected $parentColumn = 'parent_id';
+
+    // /**
+    //  * Column name for the depth field.
+    //  *
+    //  * @var string
+    //  */
+    // protected $depthColumn = 'depth';
+
+    // /**
+    //  * Column to perform the default sorting
+    //  *
+    //  * @var string
+    //  */
+    // protected $orderColumn = null;
+
+    //
+    // This is to support "scoping" which may allow to have multiple nested
+    // set trees in the same database table.
+    //
+    // You should provide here the column names which should restrict Nested
+    // Set queries. f.ex: company_id, etc.
+    //
+
+    // /**
+    //  * Columns which restrict what we consider our Nested Set list
+    //  *
+    //  * @var array
+    //  */
+    // protected $scoped = array();
 
 }

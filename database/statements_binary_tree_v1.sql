@@ -4,7 +4,7 @@ CREATE TYPE e_binary_position AS ENUM (
   'R',
   'N');
 
-CREATE TABLE public.binary_tree (
+CREATE TABLE public.tree_binary (
   id SERIAL NOT NULL ,
   --user_id int, -- по сути он и есть parent_id
 	parent_id int NULL,
@@ -19,26 +19,26 @@ CREATE TABLE public.binary_tree (
 	UNIQUE(parent_id, child_id),
 	UNIQUE(parent_id, child_id, bt_position)
 
-	--   parent_id INTEGER REFERENCES binary_tree(parent_id) ???
+	--   parent_id INTEGER REFERENCES tree_binary(parent_id) ???
 
 );
 
-CREATE INDEX "idx_parent_id" ON "public"."binary_tree" ("parent_id");
-CREATE INDEX "idx_parent_child" ON "public"."binary_tree" ("parent_id","child_id");
+CREATE INDEX "idx_parent_id" ON "public"."tree_binary" ("parent_id");
+CREATE INDEX "idx_parent_child" ON "public"."tree_binary" ("parent_id","child_id");
 
 -- ROOT
-INSERT INTO public.binary_tree ( parent_id, child_id, bt_position, refer_id, bt_level) VALUES ( 0 , 1, 'N', null, 0);
+INSERT INTO public.tree_binary ( parent_id, child_id, bt_position, refer_id, bt_level) VALUES ( 0 , 1, 'N', null, 0);
 
 --- OTHERS
-INSERT INTO public.binary_tree ( parent_id, child_id, bt_position, refer_id, bt_level) VALUES ( 1, 2, 'L', null, 1);
-INSERT INTO public.binary_tree ( parent_id, child_id, bt_position, refer_id, bt_level) VALUES ( 1, 3, 'R', null, 1);
-INSERT INTO public.binary_tree ( parent_id, child_id, bt_position, refer_id, bt_level) VALUES ( 2, 4, 'L', null, 2);
-INSERT INTO public.binary_tree ( parent_id, child_id, bt_position, refer_id, bt_level) VALUES ( 2, 5, 'R', null, 2);
-INSERT INTO public.binary_tree ( parent_id, child_id, bt_position, refer_id, bt_level) VALUES ( 3, 6, 'R', null, 2);
-INSERT INTO public.binary_tree ( parent_id, child_id, bt_position, refer_id, bt_level) VALUES ( 4, 7, 'L', null, 3);
-INSERT INTO public.binary_tree ( parent_id, child_id, bt_position, refer_id, bt_level) VALUES ( 5, 8, 'L', null, 3);
-INSERT INTO public.binary_tree ( parent_id, child_id, bt_position, refer_id, bt_level) VALUES ( 5, 9, 'R', null, 3);
-INSERT INTO public.binary_tree ( parent_id, child_id, bt_position, refer_id, bt_level) VALUES ( 3, 10, 'L', null, 2);
+INSERT INTO public.tree_binary ( parent_id, child_id, bt_position, refer_id, bt_level) VALUES ( 1, 2, 'L', null, 1);
+INSERT INTO public.tree_binary ( parent_id, child_id, bt_position, refer_id, bt_level) VALUES ( 1, 3, 'R', null, 1);
+INSERT INTO public.tree_binary ( parent_id, child_id, bt_position, refer_id, bt_level) VALUES ( 2, 4, 'L', null, 2);
+INSERT INTO public.tree_binary ( parent_id, child_id, bt_position, refer_id, bt_level) VALUES ( 2, 5, 'R', null, 2);
+INSERT INTO public.tree_binary ( parent_id, child_id, bt_position, refer_id, bt_level) VALUES ( 3, 6, 'R', null, 2);
+INSERT INTO public.tree_binary ( parent_id, child_id, bt_position, refer_id, bt_level) VALUES ( 4, 7, 'L', null, 3);
+INSERT INTO public.tree_binary ( parent_id, child_id, bt_position, refer_id, bt_level) VALUES ( 5, 8, 'L', null, 3);
+INSERT INTO public.tree_binary ( parent_id, child_id, bt_position, refer_id, bt_level) VALUES ( 5, 9, 'R', null, 3);
+INSERT INTO public.tree_binary ( parent_id, child_id, bt_position, refer_id, bt_level) VALUES ( 3, 10, 'L', null, 2);
 
 
 
@@ -60,13 +60,9 @@ DECLARE
   json_result JSON;
   new_node_id INTEGER;
 BEGIN
-  --check if root exists
-  /*  SELECT COUNT(*)
-             FROM binary_tree
-             WHERE parent_id IS NULL AND p = 'N');*/
 
   SELECT EXISTS(SELECT 1
-                FROM binary_tree
+                FROM tree_binary
                 WHERE parent_id=0 AND bt_position = 'N') INTO is_root_exists;
 
 
@@ -75,7 +71,6 @@ BEGIN
     RAISE EXCEPTION 'No root in the table please use bt_add_root()';
 
     RETURN FALSE ;
-    --INSERT INTO binary_tree (parent_id, child_id, p, bt_level) VALUES (NULL ,new_node_parent_id,p,0);
 
   END IF;
 
@@ -84,7 +79,7 @@ BEGIN
   --check if parent exitst
   -- тот к кому мы хотим добавить, он должен быть обязательно хотя бы раз встречаться в поле child_id
   SELECT EXISTS(SELECT 1
-                FROM binary_tree
+                FROM tree_binary
                 WHERE child_id = new_node_parent_id)
   INTO is_parent_exists;
 
@@ -95,7 +90,6 @@ BEGIN
   ELSE
     RAISE NOTICE 'Parent with id:% exists', new_node_parent_id;
 
-    --INSERT INTO binary_tree (parent_id, child_id, p, bt_level) VALUES (NULL ,new_node_parent_id,p,0);
 
     --parent существует, дальше можно ли к нему добавить в нужное место
 
@@ -105,18 +99,18 @@ BEGIN
     --  Если парент есть в столбце parent_id то дети у него есть...
 
     /*SELECT json_object_agg(p,json_build_array(child_id,bt_level,parent_id)) INTO json_result
-    FROM binary_tree
+    FROM tree_binary
     WHERE parent_id = new_node_parent_id;*/
 
     --SELECT json_result::jsonb <@ new_position INTO is_free_place;
 
     SELECT array_agg(child_id)
     INTO existing_children
-    FROM binary_tree
+    FROM tree_binary
     WHERE parent_id = new_node_parent_id;
 
     IF existing_children IS NULL THEN
-        INSERT INTO binary_tree (parent_id, child_id, bt_position)
+        INSERT INTO tree_binary (parent_id, child_id, bt_position)
         VALUES (new_node_parent_id, user_id, new_position) RETURNING id INTO new_node_id;
         RETURN new_node_id;
     END IF;
@@ -137,19 +131,19 @@ BEGIN
     END CASE;
 
     -- проверка на свободную ячейку
-    SELECT NOT EXISTS (SELECT 1 FROM binary_tree
+    SELECT NOT EXISTS (SELECT 1 FROM tree_binary
     WHERE parent_id = new_node_parent_id AND bt_position = new_position) INTO is_free_place;
 
     -- подсчет детей
     /*SELECT COUNT(child_id)
     INTO is_free_place
-    FROM binary_tree
+    FROM tree_binary
     WHERE parent_id = new_node_parent_id AND p = new_position;*/
 
     IF is_free_place IS TRUE
     THEN
       RAISE NOTICE 'Place is free';
-       INSERT INTO binary_tree (parent_id, child_id, bt_position)
+       INSERT INTO tree_binary (parent_id, child_id, bt_position)
         VALUES (new_node_parent_id, user_id, new_position) RETURNING id INTO new_node_id;
         RETURN new_node_id;
 
@@ -183,8 +177,8 @@ BEGIN
       child_id,
       ARRAY[]::integer[] AS ancestors,
       ARRAY[]::e_binary_position[] AS positions
-    FROM binary_tree
-    WHERE parent_id = 0 AND binary_tree.bt_position='N' --todo depends on INDEXES, UNIQUES, PK
+    FROM tree_binary
+    WHERE parent_id = 0 AND tree_binary.bt_position='N' --todo depends on INDEXES, UNIQUES, PK
 
     UNION ALL
 
@@ -192,7 +186,7 @@ BEGIN
       bt.child_id,
       cn.ancestors || bt.parent_id,
       cn.positions || bt.bt_position
-    FROM binary_tree bt, child_nodes cn
+    FROM tree_binary bt, child_nodes cn
     WHERE bt.parent_id = cn.child_id
   ) SELECT unnest(ancestors) AS ancestor,unnest(positions) AS position
     FROM child_nodes
@@ -210,7 +204,7 @@ BEGIN
 
   SELECT
         bt.bt_level INTO parent_level
-          FROM binary_tree bt
+          FROM tree_binary bt
             WHERE bt.parent_id = parentId;
 
   RAISE NOTICE 'Parent bt_level level is %', parent_level;
@@ -226,13 +220,13 @@ BEGIN
     (
       SELECT
         bt.*, 1 as auto_level
-      FROM binary_tree bt
+      FROM tree_binary bt
       WHERE bt.parent_id = parentId
     )
     UNION
     SELECT
       bt.*, cn.auto_level+1 as auto_level
-    FROM child_nodes cn, binary_tree bt
+    FROM child_nodes cn, tree_binary bt
     WHERE bt.parent_id = cn.child_id
 
   ) SELECT

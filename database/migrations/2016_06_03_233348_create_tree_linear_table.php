@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTreeLinearsTable extends Migration {
+class CreateTreeLinearTable extends Migration {
 
   /**
    * Run the migrations.
@@ -11,7 +11,7 @@ class CreateTreeLinearsTable extends Migration {
    * @return void
    */
   public function up() {
-    Schema::create('linear_tree', function(Blueprint $table) {
+    Schema::create('tree_linear', function(Blueprint $table) {
       // These columns are needed for Baum's Nested Set implementation to work.
       // Column names may be changed, but they *must* all exist and be modified
       // in the model.
@@ -23,12 +23,12 @@ class CreateTreeLinearsTable extends Migration {
       $table->integer('lft')->nullable()->index();
       $table->integer('rgt')->nullable()->index();
       $table->integer('depth')->nullable();
-      $table->string('comment')->nullable();
+      $table->json('info')->nullable();
       
       // Add needed columns here (f.ex: name, slug, path, etc.)
       // $table->string('name', 255);
 
-      $table->timestamps();
+      $table->nullableTimestamps();
     });
   }
 
@@ -38,7 +38,7 @@ class CreateTreeLinearsTable extends Migration {
    * @return void
    */
   public function down() {
-    Schema::drop('linear_tree');
+    Schema::drop('tree_linear');
   }
 
 }

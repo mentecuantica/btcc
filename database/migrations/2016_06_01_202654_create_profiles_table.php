@@ -15,10 +15,9 @@ class CreateProfilesTable extends Migration
         Schema::create('profiles', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->index();
-            $table->string('name')->nullable();
-            $table->string('surname')->nullable();
-            $table->string('country')->nullable();
-            $table->string('city')->nullable();
+            $table->integer('package_id');
+            $table->integer('country_id')->nullable();
+            $table->string('city_id')->nullable();
             $table->json('additional')->nullable();
             $table->timestamps();
         });

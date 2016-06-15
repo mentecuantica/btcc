@@ -55,10 +55,10 @@
             <!-- Left Side Of Navbar -->
             <ul class="nav navbar-nav">
                 @if (\Auth::getUser())
-                    <li><a href="{{ url('/') }}">Home</a></li>
-                    <li><a href="{{ url('/register') }}">{{ trans('Add partner') }}</a></li>
+                    <li><a href="{{ url('/dashboard') }}">Dashboard</a></li>
                     <li><a href="{{ url('/partner') }}">{{ trans('View partners') }}</a></li>
-                    <li><a href="{{ url('/tree/binary',['id'=>Sentinel::getUser()->getUserId()]) }}">{{ trans('Binary') }}</a></li>
+                    <li><a href="{{ url('/tree/') }}">{{ trans('Trees') }}</a></li>
+                  {{--  <li><a href="{{ url('/tree/',['id'=>Sentinel::getUser()->getUserId()]) }}">{{ trans('Binary') }}</a></li>--}}
                 @endif
             </ul>
 
@@ -75,7 +75,7 @@
                         </a>
 
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{ url('/invite') }}"><i class="fa fa-btn fa-sign-out"></i>Invite</a></li>
+                        {{--    <li><a href="{{ url('/invite') }}"><i class="fa fa-btn fa-sign-out"></i>Invite</a></li>--}}
                             <li><a href="{{ url('/account') }}"><i class="fa fa-btn fa-sign-out"></i>Account</a></li>
                             <li><a href="{{ route('transaction.create') }}"><i class="fa fa-btn fa-sign-out"></i>New
                                     Transaction</a></li>

@@ -6,4 +6,4 @@
 
 {!! \Sentinel::getUser()->getUserLogin() !!}
 
-@endsection;
+@endsection

@@ -174,9 +174,9 @@ return [
 
         Kris\LaravelFormBuilder\FormBuilderServiceProvider::class,
 
-        Yab\Laracogs\LaracogsProvider::class
+        Yab\Laracogs\LaracogsProvider::class,
 
-        //  \Clockwork\Support\Laravel\ClockworkServiceProvider::class,
+          \Clockwork\Support\Laravel\ClockworkServiceProvider::class,
     ],
 
     /*

@@ -13,16 +13,15 @@ use Btcc\Models\User;
 
 interface UserTreeable {
 
-    /**
-     * @return User
-     */
-    public function user();
-
+    public function initTreeParent(User $user);
 
     /**
      * @return User
      */
     public function getParentUser();
+
+
+    public function getParents();
 
     /**
      * @return bool
@@ -37,7 +36,7 @@ interface UserTreeable {
 
 
 
-    public function allPartners();
+    public function getPartners();
 
 
     /**
@@ -45,7 +44,7 @@ interface UserTreeable {
      *
      * @return mixed
      */
-    public function subPartners($depthLimit =5 );
+    public function getPartnersLimit($depthLimit =5 );
 
 
     /**
@@ -53,7 +52,10 @@ interface UserTreeable {
      *
      * @return mixed
      */
-    public function directPartners();
+    public function getFirstPartners();
 
+    public function countPartners();
+
+    public function countFirstPartners();
 
 }

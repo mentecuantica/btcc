@@ -51,6 +51,7 @@ Route::group(['middleware' => ['sent.auth']], function () {
     Route::post('register', 'Auth\AuthController@register');
 
     Route::any('test/initTree', 'TempController@initTree');
+    Route::any('test/tree', 'TempController@testTree');
     Route::any('test/gsb', 'TempController@globalSingletonBinding');
     Route::any('test/gdisb', 'TempController@globalDISingletonBinding');
 
