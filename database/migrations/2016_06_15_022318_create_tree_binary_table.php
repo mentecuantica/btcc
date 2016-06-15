@@ -14,6 +14,7 @@ class CreateTreeBinaryTable extends Migration
      */
     public function up()
     {
+        DB::beginTransaction();
 
         DB::connection()->setSchemaGrammar(new ExtendedPostrgresGrammer());
         $schema = DB::connection()->getSchemaBuilder();
@@ -36,24 +37,44 @@ class CreateTreeBinaryTable extends Migration
             $table->integer('parent_id')->nullable();
             $table->integer('child_id');
 
-            
+            $table->enum_pg('bt_position','e_binary_position');
+
             //$table->enum('bt_position',['L','R','N']);
             $table->integer('l_child_id')->nullable();
             $table->integer('r_child_id')->nullable();
             $table->integer('refer_id')->nullable();
             $table->integer('depth')->nullable();
-            $table->json('info')->nullable();
+         //   $table->json('info')->nullable();
             $table->unique(['parent_id','child_id']);
             $table->unique(['parent_id','child_id','bt_position']);
             //$table->primary(['parent_id','child_id']);
-         //   $table->dropIndex('geo_state_index'); // Drop basic index in 'state' from 'geo' table
+            //   $table->dropIndex('geo_state_index'); // Drop basic index in 'state' from 'geo' table
             $table->index('parent_id');
             $table->index(['parent_id','child_id']);
             $table->nullableTimestamps();
-            $table->enum_pg('bt_position','e_binary_position');
         });
+
+        $this->seedInitialTree();
+
+
+        DB::commit();
     }
 
+    protected function seedInitialTree()
+    {
+        DB::table('tree_binary')->insert([
+            ['parent_id'=>0,'child_id'=>1,'bt_position'=>'N','depth'=>0],
+            ['parent_id'=>1,'child_id'=>2,'bt_position'=>'L','depth'=>1],
+            ['parent_id'=>1,'child_id'=>3,'bt_position'=>'R','depth'=>1],
+            ['parent_id'=>2,'child_id'=>4,'bt_position'=>'L','depth'=>2],
+            ['parent_id'=>2,'child_id'=>5,'bt_position'=>'R','depth'=>2],
+            ['parent_id'=>3,'child_id'=>6,'bt_position'=>'R','depth'=>2],
+            ['parent_id'=>4,'child_id'=>7,'bt_position'=>'L','depth'=>3],
+            ['parent_id'=>5,'child_id'=>8,'bt_position'=>'L','depth'=>3],
+            ['parent_id'=>5,'child_id'=>9,'bt_position'=>'R','depth'=>3],
+            ['parent_id'=>3,'child_id'=>10,'bt_position'=>'L','depth'=>2],
+        ]);
+    }
     /**
      * Reverse the migrations.
      *
@@ -61,7 +82,7 @@ class CreateTreeBinaryTable extends Migration
      */
     public function down()
     {
-        $createType = "DROP TYPE e_binary_position CASCADE";
+        $createType = "DROP TYPE IF EXISTS e_binary_position CASCADE";
 
         DB::connection()->getPdo()->exec($createType);
         Schema::drop('tree_binary');
