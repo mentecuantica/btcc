@@ -71,7 +71,7 @@ trait BinaryTreeTrait {
         $parent = array_pop($revesedArray);
         //unset($rows[0]);
 
-        $jsonNodes = static::formNestedJson($rows, 1);
+        $jsonNodes = static::formNestedJson($rows, $userId);
 
         return [
             $parent,
