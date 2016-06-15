@@ -43,7 +43,7 @@ trait BinaryTreeTrait {
      *
      * @return array
      */
-    protected static function generateJsonBinary($userId)
+    public static function generateJsonBinary($userId)
     {
         $rows = static::getUserTree($userId);
 

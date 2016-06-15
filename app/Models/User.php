@@ -86,7 +86,7 @@ class User extends SentinelUser implements Authenticatable{
 
 
         static::created(function(User $newUser) {
-            $newUser->createRelatedLinearRelation();
+            //$newUser->createRelatedLinearRelation();
         });
     }
 

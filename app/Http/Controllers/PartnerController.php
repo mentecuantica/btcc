@@ -46,7 +46,7 @@ class PartnerController extends Controller {
 
         $userId = \Sentinel::getUser()->id;
 
-        list($parent, $jsonNodes) = TreeBinary::generateJsonBinary(0);
+        list($parent, $jsonNodes) = TreeBinary::generateJsonBinary($userId);
 
         //dd($userId,$jsonNodes,$parent);
         return view('partner.create', compact('parent', 'jsonNodes'));

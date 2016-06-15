@@ -6,6 +6,7 @@ use Btcc\Events\ProfileWasUpdated;
 use Btcc\Http\Requests\Request;
 use Btcc\Models\Profile;
 use Btcc\Models\Tree\TreeBinary;
+use Btcc\Models\Tree\TreeLinear;
 use Btcc\Models\User;
 use Illuminate\Support\Facades\Schema;
 
@@ -156,8 +157,9 @@ class UserRepository
             \Log::info('New user save status: ', compact('result'));
 
             // Update the nested set relation
-            $newUser->linear->parent_id = $currentUserId;
-            $result = $newUser->linear->save();
+             $linearRelated = TreeLinear::create(['user_id'=>$newUser->id]);
+            $linearRelated->parent_id = $currentUserId;
+            $result = $linearRelated->save();
 
 
              if (false==$result) {
