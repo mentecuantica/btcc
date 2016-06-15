@@ -9,7 +9,10 @@ class UsersTableSeeder extends Seeder {
 	{
 		//DB::table('users')->truncate();
 		DB::table('roles')->truncate();
+		DB::table('tree_linear')->truncate();
 		DB::table('role_users')->truncate();
+
+		DB::table('users')->delete();
 
 		$faker = Faker\Factory::create();
 
@@ -36,7 +39,7 @@ class UsersTableSeeder extends Seeder {
 		$superUser->roles()->attach($topUserRole);
 
 
-		foreach (range(1, 20) as $number) {
+		foreach (range(1, 10) as $number) {
 			$credentials = [
 				'email'    => $faker->email,
 				'password' => '123456',

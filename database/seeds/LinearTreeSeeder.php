@@ -2,13 +2,46 @@
 
 use Illuminate\Database\Seeder;
 use Btcc\Models\User;
+use Btcc\Models\Tree\TreeLinear;
+
 
 class LinearTreeSeeder extends Seeder {
     /**
      * Run the database seeds.
      * @return void
      */
+
     public function run()
+    {
+        $userIds = TreeLinear::get(['user_id','parent_id','lft'])->pluck('user_id');
+
+        $shuffled = $userIds->shuffle();
+
+
+        $root = TreeLinear::where(['user_id'=>1])->first();
+
+        $root->makeRoot();
+
+        for($i=1;$i<8;$i++) {
+
+            $randomId = $shuffled->pop();
+
+            if ($randomId!=$root->user_id) {
+
+                $link = TreeLinear::where(['user_id'=>$randomId])->first();
+
+                $link->makeChildOf($root);
+            }
+        }
+
+        $more = TreeLinear::all()->random(5);
+
+
+       // dd($root);
+    }
+    
+    
+    public function run2()
     {
         $faker = Faker\Factory::create();
 

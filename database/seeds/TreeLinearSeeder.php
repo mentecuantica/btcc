@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use Btcc\Models\User;
 
-class UsersTableSeeder1 extends Seeder {
+class TreeLinearSeeder extends Seeder {
     /**
      * Run the database seeds.
      * @return void
@@ -16,7 +16,9 @@ class UsersTableSeeder1 extends Seeder {
 
         User::unguard();
 
-        $root = User::root();
+
+        $root = User::find(1);
+
         if (User::roots()->count() == 0) {
 
             $rootUser = [
