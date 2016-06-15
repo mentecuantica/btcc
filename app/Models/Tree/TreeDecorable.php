@@ -9,6 +9,13 @@
 
 namespace Btcc\Models\Tree;
 
+/**
+ * Every tree has own decorator object
+ *
+ *
+ * Interface TreeDecorable
+ * @package Btcc\Models\Tree
+ */
 interface TreeDecorable {
 
     public function getNestedArray();

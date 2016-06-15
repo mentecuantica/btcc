@@ -36,21 +36,7 @@ trait BinaryTreeTrait {
     }
 
 
-    /**
-     * @param $userId
-     *
-     * @return array
-     */
-    public static function getUser($userId)
-    {
-        //$children = \DB::select('select * from getChildren(:id)',['id'=>$userId]);
-        $children = \DB::select('SELECT bu.*,u.email,u.id as uid FROM bt_get_descendants(:id) as bu LEFT JOIN users u ON (bu.child_id=u.id)
-', ['id' => $userId]);
-
-        return $children;
-    }
-
-
+ 
     /**
      * @param $userId
      *
