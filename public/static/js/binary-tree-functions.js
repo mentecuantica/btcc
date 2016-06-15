@@ -9,6 +9,7 @@ var analyzeTree = function (treeObj) {
             console.log('Index', index, 'treeObj', node);
             length = node.children.length;
             if (0 === length) {
+                getVirtualFreeNode(node.child_id, binaryPositions)
                 // getVirtualFreeNode(node.child_id, binaryPositions);
             }
             ;

@@ -15,30 +15,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div class="binary-tree-chart" id="tree-container"></div>
-
-
-                <script>
-
-                    var binary_tree_config = {
-                        chart: {
-                            container: "#tree-container"
-                        },
-
-                        nodeStructure: {
-                            text: {
-                                name: "You: " + "<?=$parent->name;?>",
-                                desc: "ID: " + "<?=$parent->id;?>",
-
-                            },
-                            children: {!! $jsonNodes !!}
-
-                        },
-
-
-                    };
-                    new Treant(binary_tree_config);
-                </script>
+                @include('tree._binaryTreeChart')
             </div>
 
         </div>

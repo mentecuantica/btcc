@@ -21,8 +21,9 @@
             },
 
             nodeStructure: {
+                child_id: <?=$parent->id;?>,
                 text: {
-                    name: "You: " + "<?=$parent->name;?>",
+                    title: "You: " + "<?=$parent->name;?>",
                     desc: "ID: " + "<?=$parent->id;?>",
 
                 },

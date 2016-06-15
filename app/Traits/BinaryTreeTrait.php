@@ -47,6 +47,21 @@ trait BinaryTreeTrait {
     {
         $rows = static::getUserTree($userId);
 
+
+        if (count($rows)==0) {
+            // no children
+
+            $parent = new \stdClass();
+            $parent->id = $userId;
+            $parent->name = user()->getUserLogin();
+          //  $parent = new \stdClass(['id'=>$userId,'name'=>user()->getUserLogin()]);
+            $jsonNodes = json_encode([]);
+            return [
+                $parent,
+                $jsonNodes
+            ];
+        }
+
         /**
          * If remove first element from rows, to make it parent
          *      then buildTree fails
