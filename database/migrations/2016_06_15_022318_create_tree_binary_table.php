@@ -29,7 +29,7 @@ class CreateTreeBinaryTable extends Migration
         $createType = "CREATE TYPE e_binary_position AS ENUM ('L','R','N');";
 
         DB::connection()->getPdo()->exec($createType);
-
+        //DB::unprepared('CREATE PROCEDURE test() BEGIN SELECT * FROM user; END');
 
         $schema->create('tree_binary', function (ExtendedBlueprint $table) {
             $table->integer('id',true,true);

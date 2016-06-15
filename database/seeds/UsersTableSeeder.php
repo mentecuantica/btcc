@@ -7,26 +7,56 @@ class UsersTableSeeder extends Seeder {
 
 	public function run()
 	{
+		//DB::table('users')->truncate();
+		DB::table('roles')->truncate();
+		DB::table('role_users')->truncate();
+
 		$faker = Faker\Factory::create();
 
-		for($i=0;$i<40;$i++){
+		$initSequence = "SELECT setval('users_id_seq'::regclass,1,false)";
+		DB::connection()->getPdo()->exec($initSequence);
+		$credentials = [
+			'email'    => 'top@btcc.vgt',
+			'password' => '123456',
+			'first_name'=> $faker->firstName,
+			'last_name'=>$faker->lastName,
+		];
 
+		$superUser = Sentinel::registerAndActivate($credentials);
+
+
+		$role = [
+			'name' => 'TopUser',
+			'slug' => 'topUser',
+			'permissions' => [
+				'allTree' => true,
+			]
+		];
+		$topUserRole = Sentinel::getRoleRepository()->createModel()->fill($role)->save();
+		$superUser->roles()->attach($topUserRole);
+
+
+		foreach (range(1, 20) as $number) {
 			$credentials = [
 				'email'    => $faker->email,
-				'password' => 'demo123',
+				'password' => '123456',
+				'first_name'=> $faker->firstName,
+				'last_name'=>$faker->lastName,
 			];
 
-			Sentinel::registerAndActivate($credentials);
-
+			$user = Sentinel::registerAndActivate($credentials);
 		}
+		//dd($user);
+
+		//Sentinel::activate($user);
+
+
 
 	}
 
 	public function run1()
 	{
-		/*DB::table('users')->truncate();
-		DB::table('roles')->truncate();
-		DB::table('role_users')->truncate();*/
+
 
 		$role = [
 			'name' => 'Administrator',

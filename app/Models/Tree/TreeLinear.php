@@ -54,7 +54,7 @@ class TreeLinear extends Node implements UserTreeable {
      * Table name.
      * @var string
      */
-    protected $table = 'linear_tree';
+    protected $table = 'tree_linear';
 
     public function user()
     {

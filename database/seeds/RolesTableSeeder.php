@@ -15,6 +15,10 @@ class RolesTableSeeder extends Seeder
 
 
         $adminUser = Sentinel::registerAndActivate($admin);
+
+        
+
+
         $role = [
             'name' => 'Super Administrator',
             'slug' => 'saadmin',
