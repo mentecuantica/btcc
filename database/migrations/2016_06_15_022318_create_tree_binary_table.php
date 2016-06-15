@@ -2,7 +2,6 @@
 
 use Database\Schema\ExtendedBlueprint;
 use Database\Schema\ExtendedPostrgresGrammer;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 class CreateTreeBinaryTable extends Migration
@@ -25,7 +24,7 @@ class CreateTreeBinaryTable extends Migration
         });
 
 
-        $createType = "DROP TYPE IF EXISTS e_binary_position";
+        $createType = "DROP TYPE IF EXISTS e_binary_position CASCADE";
         DB::connection()->getPdo()->exec($createType);
         $createType = "CREATE TYPE e_binary_position AS ENUM ('L','R','N');";
 
@@ -55,11 +54,20 @@ class CreateTreeBinaryTable extends Migration
         });
 
         $this->seedInitialTree();
-
+        $this->createPgSqlFunctions();
 
         DB::commit();
     }
 
+    protected function createPgSqlFunctions()
+    {
+
+        $rawSQL = file_get_contents(__DIR__.'/../pgsql_functions.sql');
+
+
+        DB::connection()->getPdo()->exec($rawSQL);
+    }
+    
     protected function seedInitialTree()
     {
         DB::table('tree_binary')->insert([
@@ -82,7 +90,10 @@ class CreateTreeBinaryTable extends Migration
      */
     public function down()
     {
-        $createType = "DROP TYPE IF EXISTS e_binary_position CASCADE";
+        $createType = "DROP TYPE IF EXISTS e_binary_position CASCADE"; // this will delete all the functions
+        $dropFunction1 = "DROP FUNCTION IF EXISTS bt_get_descendants";
+        $dropFunction2 = "DROP FUNCTION IF EXISTS bt_get_ancestors";
+        $dropFunction3 = "DROP FUNCTION IF EXISTS bt_add_to_parent";
 
         DB::connection()->getPdo()->exec($createType);
         Schema::drop('tree_binary');
