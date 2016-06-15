@@ -29,9 +29,11 @@ class PartnerController extends Controller {
         /**@var User $user * */
 
         // get an nested collection of LinearTree with User inside
-        $linearTree = $user->getLinearTree();
+        $binaryPartnersCount = $user->getTreeBinary()->countPartners();
 
-        return view('partner.index', ['partners' => []]);
+        $partners = [];
+
+        return view('partner.index', compact('binaryPartnersCount','partners'));
 
     }
 

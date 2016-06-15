@@ -29,9 +29,9 @@ Route::group(['middleware' => ['sent.auth']], function () {
 
     Route::get('/tree', 'TreeController@index');
     Route::get('/tree/linear', 'TreeController@showLinear');
-    Route::get('/tree/binary/{id}', 'TreeController@showBinary');
     Route::get('/tree/binary', 'TreeController@showBinaryAll');
     Route::get('/tree/binary/json', 'TreeController@showBinaryJson');
+    Route::get('/tree/binary/{id}', 'TreeController@showBinary');
     Route::get('/tree/ternary', 'TreeController@showTernary');
     Route::get('/tree/show/{id}', 'TreeController@show');
 

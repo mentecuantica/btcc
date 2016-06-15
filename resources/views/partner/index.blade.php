@@ -4,9 +4,14 @@
     <h1>{!! trans('Your partners') !!}</h1>
 
 
-
     <a href="{!! route('partner.create') !!}">Add partner</a>
 
+
+    <div class="panel panel-default">
+    	<div class="panel-body">
+    	   Binary partners count: {{ $binaryPartnersCount }}
+    	</div>
+    </div>
 
     @if (count($partners)>0)
 

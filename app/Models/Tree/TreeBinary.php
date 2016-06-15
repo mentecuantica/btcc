@@ -84,7 +84,7 @@ class TreeBinary extends BaseTree
      */
     private static function getDescendants($userId, $level = 100)
     {
-        $descentants = DB::select('SELECT * FROM bt_get_descendants(:id)',['id'=>$userId]);
+        $descentants = DB::select('SELECT * FROM bt_get_descendants(:id,:level)',['id'=>$userId,'level'=>100]);
         return $descentants;
     }
 
@@ -119,7 +119,8 @@ class TreeBinary extends BaseTree
 
     public function countPartners()
     {
-        // TODO: Implement countPartners() method.
+        $descentants = DB::select('SELECT count(*) FROM bt_get_descendants(:id,:level)',['id'=>$this->userId,'level'=>100]);
+        return $descentants[0]->count;
     }
 
     public function countFirstPartners()

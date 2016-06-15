@@ -55,7 +55,7 @@ use Watson\Validating\ValidatingTrait;
  * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\User whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class User extends SentinelUser  {
+class User extends SentinelUser implements Authenticatable{
 
 
     use ValidatingTrait, UserWithTrees;
@@ -178,11 +178,11 @@ class User extends SentinelUser  {
 
 
 
-/*
+
 
     public function getAuthIdentifier()
     {
-        $this->getAuthIdentifier();
+        $this->getUserLogin();
     }
 
 
@@ -196,7 +196,7 @@ class User extends SentinelUser  {
 
     public function getAuthPassword()
     {
-        // TODO: Implement getAuthPassword() method.
+       $this->getUserPassword();
     }
 
     public function getRememberToken()
@@ -206,13 +206,13 @@ class User extends SentinelUser  {
 
     public function setRememberToken($value)
     {
-        $v = $value;
+
     }
 
     public function getRememberTokenName()
     {
-        return "9888";
-    }*/
+        
+    }
 
 
     /**

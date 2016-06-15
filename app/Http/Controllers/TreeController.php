@@ -58,7 +58,7 @@ class TreeController extends Controller
 
         $jsonNodes = TreeBinary::formNestedJson($rows,$userId);
 
-        return view('tree.indexBinary',compact('jsonNodes'));
+        return $jsonNodes;
 
     }
 
@@ -72,7 +72,7 @@ class TreeController extends Controller
 
         $jsonNodes = TreeBinary::formNestedJson($rows,$id);
 
-        return view('tree.indexBinary',compact('jsonNodes'));
+        return view('tree.showBinary',compact('jsonNodes','id'));
 
     }
 
