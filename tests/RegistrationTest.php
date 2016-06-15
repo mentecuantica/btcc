@@ -23,6 +23,20 @@ class RegistrationTest extends TestCase
             ->see('Binary partners count');
     }
 
+    public function testShowPage()
+    {
+        $credentials = [
+            'email'    => 'emclaughlin@yahoo.com',
+            'password' => '123456',
+        ];
+
+        $user = User::where('email','=',$credentials['email'])->first();
+
+        \Sentinel::setUser($user);
+
+        $this->actingAs($user)->visit('/partner')->click('Add partner')->visit('/tree/show/4');
+
+    }
 
     public function testAddPartnerPage()
     {
@@ -40,7 +54,7 @@ class RegistrationTest extends TestCase
     }
 
 
-    public function testAddPartnerFunctional()
+    public function testAddPartnerMailTaken()
     {
         $credentials = [
             'email'    => 'top@btcc.vgt',
@@ -50,6 +64,8 @@ class RegistrationTest extends TestCase
         $user = User::find(1);
 
         \Sentinel::setUser($user);
+
+
 
         $this->actingAs($user)->visit('/partner/create')
             ->type('Valentindas 1','first_name')
@@ -62,6 +78,36 @@ class RegistrationTest extends TestCase
             ->check('user_agreement')
             ->press('Add partner')
             ->see('The email has already been taken');
+    }
+
+
+    public function testAddPartnerWrongBinary()
+    {
+        $credentials = [
+            'email'    => 'top@btcc.vgt',
+            'password' => '123456',
+        ];
+
+        $user = User::find(1);
+
+        \Sentinel::setUser($user);
+
+        $faker = Faker\Factory::create();
+
+
+
+
+        $this->actingAs($user)->visit('/partner/create')
+            ->type($faker->firstName,'first_name')
+            ->type($faker->lastName,'last_name')
+            ->type($faker->email,'email')
+            ->select('1','package_id')
+            ->select('1','country_id')
+            ->select('R','binary-position')
+            ->type('9','binary-parent-id')
+            ->check('user_agreement')
+            ->press('Add partner');
+
     }
 
     public function testNewUserLogin()

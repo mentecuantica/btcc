@@ -33,7 +33,7 @@ Route::group(['middleware' => ['sent.auth']], function () {
     Route::get('/tree/binary/json', 'TreeController@showBinaryJson');
     Route::get('/tree/binary/{id}', 'TreeController@showBinary');
     Route::get('/tree/ternary', 'TreeController@showTernary');
-    Route::get('/tree/show/{id}', 'TreeController@show');
+    Route::get('/tree/show/{id}', 'TreeController@showBinary');
 
     Route::resource('transaction', 'TransactionController');
     Route::resource('partner', 'PartnerController');
