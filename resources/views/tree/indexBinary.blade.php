@@ -7,7 +7,6 @@
 
 @push('stylesheets')
 <link rel="stylesheet" href="/static/vendor/treant/treant.css">
-<link rel="stylesheet" href="/static/css/binary-tree.css">
 @endpush
 
 

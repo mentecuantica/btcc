@@ -12,14 +12,11 @@
         "laracasts/utilities": "~2.0",
         "laracasts/flash":"~2.0",
         "cartalyst/sentinel": "2.0.*",
-        "baum/baum": "~1.1",
+        "baum/baum": "~1.1"
 
-        "kris/laravel-form-builder": "1.6.*",
-        "watson/validating": "^2.2"
 
     },
     "require-dev": {
-        "yab/laracogs": "^1.9",
         "barryvdh/laravel-ide-helper": "2.1.*",
         "barryvdh/laravel-debugbar": "2.2.*",
         "itsgoingd/clockwork": "~1.11.2",

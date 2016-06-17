@@ -6,9 +6,9 @@ use Btcc\Repositories\UserRepository;
 
 class UserService
 {
-    public function __construct(TransactionRepository $transactionRepository)
+    public function __construct(UserRepository $userRepository)
     {
-        $this->repo = $transactionRepository;
+        $this->repo = $userRepository;
     }
 
     public function all()

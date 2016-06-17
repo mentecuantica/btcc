@@ -9,7 +9,7 @@ use Btcc\Models\Tree\TreeBinary;
 use Btcc\Models\User;
 use Btcc\Repositories\UserRepository;
 use Illuminate\Http\Request;
-
+use JavaScript;
 use Btcc\Http\Requests;
 use Illuminate\Support\Facades\Session;
 use Laracasts\Flash\Flash;
@@ -47,6 +47,8 @@ class PartnerController extends Controller {
         $userId = \Sentinel::getUser()->id;
 
         list($parent, $jsonNodes) = TreeBinary::generateJsonBinary($userId);
+
+        JavaScript::put(['childrenNodes'=>$jsonNodes,'parent'=>$parent,'user'=>user()]);
 
         //dd($userId,$jsonNodes,$parent);
         return view('partner.create', compact('parent', 'jsonNodes'));

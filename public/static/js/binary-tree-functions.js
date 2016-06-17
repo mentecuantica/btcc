@@ -51,7 +51,7 @@ var modifyTree = function (nodes) {
         if (node.hasOwnProperty('child_id')) {
 
             var childId = node.child_id;
-            if (true == _.contains(_.map(freeNodes, function (obj) {
+            if (true == _.includes(_.map(freeNodes, function (obj) {
                     return obj.searchId;
                 }), childId)) {
                 console.log('We need add to node', childId);
@@ -117,7 +117,42 @@ var getVirtualFreeNode = function (parentNodeId, positions) {
 var freeNodes = [];
 
 
-var initBinaryTree = function (treeInstance) {
+var decorateTreeConfig = function (usersNestedArray) {
+
+
+    _.forEach(usersNestedArray, function (elem, key) {
+
+    });
+
+};
+
+var initBinaryTree = function (containerID, parentNode, childrenNodes) {
+
+    var treeInstance = (function() {
+        "use strict";
+        var treeConfig = {
+            chart: {
+                container: containerID,
+                node: {
+                    collapsable: true
+                },
+            },
+            nodeStructure: {
+                HTMLclass: "owner",
+                child_id: parentNode.child_id,
+                collapsed: true, 
+                text: {
+                    title: "You",
+                    desc: parentNode.name,
+                },
+
+                children: JSON.parse(childrenNodes)
+            }
+        };
+        return treeConfig;
+    })(containerID, parentNode, childrenNodes);
+
+   // var treeInstance = generataTreantInitialConfig();
 
     analyzeTree(treeInstance.nodeStructure);
 

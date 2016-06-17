@@ -4,7 +4,6 @@ namespace Btcc\Models;
 
 use Btcc\Models\User;
 use Illuminate\Database\Eloquent\Model;
-use Watson\Validating\ValidatingTrait;
 
 /**
  * Btcc\Models\Profile
@@ -27,8 +26,7 @@ use Watson\Validating\ValidatingTrait;
  */
 class Profile extends Model
 {
-    use ValidatingTrait;
-    
+
     protected $fillable = ['name','surname','package_id','country_id'];
 
     /**

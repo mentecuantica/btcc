@@ -31,6 +31,7 @@ Route::group(['middleware' => ['sent.auth']], function () {
     Route::get('/tree/linear', 'TreeController@showLinear');
     Route::get('/tree/binary', 'TreeController@showBinaryAll');
     Route::get('/tree/binary/json', 'TreeController@showBinaryJson');
+    Route::get('/tree/binary/free/{id}', 'TreeController@showBinaryFree');
     Route::get('/tree/binary/{id}', 'TreeController@showBinary');
     Route::get('/tree/ternary', 'TreeController@showTernary');
     Route::get('/tree/show/{id}', 'TreeController@showBinary');
@@ -87,15 +88,7 @@ $this->post('password/reset', 'Auth\PasswordController@reset');
  * For edu and test
  */
 
-// Instead, you could have a handy list of patterns and reuse them everywhere:
-// Patterns
-Route::pattern('id', '\d+');
-Route::pattern('hash', '[a-z0-9]+');
-Route::pattern('hex', '[a-f0-9]+');
-Route::pattern('uuid', '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}');
-Route::pattern('base', '[a-zA-Z0-9]+');
-Route::pattern('slug', '[a-z0-9-]+');
-Route::pattern('username', '[a-z0-9_-]{3,16}');
+
 
 /*Route::group(['namespace'  => 'Users',
               'prefix'     => 'users',

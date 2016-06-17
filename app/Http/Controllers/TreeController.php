@@ -76,4 +76,21 @@ class TreeController extends Controller
 
     }
 
+
+    public function showBinaryFree($id)
+    {
+
+
+        $usersPlainCollection = TreeBinary::getUserDescendantsModels($id);
+
+        $parentUser =$usersPlainCollection->first();
+
+
+        $usersNestedArray = TreeBinary::buildNestedUserArray($usersPlainCollection,$parentUser->parent_id);
+
+        \JavaScript::put(['usersNestedArray'=>$usersNestedArray]);
+
+        return view('tree.showBinaryFree');
+
+    }
 }

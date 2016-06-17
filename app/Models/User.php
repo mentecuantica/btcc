@@ -9,7 +9,6 @@
 
 namespace Btcc\Models;
 use Baum\Extensions\Eloquent\Collection;
-use Btcc\Models\Invite;
 use Btcc\Models\Tree\TreeBinary;
 use Btcc\Models\Tree\TreeLinear;
 use Btcc\Models\Wallet;
@@ -17,7 +16,6 @@ use Btcc\Services\BinaryTreeTrait;
 use Btcc\Traits\UserWithTrees;
 use Cartalyst\Sentinel\Users\EloquentUser as SentinelUser;
 use Illuminate\Contracts\Auth\Authenticatable;
-use Watson\Validating\ValidatingTrait;
 
 /**
  * Class User
@@ -57,8 +55,7 @@ use Watson\Validating\ValidatingTrait;
  */
 class User extends SentinelUser implements Authenticatable{
 
-
-    use ValidatingTrait, UserWithTrees;
+ use UserWithTrees;
 
 
 
