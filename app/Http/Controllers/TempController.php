@@ -31,19 +31,7 @@ class TempController extends Controller {
       phpinfo();
     }
     
-    public function testTree() {
-
-        $user = \Sentinel::getUser();
-
-        /**
-         * @var User $user
-         */
-        $treeBinary = $user->getTreeBinary();
-        $treeLinear = $user->getTreeLinear();
-
-        dd($treeBinary,$treeLinear);
-    }
-
+    
 
     /**
      * App singleton returns only instance

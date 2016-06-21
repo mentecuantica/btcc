@@ -4,7 +4,9 @@ namespace Btcc\Providers;
 
 use Btcc\Events\Event;
 use Btcc\Services\SystemWallet;
+use Btcc\Services\Validation;
 use Illuminate\Support\ServiceProvider;
+use Validator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -15,7 +17,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        
+        Validator::extend('foo', function($attribute, $value, $parameters, $validator) {
+            return $value == 'foo';
+        });
+
+        Validator::resolver(function($translator, $data, $rules, $messages)
+        {
+            return new Validation($translator, $data, $rules, $messages);
+        });
     }
 
     /**
@@ -26,7 +35,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
 
-        $this->app->register(ComposerServiceProvicer::class);
+        $this->app->register(ViewComposerServiceProvicer::class);
         
         $this->app->singleton('SystemWallet', function ($app) {
             return new SystemWallet(1250);

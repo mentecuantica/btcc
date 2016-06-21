@@ -27,7 +27,7 @@ use Illuminate\Database\Eloquent\Model;
 class Profile extends Model
 {
 
-    protected $fillable = ['name','surname','package_id','country_id'];
+    protected $fillable = ['name','surname','package_id','country_code'];
 
     /**
      * New inline validation from
@@ -35,9 +35,9 @@ class Profile extends Model
      * 
      * @var array
      */
-    protected $rules = [
+    public static $rules = [
         //'name'   => 'required',
-        'country_id'   => 'required',
+        'country_code'   => 'required',
         //'surname'    => 'required|unique:posts,slug',
         'package_id' => 'required|exists:packages,id'
     ];

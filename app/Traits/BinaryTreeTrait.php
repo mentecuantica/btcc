@@ -25,17 +25,21 @@ trait BinaryTreeTrait {
      */
     public static function getUserTree($userId)
     {
-        //$children = \DB::select('select * from getChildren(:id)',['id'=>$userId]);
-        $children = \DB::select(
-        /** @lang SQL */
-            'SELECT d.parent_id,d.child_id,d.bt_position,d.level, u.email AS name,u.id FROM bt_get_descendants1(:id,10) as d LEFT JOIN users u ON (d.child_id=u.id)
-', ['id' => $userId]);
-        //dd($children);
-      //  \Debugbar::addMessage('Loaded raw:',$children);
+        $query = 'SELECT d.parent_id,d.child_id,d.bt_position,d.level, u.email AS 
+        name,u.id FROM bt_get_descendants1(:id,10) as d LEFT JOIN users u ON (d.child_id=u.id)';
+        $children = \DB::select($query,['id' => $userId]);
 
         return $children;
     }
 
+    public static function getUserDescendantsModels($userId)
+    {
+       return User::hydrate(static::getUserTree($userId));
+
+    }
+    
+    
+    
 
 
     /**
@@ -117,6 +121,36 @@ trait BinaryTreeTrait {
     }
 
     /**
+     * @param mixed $users
+     * @param int   $parentId
+
+     *
+*@return array
+     */
+    public static function buildNestedUserArray($users, $parentId = 1)
+    {
+
+        $newNode = [];
+
+        foreach ($users as $user) {
+
+            if ($user->parent_id == $parentId) {
+                $children = static::buildNestedUserArray($users, $user->child_id);
+                if ($children) {
+                    $user->children = $children;
+                }
+                $newNode[] = $user;
+            }
+
+        }
+
+        // \Debugbar::addMessage('Final ',$branch);
+
+        return $newNode;
+    }
+
+
+    /**
      * @param $nodeList
      *
      * @return string
@@ -141,36 +175,4 @@ trait BinaryTreeTrait {
 
 
 
-    /**
-     * 1. Add user
-     *      1.1 Choose parent, position (L,R)
-     *          1.1.3 Check available position is free - L or R
-     *               If both free -
-     *                    take a place at choosed position
-     *               If only one free
-     *                    take place at that position
-     *                    or
-     *                    take child position and use it as a parent and REPEAT 1.1
-     * 2. Get user tree
-     *     Check relations
-     *     Can see only his partners ?
-     *       or
-     *     Can see all his childs?
-     * 3. Integrity check
-     *      LEFT RIGHT rules
-     *      PARENT CHILD existence
-     * @todo Table tree strucutree
-     * @todo Use SQL functions, SP or PHP logic ?
-     */
-
-    /**
-     *  1. If the tree is empty, insert new_node as the root node (obviously!)
-     * 2. while (tree is NOT empty):
-     * 2a. If (current_node is empty), insert it here and stop;
-     * 2b. Else if (new_node > current_node), try inserting to the right
-     * of this node (and repeat Step 2)
-     * 2c. Else if (new_node < current_node), try inserting to the left
-     * of this node (and repeat Step 2)
-     * 2d. Else value is already in the tree
-     */
 }

@@ -75,7 +75,7 @@ class PartnerController extends Controller {
         ];
 
         $profile = [
-            'country_id' => $request->country_id,
+            'country_code' => $request->country_code,
             'package_id' => $request->package_id
         ];
         $binary = ['position' => $request->input('binary-position'),'parent_id' => $request->input('binary-parent-id')];

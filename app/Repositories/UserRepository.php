@@ -168,7 +168,7 @@ class UserRepository
             \Log::info('Linear nested set update: ', compact('result'));
 
             $newUserProfile = new Profile();
-            $newUserProfile->country_id = $profileInput['country_id'];
+            $newUserProfile->country_code = $profileInput['country_code'];
             $newUserProfile->package_id = $profileInput['package_id'];
 
 

@@ -16,7 +16,7 @@ use Illuminate\Support\ServiceProvider;
  * Class ComposerServiceProvicer
  * @package Btcc\Providers
  */
-class ComposerServiceProvicer extends ServiceProvider{
+class ViewComposerServiceProvicer extends ServiceProvider{
 
 
     /**
