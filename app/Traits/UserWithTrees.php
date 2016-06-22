@@ -70,7 +70,7 @@ trait UserWithTrees {
      */
     public function createTreeLinear()
     {
-        $userId = $this->getUserId();
+        $userId = $this->id;
         $treeLinear = TreeLinear::where(['user_id'=>$userId])->first();
 
         if ($treeLinear == FALSE) {

@@ -41,12 +41,12 @@ class ExampleTest extends TestCase
 
 
 
-        $user = User::find(1);
+        $user = User::where(['email'=>$credentials['email']])->first();
 
         \Auth::setUser($user);
 
         $this->actingAs($user)->visit('/')
-            ->see($user->getUserLogin())->see('Logout');
+            ->see($user->email)->see('Logout');
     }
 
 

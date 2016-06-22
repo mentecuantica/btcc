@@ -4,6 +4,6 @@
 
 @section('content')
 
-{!! \Auth::getUser()->getUserLogin() !!}
+{!! \Auth::getUser()->email !!}
 
 @endsection

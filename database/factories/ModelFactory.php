@@ -20,6 +20,13 @@ $factory->define(Btcc\Models\User::class, function (Faker\Generator $faker) {
     ];
 });
 
+$factory->define(Btcc\Models\Package::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->name,
+        'start_balance' => $faker->numberBetween(100,1000),
+        'description' => $faker->sentence,
+    ];
+});
 
 
 /**

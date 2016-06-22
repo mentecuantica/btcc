@@ -15,7 +15,7 @@ class RegistrationTest extends TestCase
             'password' => '123456',
         ];
 
-        $user = User::find(1);
+        $user = User::where(['email'=>$credentials['email']])->first();
 
         \Auth::setUser($user);
 
@@ -30,7 +30,7 @@ class RegistrationTest extends TestCase
             'password' => '123456',
         ];
 
-        $user = User::where('email','=',$credentials['email'])->first();
+        $user = User::all()->random();
 
         \Auth::setUser($user);
 
@@ -45,7 +45,7 @@ class RegistrationTest extends TestCase
             'password' => '123456',
         ];
 
-        $user = User::find(1);
+        $user = User::where(['email'=>$credentials['email']])->first();
 
         \Auth::setUser($user);
 
@@ -61,17 +61,18 @@ class RegistrationTest extends TestCase
             'password' => '123456',
         ];
 
-        $user = User::find(1);
+        $user = User::where(['email'=>$credentials['email']])->first();
 
         \Auth::setUser($user);
 
 
+        $package =\Btcc\Models\Package::all()->random(1);
 
         $this->actingAs($user)->visit('/partner/create')
             ->type('Valentindas 1','first_name')
             ->type('Popopdasop 2','last_name')
             ->type('adasdaghey@bitch.ru','email')
-            ->select('1','package_id')
+            ->select($package->id,'package_id')
             ->select('au','country_code')
             ->select('R','binary-position')
             ->type('9','binary-parent-id')
@@ -88,20 +89,20 @@ class RegistrationTest extends TestCase
             'password' => '123456',
         ];
 
-        $user = User::find(1);
+        $user = User::where(['email'=>$credentials['email']])->first();
 
         \Auth::setUser($user);
 
         $faker = Faker\Factory::create();
 
 
-
+        $package =\Btcc\Models\Package::all()->random(1);
 
         $this->actingAs($user)->visit('/partner/create')
             ->type($faker->firstName,'first_name')
             ->type($faker->lastName,'last_name')
             ->type($faker->email,'email')
-            ->select('1','package_id')
+            ->select($package->id,'package_id')
             ->select('au','country_code')
             ->select('R','binary-position')
             ->type('9','binary-parent-id')

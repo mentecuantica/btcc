@@ -1,7 +1,7 @@
 <?php
 
 
-
+Route::auth();
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard', 'DashboardController@index');
@@ -62,6 +62,7 @@ Route::get('/phpinfo', 'TempController@phpinfo');
     Route::post('transactions/search', 'TransactionController@search');
 
 });*/
-Route::auth();
 
-Route::get('/home', 'HomeController@index');
+
+
+

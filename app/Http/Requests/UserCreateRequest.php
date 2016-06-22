@@ -34,7 +34,7 @@ class UserCreateRequest extends Request
                     'email'           => 'required|email|max:255|unique:users',
                     'first_name' => 'required',
                     'last_name' => 'required',
-                    'country_code' => 'required|integer',
+                    'country_code' => 'required',
                     'package_id' => 'required|integer|exists:packages,id',
                     'binary-position'=>'required|in:L,R',
                     'binary-parent-id'=>'required|integer|exists:users,id',

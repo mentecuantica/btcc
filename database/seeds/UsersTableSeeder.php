@@ -1,4 +1,5 @@
 <?php
+use Btcc\Models\User;
 use Illuminate\Database\Seeder;
 
 class UsersTableSeeder extends Seeder {
@@ -18,86 +19,33 @@ class UsersTableSeeder extends Seeder {
 		DB::connection()->getPdo()->exec($initSequence);
 		$credentials = [
 			'email'    => 'top@btcc.vgt',
-			'password' => '123456',
-			'first_name'=> $faker->firstName,
-			'last_name'=>$faker->lastName,
+			'password' => bcrypt('123456'),
+			'name'=> $faker->firstName,
+			//'last_name'=>$faker->lastName,
 		];
 
-		//$superUser = Auth::user()->create() ::registerAndActivate($credentials);
 
+		User::create($credentials);
 
-		$role = [
-			'name' => 'TopUser',
-			'slug' => 'topUser',
-			'permissions' => [
-				'allTree' => true,
-			]
-		];
-		
+		//\Auth::user()->create($credentials);
 
 
 		foreach (range(1, 10) as $number) {
 			$credentials = [
 				'email'    => $faker->email,
-				'password' => '123456',
-				'first_name'=> $faker->firstName,
-				'last_name'=>$faker->lastName,
+				'password' => bcrypt('123456'),
+				'name'=> $faker->firstName,
+				//'last_name'=>$faker->lastName,
 			];
 
-			
+			User::create($credentials);
+
 		}
-		//dd($user);
-
-		//Sentinel::activate($user);
 
 
 
 	}
 
-	public function run1()
-	{
 
-
-		$role = [
-			'name' => 'Administrator',
-			'slug' => 'administrator',
-			'permissions' => [
-				'admin' => true,
-			]
-		];
-
-
-		$subscribersRole = [
-			'name' => 'Subscribers',
-			'slug' => 'subscribers',
-		];
-
-
-		$admin = [
-			'email'    => 'admin@example.com',
-			'password' => 'password',
-		];
-
-		$users = [
-
-			[
-				'email'    => 'demo1@example.com',
-				'password' => 'demo123',
-			],
-
-			[
-				'email'    => 'demo2@example.com',
-				'password' => 'demo123',
-			],
-
-			[
-				'email'    => 'demo3@example.com',
-				'password' => 'demo123',
-			],
-
-		];
-
-		
-	}
 
 }

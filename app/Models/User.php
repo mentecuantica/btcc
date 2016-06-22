@@ -66,8 +66,8 @@ class User  extends Authenticatable {
     protected $rules =[
         'email'           => 'required|email|max:255|unique:users',
         'password'    => 'required|max:64',
-        'first_name' => 'required',
-        'last_name' => 'required',
+       // 'first_name' => 'required',
+       // 'last_name' => 'required',
     ];
 
 
@@ -124,6 +124,7 @@ class User  extends Authenticatable {
 
     protected $fillable = [
         'email',
+        'name',
         'username',
         'password',
         'last_name',

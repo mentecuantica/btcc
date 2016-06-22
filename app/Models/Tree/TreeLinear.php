@@ -47,7 +47,7 @@ class TreeLinear extends Node implements UserTreeable {
     public function initTreeParent(User $user)
     {
         $this->userModel = $user;
-        $this->userId = $user->getUserId();
+        $this->userId = $user->id;
     }
 
     /**

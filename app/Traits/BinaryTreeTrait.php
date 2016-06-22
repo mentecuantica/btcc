@@ -26,7 +26,7 @@ trait BinaryTreeTrait {
     public static function getUserTree($userId)
     {
         $query = 'SELECT d.parent_id,d.child_id,d.bt_position,d.level, u.email AS 
-        name,u.id FROM bt_get_descendants1(:id,10) as d LEFT JOIN users u ON (d.child_id=u.id)';
+        name,u.id FROM bt_get_descendants_with_parent(:id,10) as d LEFT JOIN users u ON (d.child_id=u.id)';
         $children = \DB::select($query,['id' => $userId]);
 
         return $children;
@@ -57,8 +57,7 @@ trait BinaryTreeTrait {
 
             $parent = new \stdClass();
             $parent->id = $userId;
-            $parent->name = user()->getUserLogin();
-          //  $parent = new \stdClass(['id'=>$userId,'name'=>user()->getUserLogin()]);
+            $parent->name = user()->email;
             $jsonNodes = json_encode([]);
             return [
                 $parent,
