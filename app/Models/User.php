@@ -14,8 +14,8 @@ use Btcc\Models\Tree\TreeLinear;
 use Btcc\Models\Wallet;
 use Btcc\Services\BinaryTreeTrait;
 use Btcc\Traits\UserWithTrees;
-use Cartalyst\Sentinel\Users\EloquentUser as SentinelUser;
-use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+
 
 /**
  * Class User
@@ -37,11 +37,6 @@ use Illuminate\Contracts\Auth\Authenticatable;
  * @property-read \Illuminate\Database\Eloquent\Collection|\Btcc\Models\Invite[] $invitesIssued
  * @property-read \Illuminate\Database\Eloquent\Collection|\Btcc\Models\Transaction[] $transactionsSent
  * @property-read \Illuminate\Database\Eloquent\Collection|\Btcc\Models\Transaction[] $transactionsRecieved
- * @property-read \Illuminate\Database\Eloquent\Collection|\Cartalyst\Sentinel\Roles\EloquentRole[] $roles
- * @property-read \Illuminate\Database\Eloquent\Collection|\Cartalyst\Sentinel\Persistences\EloquentPersistence[] $persistences
- * @property-read \Illuminate\Database\Eloquent\Collection|\Cartalyst\Sentinel\Activations\EloquentActivation[] $activations
- * @property-read \Illuminate\Database\Eloquent\Collection|\Cartalyst\Sentinel\Reminders\EloquentReminder[] $reminders
- * @property-read \Illuminate\Database\Eloquent\Collection|\Cartalyst\Sentinel\Throttling\EloquentThrottle[] $throttle
  * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\User whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\User whereEmail($value)
  * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\User wherePassword($value)
@@ -53,7 +48,7 @@ use Illuminate\Contracts\Auth\Authenticatable;
  * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\User whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class User extends SentinelUser implements Authenticatable{
+class User  extends Authenticatable {
 
  use UserWithTrees;
 
@@ -133,7 +128,6 @@ class User extends SentinelUser implements Authenticatable{
         'password',
         'last_name',
         'first_name',
-        'permissions',
         'parent_id'
     ];
 
@@ -177,39 +171,7 @@ class User extends SentinelUser implements Authenticatable{
 
 
 
-    public function getAuthIdentifier()
-    {
-        $this->getUserLogin();
-    }
-
-
-
-    public function getAuthIdentifierName()
-    {
-        return $this->getUserLoginName();
-    }
-
-
-
-    public function getAuthPassword()
-    {
-       $this->getUserPassword();
-    }
-
-    public function getRememberToken()
-    {
-        return "xxxxxx";
-    }
-
-    public function setRememberToken($value)
-    {
-
-    }
-
-    public function getRememberTokenName()
-    {
-        
-    }
+  
 
 
     /**

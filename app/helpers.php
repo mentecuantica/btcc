@@ -10,6 +10,6 @@ if (! function_exists('user')) {
      */
     function user()
     {
-        return \Sentinel::getUser();
+        return \Auth::getUser();
     }
 }

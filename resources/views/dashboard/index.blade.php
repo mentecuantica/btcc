@@ -4,6 +4,6 @@
 
 @section('content')
 
-{!! \Sentinel::getUser()->getUserLogin() !!}
+{!! \Auth::getUser()->getUserLogin() !!}
 
 @endsection

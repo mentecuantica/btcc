@@ -24,7 +24,7 @@ class PartnerController extends Controller {
         //todo List transactions
 
         //$partners = \Auth::user()->subPartners(5);
-        $user = \Sentinel::getUser();
+        $user = \Auth::getUser();
 
         /**@var User $user * */
 
@@ -44,7 +44,7 @@ class PartnerController extends Controller {
     public function create()
     {
 
-        $userId = \Sentinel::getUser()->id;
+        $userId = \Auth::getUser()->id;
 
         list($parent, $jsonNodes) = TreeBinary::generateJsonBinary($userId);
 
@@ -92,7 +92,8 @@ class PartnerController extends Controller {
         if ($newUser instanceof User) {
             event(new UserRegisteredPartner($newUser,$passwordPlain));
 
-            $activationResult = \Sentinel::activate($newUser);
+            
+            $activationResult = \Auth::activate($newUser);
 
 
             \Flash::success('Partner successfully added! Password ' . $passwordPlain);

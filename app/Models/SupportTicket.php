@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class SupportTicket
+ *
  * @package Btcc\Models
+ * @mixin \Eloquent
  */
 class SupportTicket extends Model
 {

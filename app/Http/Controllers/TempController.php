@@ -19,11 +19,9 @@ use Btcc\Services\SystemWallet;
  */
 class TempController extends Controller {
 
-    public function initTree()
+    public function index()
     {
-        $root = UserLevel::create(['user_id' => \Auth::id(), 'binary_flag' =>'L']);
 
-        return $root;
     }
 
     public function phpinfo()
@@ -33,28 +31,6 @@ class TempController extends Controller {
     
     
 
-    /**
-     * App singleton returns only instance
-     *
-     * @return mixed
-     */
-    public function globalSingletonBinding()
-    {
-        return app('SystemWallet');
 
-    }
-
-    /**
-     * DI returns only new instance
-     *
-     * @param \Btcc\Services\SystemWallet $systemWallet
-     *
-     * @return \Btcc\Services\SystemWallet
-     */
-    public function globalDISingletonBinding(SystemWallet $systemWallet)
-    {
-        return $systemWallet;
-
-    }
 
 }

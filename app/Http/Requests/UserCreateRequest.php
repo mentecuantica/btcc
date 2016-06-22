@@ -16,7 +16,7 @@ class UserCreateRequest extends Request
      */
     public function authorize()
     {
-        if (\Sentinel::getUser()) {
+        if (\Auth::user()) {
             return true;
         }
 

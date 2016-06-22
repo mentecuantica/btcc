@@ -63,4 +63,28 @@ class SystemWallet {
         return json_encode(['balance'=>$this->getBalance()]);
     }
 
+    /**
+     * App singleton returns only instance
+     *
+     * @return mixed
+     */
+    public function globalSingletonBinding()
+    {
+        return app('SystemWallet');
+
+    }
+
+    /**
+     * DI returns only new instance
+     *
+     * @param \Btcc\Services\SystemWallet $systemWallet
+     *
+     * @return \Btcc\Services\SystemWallet
+     */
+    public function globalDISingletonBinding(SystemWallet $systemWallet)
+    {
+        return $systemWallet;
+
+    }
+
 }

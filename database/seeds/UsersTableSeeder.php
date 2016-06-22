@@ -8,9 +8,7 @@ class UsersTableSeeder extends Seeder {
 	public function run()
 	{
 		//DB::table('users')->truncate();
-		DB::table('roles')->truncate();
-		DB::table('tree_linear')->truncate();
-		DB::table('role_users')->truncate();
+
 
 		DB::table('users')->delete();
 
@@ -25,7 +23,7 @@ class UsersTableSeeder extends Seeder {
 			'last_name'=>$faker->lastName,
 		];
 
-		$superUser = Sentinel::registerAndActivate($credentials);
+		//$superUser = Auth::user()->create() ::registerAndActivate($credentials);
 
 
 		$role = [
@@ -35,8 +33,7 @@ class UsersTableSeeder extends Seeder {
 				'allTree' => true,
 			]
 		];
-		$topUserRole = Sentinel::getRoleRepository()->createModel()->fill($role)->save();
-		$superUser->roles()->attach($topUserRole);
+		
 
 
 		foreach (range(1, 10) as $number) {
@@ -47,7 +44,7 @@ class UsersTableSeeder extends Seeder {
 				'last_name'=>$faker->lastName,
 			];
 
-			$user = Sentinel::registerAndActivate($credentials);
+			
 		}
 		//dd($user);
 
@@ -69,14 +66,12 @@ class UsersTableSeeder extends Seeder {
 			]
 		];
 
-		$adminRole = Sentinel::getRoleRepository()->createModel()->fill($role)->save();
 
 		$subscribersRole = [
 			'name' => 'Subscribers',
 			'slug' => 'subscribers',
 		];
 
-		Sentinel::getRoleRepository()->createModel()->fill($subscribersRole)->save();
 
 		$admin = [
 			'email'    => 'admin@example.com',
@@ -102,13 +97,7 @@ class UsersTableSeeder extends Seeder {
 
 		];
 
-		$adminUser = Sentinel::registerAndActivate($admin);
-		$adminUser->roles()->attach($adminRole);
-
-		foreach ($users as $user)
-		{
-			Sentinel::registerAndActivate($user);
-		}
+		
 	}
 
 }

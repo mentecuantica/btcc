@@ -7,7 +7,7 @@
         <ul>
             <li><a href="{!! url('/tree')  !!}" class="">Index</a></li>
             <li><a href="{!! url('/tree/linear')  !!}" class="">Linear</a></li>
-            <li><a href="{!! url('/tree/binary',['id'=>Sentinel::getUser()->id])  !!}" class="">Binary</a></li>
+            <li><a href="{!! url('/tree/binary',['id'=>Auth::getUser()->id])  !!}" class="">Binary</a></li>
             <li><a href="{!! url('/tree/binary')  !!}" class="">Binary all</a></li>
             <li><a href="{!! url('/tree/binary/json')  !!}" class="">Binary json</a></li>
             <li><a href="{!! url('/tree/binary/free',['id'=>user()->id])  !!}" class="">Free Binary (new method)</a></li>

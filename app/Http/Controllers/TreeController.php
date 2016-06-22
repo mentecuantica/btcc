@@ -28,7 +28,7 @@ class TreeController extends Controller
          *
          */
 
-        $currentUser = \Sentinel::getUser();
+        $currentUser = \Auth::user();
 
 
         return view('tree.indexLinear',[]);

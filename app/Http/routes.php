@@ -3,7 +3,7 @@
 
 
 
-Route::group(['middleware' => ['sent.auth']], function () {
+Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard', 'DashboardController@index');
     Route::get('/account', 'AccountController@index');
 
@@ -25,27 +25,17 @@ Route::group(['middleware' => ['sent.auth']], function () {
 
 
 
-    // Registration Routes...
-    //Route::get('register', 'Auth\AuthController@showRegistrationForm');
-    Route::post('register', 'Auth\AuthController@register');
 
-    Route::any('test/initTree', 'TempController@initTree');
-    Route::any('test/tree', 'TempController@testTree');
-    Route::any('test/gsb', 'TempController@globalSingletonBinding');
-    Route::any('test/gdisb', 'TempController@globalDISingletonBinding');
+    Route::any('test', 'TempController@index');
 
 
-    Route::get('/logout', function () {
-        \Sentinel::logout(\Sentinel::getUser());
 
-        return redirect('/');
-    });
 
 });
 //Route::group(['middleware'=>'web'], function () {
 Route::get('/', function () {
 
-    if (\Sentinel::guest()) {
+    if (\Auth::guest()) {
         return view('landing.index');
     }
     else {
@@ -54,21 +44,8 @@ Route::get('/', function () {
 });
 
 Route::get('/phpinfo', 'TempController@phpinfo');
-// Authentication Routes...
-//Route::get('login', 'AccountController@login');
-
-Route::get('/login', function () {
-    return view('account.login');
-});
-Route::post('/login', 'AccountController@postLogin');
 
 
-// Password Reset Routes...
-$this->get('password/reset/{token?}', 'Auth\PasswordController@showResetForm');
-$this->post('password/email', 'Auth\PasswordController@sendResetLinkEmail');
-$this->post('password/reset', 'Auth\PasswordController@reset');
-
-//Route::get('/home', 'HomeController@index');
 
 /**
  * For edu and test
@@ -85,3 +62,6 @@ $this->post('password/reset', 'Auth\PasswordController@reset');
     Route::post('transactions/search', 'TransactionController@search');
 
 });*/
+Route::auth();
+
+Route::get('/home', 'HomeController@index');

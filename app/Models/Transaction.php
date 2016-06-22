@@ -48,6 +48,10 @@ use Btcc\Models\Transaction\BaseTransaction;
  * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\Transaction\BaseTransaction processed()
  * @mixin \Eloquent
  * @property-read \Btcc\Models\User $parentUser
+ * @property integer $sender_id
+ * @property integer $reciever_id
+ * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\Transaction whereSenderId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\Transaction whereRecieverId($value)
  */
 class Transaction extends BaseTransaction {
 

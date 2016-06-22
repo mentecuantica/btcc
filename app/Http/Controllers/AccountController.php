@@ -8,7 +8,6 @@ use Btcc\Http\Requests;
 use Btcc\Http\Requests\ProfileUpdateRequest;
 use Btcc\Models\Profile;
 use Btcc\Models\User;
-use Cartalyst\Sentinel\Sentinel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 
@@ -72,7 +71,7 @@ class AccountController extends Controller {
         ]);
 
         if ($loginValidator->valid()) {
-            if (\Sentinel::authenticate($credentials)) {
+            if (\Auth::authenticate($credentials)) {
                 return redirect('/dashboard')->with(['message'=>'Welcome']);
 
             }

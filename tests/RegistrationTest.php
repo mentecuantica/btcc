@@ -17,7 +17,7 @@ class RegistrationTest extends TestCase
 
         $user = User::find(1);
 
-        \Sentinel::setUser($user);
+        \Auth::setUser($user);
 
         $this->actingAs($user)->visit('/')->click('View partners')
             ->see('Binary partners count');
@@ -32,7 +32,7 @@ class RegistrationTest extends TestCase
 
         $user = User::where('email','=',$credentials['email'])->first();
 
-        \Sentinel::setUser($user);
+        \Auth::setUser($user);
 
         $this->actingAs($user)->visit('/partner')->click('Add partner')->visit('/tree/show/4');
 
@@ -47,7 +47,7 @@ class RegistrationTest extends TestCase
 
         $user = User::find(1);
 
-        \Sentinel::setUser($user);
+        \Auth::setUser($user);
 
         $this->actingAs($user)->visit('/partner')->click('Add partner')
             ->see('Add partner');
@@ -63,7 +63,7 @@ class RegistrationTest extends TestCase
 
         $user = User::find(1);
 
-        \Sentinel::setUser($user);
+        \Auth::setUser($user);
 
 
 
@@ -90,7 +90,7 @@ class RegistrationTest extends TestCase
 
         $user = User::find(1);
 
-        \Sentinel::setUser($user);
+        \Auth::setUser($user);
 
         $faker = Faker\Factory::create();
 

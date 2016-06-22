@@ -43,7 +43,7 @@ class ExampleTest extends TestCase
 
         $user = User::find(1);
 
-        \Sentinel::setUser($user);
+        \Auth::setUser($user);
 
         $this->actingAs($user)->visit('/')
             ->see($user->getUserLogin())->see('Logout');
