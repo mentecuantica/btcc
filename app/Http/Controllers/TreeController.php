@@ -4,6 +4,7 @@ namespace Btcc\Http\Controllers;
 
 use Btcc\Models\Tree\TreeBinary;
 use Btcc\Http\Requests;
+use Btcc\Utilities\Tree\Ternary\Tree;
 use Illuminate\Http\Request;
 
 class TreeController extends Controller
@@ -92,5 +93,16 @@ class TreeController extends Controller
 
         return view('tree.showBinaryFree');
 
+    }
+
+    public function showTernary()
+    {
+        $tree = new Tree(Tree::generateFakeData(60));
+
+        $tags = $tree->getUnorderedListHtml();
+
+
+        return view('tree.showTernary',compact('tags','tree'));
+        
     }
 }

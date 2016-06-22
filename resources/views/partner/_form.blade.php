@@ -35,8 +35,8 @@
 <div class="row">
     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
         <div class="form-group">
-            {!! Form::label('country_id',trans('Country')) !!}
-            {!! Form::select('country_id', \Btcc\Utilities\Countries::getCountries() , NULL , ['required','class' => 'form-control']) !!}
+            {!! Form::label('country_code',trans('Country')) !!}
+            {!! Form::select('country_code', \Btcc\Utilities\Countries::getCountries() , NULL , ['required','class' => 'form-control']) !!}
 
         </div>
         <div class="form-group">

@@ -26,6 +26,11 @@ class ExampleTest extends TestCase
              ->see('Login');
     }
 
+    public function testGoToForgotPassword()
+    {
+        $this->visit('/')->click('Forgot Your Password?')->assertResponseOk();
+    }
+
 
     public function testWithUser()
     {

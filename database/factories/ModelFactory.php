@@ -128,3 +128,4 @@ $factory->define(Btcc\Repositories\Users\Transaction\Transaction::class, functio
 
     ];
 });
+

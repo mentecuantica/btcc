@@ -78,7 +78,7 @@ class TernaryTreeTest extends TestCase {
          ];
         $tree = new Tree(collect($data));
 
-        $this->assertEquals(4,$tree->getMaximumLevels());
+        $this->assertEquals(2,$tree->getMaximumLevels());
 
 
         $elements2= [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18];
@@ -99,16 +99,25 @@ class TernaryTreeTest extends TestCase {
         $this->assertEquals(4,$tree->getMaximumLevels());
 
         $tree = new Tree(range(1,86), 1);
-        $this->assertEquals(5,$tree->getMaximumLevels());
+        $this->assertEquals(4,$tree->getMaximumLevels());
 
 
     }
 
-    public function generateFakeData()
+    public function testTreeOutputUlLi()
+    {
+        $tree = new Tree(self::sampleData());
+
+        //$this->setOutputCallback()
+        $this->expectOutputRegex('/\<li class=\"ternary-level-3\"\>19, DEAD\<\/li\>/');
+        $tree->outputUlLi();
+    }
+
+    public function generateFakeData($qty = 10)
     {
         $faker = Faker::create();
         $rawPlainNodes = [];
-        foreach (range(1, 10) as $index) {
+        foreach (range(1, $qty) as $index) {
             $rawPlainNodes[] = [
                 'id'=>$index,
                 'name'=>$faker->name,
@@ -119,6 +128,9 @@ class TernaryTreeTest extends TestCase {
             ];
         }
     }
+
+
+
 
     public static function sampleData()
     {

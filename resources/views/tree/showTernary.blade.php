@@ -14,7 +14,8 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                @include('tree._binaryTreeChart',['parent'=>user()])
+                <h2>Fake data: {!! $tree !!}</h2>
+                <div class="well"> {!! $tags !!}</div>
 
             </div>
 

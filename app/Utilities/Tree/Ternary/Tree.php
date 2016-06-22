@@ -174,7 +174,7 @@ class Tree {
                 /* }
                  if ($freeExists) {*/
                 \Log::warning('free exists is 0', [$newLevel]);
-                $this->buildNodesRecursive($parent, $level, $newLevel + 1);
+                //$this->buildNodesRecursive($parent, $level, $newLevel + 1);
 
             }
         }
@@ -317,13 +317,28 @@ class Tree {
     public function outputUlLi()
     {
         $this->iterateRecursive($this->getNodes());
+
+    }
+
+    public function getUnorderedListHtml()
+    {
+        ob_start();
+        $this->outputUlLi();
+        $output = ob_get_clean();
+
+        return $output;
+
     }
 
     public function iterateRecursive($nodes)
     {
+        $level = 0;
+
+
         echo '<ul>';
         foreach ($nodes as $node) {
-            echo '<li>';
+            $class = $node->getLevel();
+            echo '<li class="ternary-level-'.$class.'">';
             /**@var Node $node * */
             if ($node->isRoot()) {
                 echo "Root";
@@ -337,7 +352,7 @@ class Tree {
             echo '</li>';
         }
         echo '</ul>';
-
+       
     }
 
     /**
@@ -440,6 +455,24 @@ class Tree {
         $this->addRootNode();
         $this->buildNodesRecursive($this->root, 0);
         $this->buildByFreeNodes();
+    }
+
+
+    public static function generateFakeData($qty = 10)
+    {
+        $faker = \Faker\Factory::create();
+        $rawPlainNodes = [];
+        foreach (range(1, $qty) as $index) {
+            $rawPlainNodes[] = [
+                'id'=>$index,
+                'name'=>$faker->name,
+                'level'=>$faker->numberBetween(1,4),
+                'created_at'=>$faker->dateTime,
+                'parent_id'=>$faker->numberBetween(1,10)
+
+            ];
+        }
+        return $rawPlainNodes;
     }
 
 }

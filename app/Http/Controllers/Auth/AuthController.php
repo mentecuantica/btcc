@@ -55,39 +55,7 @@ class AuthController extends Controller {
      *
      * @return User
      */
-    protected function create(array $data)
-    {
-        \DB::beginTransaction();
-        try {
 
-            $newUser = User::create([
-                'n'            => $data['n'],
-                'email'           => $data['email'],
-                'password'        => bcrypt('123456'),
-
-            ]);
-
-            $profile = new Profile();
-            $profile->name = 'Name';
-            $profile->surname = 'Surname';
-
-            $newUser->profile()->save($profile);
-
-
-
-            $newUser->makeChildOf(\Auth::user());
-
-            \DB::commit();
-
-            \Debugbar::addMessage('New user plus profile, and child');
-        }
-        catch (\Exception $e) {
-
-            \DB::rollBack();
-            \Debugbar::addMessage('Nothing in the base!');
-        }
-
-    }
 
     /**
      * Handle a registration request for the application.

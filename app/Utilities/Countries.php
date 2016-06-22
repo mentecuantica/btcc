@@ -18,7 +18,7 @@ class Countries {
     /**
      * @return array
      */
-    public static function getCountries()
+    public static function getCountriesReversed()
     {
         return [
             "Afghanistan"                                  => "af",
@@ -260,5 +260,13 @@ class Countries {
             "Zambia"                                       => "zm",
             "Zimbabwe"                                     => "zw"
         ];
+    }
+
+    public static function getCountries() {
+        return array_flip(static::getCountriesReversed());
+
+        /*return collect(static::getCountriesReversed())->keyBy(function($value,$key) {
+            return $value;
+        });*/
     }
 }
