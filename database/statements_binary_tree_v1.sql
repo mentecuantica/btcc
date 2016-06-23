@@ -41,4 +41,7 @@ INSERT INTO public.tree_binary ( parent_id, child_id, bt_position, refer_id, dep
 INSERT INTO public.tree_binary ( parent_id, child_id, bt_position, refer_id, depth) VALUES ( 3, 10, 'L', null, 2);
 
 
+INSERT INTO public.tree_linear VALUES (1,	1,	0,	1,	2,	0,	NULL	,'2016-06-23 15:26:06');
 
+
+p

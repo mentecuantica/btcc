@@ -8,10 +8,9 @@ CREATE OR REPLACE FUNCTION public.bt_add_to_parent(new_node_parent_id INT8, new_
 AS
 $BODY$
 DECLARE
-  is_root_exists    BOOL DEFAULT FALSE;
-
-  is_parent_exists  BOOL DEFAULT FALSE;
-  is_free_place     BOOL DEFAULT FALSE;
+  is_root_exists    BOOL :=FALSE;
+  is_parent_exists  BOOL :=FALSE;
+  is_free_place     BOOL :=FALSE;
 
   existing_children INTEGER ARRAY;
   children_count    INTEGER;
@@ -232,3 +231,7 @@ BEGIN
     FROM child_nodes cn WHERE auto_level <= maxLevel;
 END;
 $$ LANGUAGE 'plpgsql';
+
+
+
+
