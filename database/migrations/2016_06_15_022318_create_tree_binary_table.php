@@ -62,7 +62,7 @@ class CreateTreeBinaryTable extends Migration
     protected function createPgSqlFunctions()
     {
 
-        $rawSQL = file_get_contents(__DIR__.'/../pgsql_functions.sql');
+        $rawSQL = file_get_contents(__DIR__.'/../raw/binary/tree_binary_functions.sql');
 
 
         DB::connection()->getPdo()->exec($rawSQL);

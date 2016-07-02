@@ -69,7 +69,7 @@ class TreeBinary extends BaseTree
      */
     private static function getAncestors($id)
     {
-        $ancestors = DB::select('SELECT ancestor as user_id, p FROM bt_get_ancestors(:id)',['id'=>$id]);
+        $ancestors = DB::select('SELECT ancestor as user_id, p FROM public.bt_get_ancestors(:id)',['id'=>$id]);
         return $ancestors;
     }
 
@@ -84,7 +84,7 @@ class TreeBinary extends BaseTree
      */
     private static function getDescendants($userId, $level = 100)
     {
-        $descentants = DB::select('SELECT * FROM bt_get_descendants(:id,:level)',['id'=>$userId,'level'=>100]);
+        $descentants = DB::select('SELECT * FROM bt_get_descendants_with_parent(:id,:level)',['id'=>$userId,'level'=>100]);
         return $descentants;
     }
 
@@ -97,6 +97,27 @@ class TreeBinary extends BaseTree
         $children = \DB::select('SELECT gc.*,tc.email,tc.id as uid FROM bt_get_descendants(:id) as gc, users as tc WHERE gc.child_id = tc.id', ['id' => $this->userId]);
         \Debugbar::addMessage('Loaded raw:',$children);
         return $children;
+    }
+
+
+
+    public function countPartners()
+    {
+        $descentants = DB::select('SELECT count(*) FROM bt_get_descendants(:id,:level)',['id'=>$this->userId,'level'=>100]);
+        return $descentants[0]->count;
+    }
+
+
+
+    public function getParents()
+    {
+        return static::getAncestors($this->userId);
+
+    }
+
+    public function countFirstPartners()
+    {
+        // TODO: Implement countFirstPartners() method.
     }
 
     public function getPartnersLimit($depthLimit = 5)
@@ -115,23 +136,6 @@ class TreeBinary extends BaseTree
     public function getParentUser()
     {
         // TODO: Implement getParentUser() method.
-    }
-
-    public function countPartners()
-    {
-        $descentants = DB::select('SELECT count(*) FROM bt_get_descendants(:id,:level)',['id'=>$this->userId,'level'=>100]);
-        return $descentants[0]->count;
-    }
-
-    public function countFirstPartners()
-    {
-        // TODO: Implement countFirstPartners() method.
-    }
-
-    public function getParents()
-    {
-        return static::getAncestors($this->userId);
-
     }
 
 }

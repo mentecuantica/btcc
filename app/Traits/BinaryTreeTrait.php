@@ -25,22 +25,19 @@ trait BinaryTreeTrait {
      */
     public static function getUserTree($userId)
     {
-        $query = 'SELECT d.parent_id,d.child_id,d.bt_position,d.level, u.email AS 
-        name,u.id FROM bt_get_descendants_with_parent(:id,10) as d LEFT JOIN users u ON (d.child_id=u.id)';
-        $children = \DB::select($query,['id' => $userId]);
+        $query
+            = 'SELECT d.parent_id,d.child_id,d.bt_position,d.level, u.email AS 
+        name,u.id FROM bt_get_descendants_with_parent(:id,10) AS d LEFT JOIN users u ON (d.child_id=u.id)';
+        $children = \DB::select($query, ['id' => $userId]);
 
         return $children;
     }
 
     public static function getUserDescendantsModels($userId)
     {
-       return User::hydrate(static::getUserTree($userId));
+        return User::hydrate(static::getUserTree($userId));
 
     }
-    
-    
-    
-
 
     /**
      * @param $userId
@@ -51,14 +48,14 @@ trait BinaryTreeTrait {
     {
         $rows = static::getUserTree($userId);
 
-
-        if (count($rows)==0) {
+        if (count($rows) == 0) {
             // no children
 
             $parent = new \stdClass();
             $parent->id = $userId;
             $parent->name = user()->email;
             $jsonNodes = json_encode([]);
+
             return [
                 $parent,
                 $jsonNodes
@@ -68,7 +65,7 @@ trait BinaryTreeTrait {
         /**
          * If remove first element from rows, to make it parent
          *      then buildTree fails
-         *
+
          */
         $revesedArray = array_reverse($rows, TRUE);
         $parent = array_pop($revesedArray);
@@ -91,21 +88,20 @@ trait BinaryTreeTrait {
     public static function buildTree(array $elements, $parentId = 1)
     {
 
-        //\Debugbar::addMessage('Elelement raw:',$elements);
         $branch = [];
 
         foreach ($elements as $node) {
             $node['text'] = [
-                'name' => $node['name'],
-                'title'=> ''.$node['name'].' ID:'.$node['id'].' Level:'.$node['level'],
-                'desc' => $node['bt_position'],
+                'name'  => $node['name'],
+                'title' => '' . $node['name'] . ' ID:' . $node['id'] . ' Level:' . $node['level'],
+                'desc'  => $node['bt_position'],
 
             ];
-            $node['link']=['href'=>url('/tree/show',$node['id'])];
-            $node['HTMLclass']='partner';
+            $node['link'] = ['href' => url('/tree/show', $node['id'])];
+            $node['HTMLclass'] = 'partner';
 
             if ($node['parent_id'] == $parentId) {
-               // $node['HTMLclass']='boss';
+                // $node['HTMLclass']='boss';
                 $children = static::buildTree($elements, $node['id']);
                 if ($children) {
                     $node['children'] = $children;
@@ -114,40 +110,12 @@ trait BinaryTreeTrait {
             }
         }
 
-       // \Debugbar::addMessage('Final ',$branch);
+        // \Debugbar::addMessage('Final ',$branch);
 
         return $branch;
     }
 
-    /**
-     * @param mixed $users
-     * @param int   $parentId
-
-     *
-*@return array
-     */
-    public static function buildNestedUserArray($users, $parentId = 1)
-    {
-
-        $newNode = [];
-
-        foreach ($users as $user) {
-
-            if ($user->parent_id == $parentId) {
-                $children = static::buildNestedUserArray($users, $user->child_id);
-                if ($children) {
-                    $user->children = $children;
-                }
-                $newNode[] = $user;
-            }
-
-        }
-
-        // \Debugbar::addMessage('Final ',$branch);
-
-        return $newNode;
-    }
-
+    
 
     /**
      * @param $nodeList
@@ -166,12 +134,9 @@ trait BinaryTreeTrait {
             $items[] = json_decode(json_encode($item), TRUE);
         }
 
-       // \Debugbar::addMessage('json_decode',$items);
 
         return json_encode(static::buildTree($items, $parentId));
 
     }
-
-
 
 }

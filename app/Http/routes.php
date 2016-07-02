@@ -14,6 +14,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/tree/binary/free/{id}', 'TreeController@showBinaryFree');
     Route::get('/tree/binary/{id}', 'TreeController@showBinary');
     Route::get('/tree/ternary', 'TreeController@showTernary');
+    Route::get('/tree-ternary', 'Tree\TernaryController@index');
     Route::get('/tree/show/{id}', 'TreeController@showBinary');
 
     Route::resource('transaction', 'TransactionController');

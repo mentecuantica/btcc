@@ -51,7 +51,7 @@ class PartnerController extends Controller {
         JavaScript::put(['childrenNodes'=>$jsonNodes,'parent'=>$parent,'user'=>user()]);
 
         //dd($userId,$jsonNodes,$parent);
-        return view('partner.create', compact('parent', 'jsonNodes'));
+        return view('partner.create');
     }
 
     /**

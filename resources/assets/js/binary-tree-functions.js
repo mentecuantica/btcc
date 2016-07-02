@@ -84,6 +84,15 @@ var modifyTree = function (nodes) {
 
     });
 }
+
+/**
+ * Add new objects for as children to parentNodeId
+ *
+ *
+ * @param positions
+ * @param parentNodeId
+ * @returns {Array}
+ */
 var createChildrenNodes = function (positions, parentNodeId) {
     var newNodes = [];
     for (var i = 0; i < positions.length; i++) {
@@ -104,6 +113,13 @@ var createChildrenNodes = function (positions, parentNodeId) {
     }
     return newNodes;
 };
+
+/**
+ * Creates virtual free node and pushes it to freeNodes array
+ *
+ * @param parentNodeId
+ * @param positions
+ */
 var getVirtualFreeNode = function (parentNodeId, positions) {
     console.log('Add free node to:', parentNodeId, positions);
 
@@ -174,4 +190,61 @@ var initBinaryTree = function (containerID, parentNode, childrenNodes) {
     })
 }
 
+
+var decorateTernaryTreeConfig = function (usersNestedArray) {
+   return _.forEach(usersNestedArray, function (node, key) {
+
+       if (node.name==null) {
+           node.name = 'ID '+node.user_id;
+       }
+       node["text"]={
+            title:  node.t_position,
+            name:   node.name,
+            desc: node.name,
+        };
+       if (node.hasOwnProperty('children')) {
+           //console.log('Recuresion for children: ',index);
+           decorateTernaryTreeConfig(node.children);
+       };
+        return node;
+    });
+
+};
+
+var initTernaryTree = function (containerID, parentNode, childrenNodes) {
+
+    var chi1 = decorateTernaryTreeConfig(childrenNodes);
+
+    console.log(chi1);
+
+
+    var treeInstance = (function() {
+        "use strict";
+        var treeConfig = {
+            chart: {
+                container: containerID,
+                node: {
+                    collapsable: true
+                },
+            },
+            nodeStructure: {
+                HTMLclass: "owner",
+                child_id: parentNode.child_id,
+                collapsed: false,
+                text: {
+                    title: "You",
+                    desc: parentNode.name,
+                },
+
+                children: childrenNodes
+            }
+        };
+        return treeConfig;
+    })(containerID, parentNode, childrenNodes);
+
+
+    var treantInstance = new Treant(treeInstance);
+
+
+}
 
