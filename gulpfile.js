@@ -23,7 +23,7 @@ elixir(function(mix) {
 
     ],'public/js/vendor.js');
     
-    mix.scripts(['binary-tree-functions.js'],'public/js/app.js');
+    mix.scripts(['tree-prepare-for-output.js'],'public/js/app.js');
     
     mix.less(['app.less','landing.less']);
 

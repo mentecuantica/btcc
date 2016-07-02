@@ -192,7 +192,7 @@ var initBinaryTree = function (containerID, parentNode, childrenNodes) {
 
 
 var decorateTernaryTreeConfig = function (usersNestedArray) {
-   return _.forEach(usersNestedArray, function (node, key) {
+   _.forEach(usersNestedArray, function (node, key) {
 
        if (node.name==null) {
            node.name = 'ID '+node.user_id;
@@ -203,7 +203,6 @@ var decorateTernaryTreeConfig = function (usersNestedArray) {
             desc: node.name,
         };
        if (node.hasOwnProperty('children')) {
-           //console.log('Recuresion for children: ',index);
            decorateTernaryTreeConfig(node.children);
        };
         return node;
@@ -213,9 +212,10 @@ var decorateTernaryTreeConfig = function (usersNestedArray) {
 
 var initTernaryTree = function (containerID, parentNode, childrenNodes) {
 
-    var chi1 = decorateTernaryTreeConfig(childrenNodes);
+    //var chi1 =
+        decorateTernaryTreeConfig(childrenNodes);
 
-    console.log(chi1);
+    //console.log(chi1);
 
 
     var treeInstance = (function() {

@@ -1,0 +1,1 @@
+{"version":3,"sources":["landing.less","landing.css"],"names":[],"mappings":"AAAA;EACE,2BAAA;CCCD","file":"landing.css","sourcesContent":["#landing-layout {\r\n  background-color: seagreen;\r\n}","#landing-layout {\n  background-color: seagreen;\n}\n"],"sourceRoot":"/source/"}
