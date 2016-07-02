@@ -91,3 +91,4 @@ clockwork
 /.env.local
 /.phpstorm.meta.php
 /public/static/vendor/
+/resources/assets/bower/
