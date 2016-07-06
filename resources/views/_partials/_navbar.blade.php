@@ -74,3 +74,8 @@
 
  </div>
 </nav>
+<div class="container">
+ <div id="widgets">
+   <currencyinformer></currencyinformer>
+ </div>
+</div>

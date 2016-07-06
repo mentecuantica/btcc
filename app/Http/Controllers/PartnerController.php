@@ -48,7 +48,7 @@ class PartnerController extends Controller {
 
         list($parent, $jsonNodes) = TreeBinary::generateJsonBinary($userId);
 
-        JavaScript::put(['childrenNodes'=>$jsonNodes,'parent'=>$parent,'user'=>user()]);
+        JavaScript::put(['childrenNodes'=>$jsonNodes,'parent'=>$parent,'user'=>user(),'tree'=>'binary']);
 
         //dd($userId,$jsonNodes,$parent);
         return view('partner.create');

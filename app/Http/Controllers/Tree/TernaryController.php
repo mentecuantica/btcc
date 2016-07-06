@@ -31,7 +31,7 @@ class TernaryController extends Controller
         $parent->name = $parent->email;
         //$jsonNodes = json_encode($matrixNestedArray);
 
-        \JavaScript::put(['childrenNodes'=>$matrixNestedArray,'parent'=>$parent,'user'=>user()]);
+        \JavaScript::put(['childrenNodes'=>$matrixNestedArray,'parent'=>$parent,'user'=>user(),'tree'=>'ternary']);
 
 
         return view('tree.ternary.index');

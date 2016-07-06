@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "lodash": "^4.13.1",
+    "vue-resource":"^0.9.3",
     "laravel-elixir": "^4.0.0",
     "laravel-elixir-vueify": "^1.0.0",
     "bootstrap-less": "^3.3.0"

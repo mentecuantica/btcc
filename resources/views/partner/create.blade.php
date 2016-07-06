@@ -4,12 +4,12 @@
 
 
 @section('content')
-    <script type="text/javascript">
+  {{--  <script type="text/javascript">
         $(document).ready(function () {
             console.log('Itsready',window.Btcc);
             initBinaryTree("#tree-container",Btcc.parent,Btcc.childrenNodes);
         });
-    </script>
+    </script>--}}
 
     <div class="container">
         <div class="row">

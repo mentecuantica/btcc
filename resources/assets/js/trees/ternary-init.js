@@ -1,11 +1,15 @@
-var _ = require('lodash');
+import * as _ from "lodash";
 
 
-module.decorateTernaryTreeConfig = function (usersNestedArray) {
-    _.forEach(usersNestedArray, function (node, key) {
+function decorateTernaryTreeConfig(usersNestedArray) {
+    usersNestedArray = _.sortBy(usersNestedArray,'t_position');
+
+
+
+    _.forEach(usersNestedArray, (node, key)=> {
 
         if (node.name==null) {
-            node.name = 'ID '+node.user_id;
+            node.name = `ID ${node.user_id}`;
         }
         node["text"]={
             title:  node.t_position,
@@ -19,45 +23,45 @@ module.decorateTernaryTreeConfig = function (usersNestedArray) {
     });
 
 };
+function initTernaryTree(containerID, parentNode, childrenNodes) {
 
-module.initTernaryTree = function (containerID, parentNode, childrenNodes) {
-
-        //var chi1 =
-        decorateTernaryTreeConfig(childrenNodes);
-
-        //console.log(chi1);
+    childrenNodes = _.sortBy(childrenNodes,'t_position');
 
 
-        var treeInstance = (function() {
-            "use strict";
-            var treeConfig = {
-                chart: {
-                    container: containerID,
-                    node: {
-                        collapsable: true
-                    },
+    //var chi1 =
+    decorateTernaryTreeConfig(childrenNodes);
+
+    //console.log(chi1);
+
+
+    var treeInstance = (()=> {
+        "use strict";
+        var treeConfig = {
+            chart: {
+                container: containerID,
+                node: {
+                    collapsable: true
                 },
-                nodeStructure: {
-                    HTMLclass: "owner",
-                    child_id: parentNode.child_id,
-                    collapsed: false,
-                    text: {
-                        title: "You",
-                        desc: parentNode.name,
-                    },
+            },
+            nodeStructure: {
+                HTMLclass: "owner",
+                child_id: parentNode.child_id,
+                collapsed: false,
+                text: {
+                    title: "You",
+                    desc: parentNode.name,
+                },
 
-                    children: childrenNodes
-                }
-            };
-            return treeConfig;
-        })(containerID, parentNode, childrenNodes);
-
-
-        var treantInstance = new Treant(treeInstance);
+                children: childrenNodes
+            }
+        };
+        return treeConfig;
+    })(containerID, parentNode, childrenNodes);
 
 
+    var treantInstance = new Treant(treeInstance);
 
 
-    
+};
 
-}
+export default initTernaryTree;
