@@ -78,7 +78,7 @@ class User  extends Authenticatable {
 
 
         static::created(function(User $newUser) {
-            //$newUser->createRelatedLinearRelation();
+            $newUser->createRelatedLinearRelation();
         });
     }
 

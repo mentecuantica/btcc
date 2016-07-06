@@ -26,7 +26,7 @@ class CreateTreeTernaryTable extends Migration
 
 
         $this->createTable();
-        $this->seedInitialTree();
+        //$this->seedInitialTree();
         $this->createPgSqlFunctions();
 
         DB::commit();
@@ -43,8 +43,8 @@ class CreateTreeTernaryTable extends Migration
     protected function createPgSqlFunctions()
     {
 
-        //$rawSQL = file_get_contents(__DIR__.'/../raw/ternary/1_t_create_ternary_table.sql');
-        //DB::connection()->getPdo()->exec($rawSQL);
+        $rawSQL = file_get_contents(__DIR__.'/../raw/ternary/functions_ternary.sql');
+        DB::connection()->getPdo()->exec($rawSQL);
     }
     
     protected function seedInitialTree()
@@ -59,12 +59,13 @@ class CreateTreeTernaryTable extends Migration
      */
     public function down()
     {
-        $createType = "DROP TYPE IF EXISTS e_binary_position CASCADE"; // this will delete all the functions
-        $dropFunction1 = "DROP FUNCTION IF EXISTS bt_get_descendants";
-        $dropFunction2 = "DROP FUNCTION IF EXISTS bt_get_ancestors";
-        $dropFunction3 = "DROP FUNCTION IF EXISTS bt_add_to_parent";
+        $createType = "DROP TYPE IF EXISTS e_ternary_position CASCADE"; // this will delete all the functions
 
         DB::connection()->getPdo()->exec($createType);
-        Schema::drop('tree_binary');
+
+
+        $createType = "DROP TABLE IF EXISTS tree_ternary CASCADE"; // this will delete all the functions
+        DB::connection()->getPdo()->exec($createType);
+        //Schema::dropIfExists('tree_ternary');
     }
 }

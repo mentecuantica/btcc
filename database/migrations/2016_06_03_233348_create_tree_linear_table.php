@@ -17,7 +17,6 @@ class CreateTreeLinearTable extends Migration {
       // in the model.
       // Take a look at the model scaffold comments for details.
       // We add indexes on parent_id, lft, rgt columns by default.
-      $table->increments('id');
       $table->integer('user_id')->index();
       $table->integer('parent_id')->nullable()->index();
       $table->integer('lft')->nullable()->index();
@@ -27,7 +26,8 @@ class CreateTreeLinearTable extends Migration {
       
       // Add needed columns here (f.ex: name, slug, path, etc.)
       // $table->string('name', 255);
-
+      $table->primary('user_id');
+      $table->unique('user_id');
       $table->nullableTimestamps();
     });
   }

@@ -93,11 +93,11 @@ class PartnerController extends Controller {
             event(new UserRegisteredPartner($newUser,$passwordPlain));
 
             
-            $activationResult = \Auth::activate($newUser);
+            //$activationResult = \Auth::activate($newUser);
 
 
             \Flash::success('Partner successfully added! Password ' . $passwordPlain);
-            \Flash::warning('Activation ' . $activationResult);
+           // \Flash::warning('Activation ' . $activationResult);
             return redirect(route('partner.index'));
         }
 

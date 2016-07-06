@@ -2,7 +2,8 @@
 
 
 @section('content')
-    <div class="container">
+<section id="ternary-tree">
+    <div class="container-fluid">
         <h2>Ternary tree</h2>
         <script type="text/javascript">
             $(document).ready(function () {
@@ -15,5 +16,7 @@
 
 
     </div>
+
+</section>
 
 @endsection

@@ -2,11 +2,13 @@ var analyzeTree = function (treeObj) {
     // обходим все Node из списка в поисках Children
     var binaryPositions = ['L', 'R'];
 
+
     jQuery(treeObj).each(function (index, node) {
 
+        //console.log('Analyze tree',index,node);
         // Children есть
         if (node.hasOwnProperty('children')) {
-            console.log('Index', index, 'treeObj', node);
+           // console.log('Index', index, 'treeObj', node);
             length = node.children.length;
             if (0 === length) {
                 getVirtualFreeNode(node.child_id, binaryPositions)
@@ -44,7 +46,7 @@ var modifyTree = function (nodes) {
     jQuery(nodes).each(function (index, node) {
 
         if (node.hasOwnProperty('children')) {
-            //console.log('Recuresion for children: ',index);
+            console.log('Modify node has children: ',node);
             modifyTree(node.children);
         }
 
@@ -121,6 +123,10 @@ var createChildrenNodes = function (positions, parentNodeId) {
  * @param positions
  */
 var getVirtualFreeNode = function (parentNodeId, positions) {
+    if (parentNodeId===undefined) {
+        parentNodeId = window.Btcc.parent.id;
+        console.log('Add free root:', parentNodeId, positions);
+    }
     console.log('Add free node to:', parentNodeId, positions);
 
     var newNodes = createChildrenNodes(positions, parentNodeId);
@@ -144,6 +150,12 @@ var decorateTreeConfig = function (usersNestedArray) {
 
 var initBinaryTree = function (containerID, parentNode, childrenNodes) {
 
+    var parsedChildrenNodes = JSON.parse(childrenNodes);
+
+    if (parsedChildrenNodes.length==0) {
+        console.log('Children nodes is null', childrenNodes);
+    }
+
     var treeInstance = (function() {
         "use strict";
         var treeConfig = {
@@ -162,20 +174,16 @@ var initBinaryTree = function (containerID, parentNode, childrenNodes) {
                     desc: parentNode.name,
                 },
 
-                children: JSON.parse(childrenNodes)
+                children: parsedChildrenNodes
             }
         };
         return treeConfig;
-    })(containerID, parentNode, childrenNodes);
+    })(containerID, parentNode, parsedChildrenNodes);
 
    // var treeInstance = generataTreantInitialConfig();
 
     analyzeTree(treeInstance.nodeStructure);
 
-    /*var nodesToModify = _.map(freeNodes, function (obj) {
-     return obj.searchId;
-     });
-     */
     modifyTree(treeInstance.nodeStructure);
 
     var treantInstance = new Treant(treeInstance);
@@ -190,21 +198,24 @@ var initBinaryTree = function (containerID, parentNode, childrenNodes) {
     })
 }
 
-
 var decorateTernaryTreeConfig = function (usersNestedArray) {
-   _.forEach(usersNestedArray, function (node, key) {
+    usersNestedArray = _.sortBy(usersNestedArray,'t_position');
 
-       if (node.name==null) {
-           node.name = 'ID '+node.user_id;
-       }
-       node["text"]={
+
+
+    _.forEach(usersNestedArray, function (node, key) {
+
+        if (node.name==null) {
+            node.name = 'ID '+node.user_id;
+        }
+        node["text"]={
             title:  node.t_position,
             name:   node.name,
             desc: node.name,
         };
-       if (node.hasOwnProperty('children')) {
-           decorateTernaryTreeConfig(node.children);
-       };
+        if (node.hasOwnProperty('children')) {
+            decorateTernaryTreeConfig(node.children);
+        };
         return node;
     });
 
@@ -212,8 +223,11 @@ var decorateTernaryTreeConfig = function (usersNestedArray) {
 
 var initTernaryTree = function (containerID, parentNode, childrenNodes) {
 
+    childrenNodes = _.sortBy(childrenNodes,'t_position');
+
+
     //var chi1 =
-        decorateTernaryTreeConfig(childrenNodes);
+    decorateTernaryTreeConfig(childrenNodes);
 
     //console.log(chi1);
 
@@ -247,4 +261,3 @@ var initTernaryTree = function (containerID, parentNode, childrenNodes) {
 
 
 }
-

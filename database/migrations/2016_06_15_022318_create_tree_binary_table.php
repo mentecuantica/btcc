@@ -53,7 +53,7 @@ class CreateTreeBinaryTable extends Migration
             $table->nullableTimestamps();
         });
 
-        $this->seedInitialTree();
+        //$this->seedInitialTree();
         $this->createPgSqlFunctions();
 
         DB::commit();

@@ -40,6 +40,7 @@ class TreeLinear extends Node implements UserTreeable {
     //use LinearTreeable;
 
     //use Singleton;
+    protected $primaryKey = 'user_id';
 
     protected $userId;
     protected $userModel;
@@ -144,7 +145,7 @@ class TreeLinear extends Node implements UserTreeable {
     // */
     protected $guarded
         = [
-            'id',
+          
             'parent_id',
             'lft',
             'rgt',

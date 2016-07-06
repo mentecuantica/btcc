@@ -135,18 +135,20 @@ class UserRepository
             $newUser->email = $userInput['email'];
             $newUser->password = $userInput['password'];
             $newUser->first_name = $userInput['first_name'];
+            $newUser->name = $userInput['first_name'];
             $newUser->last_name = $userInput['last_name'];
+
 
 
        
 
-            if ($newUser->isInvalid()) {
+         /*   if ($newUser->isInvalid()) {
                 \Request::session()->registerBag($newUser->getErrors());
 
 
                 \Log::info('User data invalid: ',['userErrors'=>$newUser->getErrors()->toJson()]);
                 return FALSE;
-            }
+            }*/
 
             $result =  $newUser->save();
 
@@ -157,14 +159,16 @@ class UserRepository
             \Log::info('New user save status: ', compact('result'));
 
             // Update the nested set relation
-             $linearRelated = TreeLinear::create(['user_id'=>$newUser->id]);
-            $linearRelated->parent_id = $currentUserId;
-            $result = $linearRelated->save();
+           //  $linearRelated = TreeLinear::create(['user_id'=>$newUser->id]);
+           // $linearRelated->parent_id = $currentUserId;
+           // $result = $linearRelated->save();
 
-
+            $newUser->linear->parent_id = $currentUserId;
+             $newUser->linear->save();
              if (false==$result) {
                  throw new \Exception('Linear User link havent been saved');
              }
+             
             \Log::info('Linear nested set update: ', compact('result'));
 
             $newUserProfile = new Profile();
@@ -189,7 +193,9 @@ class UserRepository
          }
          catch (\Exception $e) {
              \DB::rollBack();
-             \Log::error('Creating user failed');
+             \Log::error('Creating user failed '.$e->getMessage());
+             throw $e;
+
              return false;
          }
 
