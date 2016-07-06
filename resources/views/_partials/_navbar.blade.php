@@ -21,10 +21,29 @@
    <!-- Left Side Of Navbar -->
    <ul class="nav navbar-nav">
     @if (\Auth::getUser())
-     <li><a href="{{ url('/dashbord') }}">Dashboard</a></li>
-     <li><a href="{{ url('/partner') }}">{{ trans('View partners') }}</a></li>
-     <li><a href="{{ url('/tree/') }}">{{ trans('Trees') }}</a></li>
-     {{--  <li><a href="{{ url('/tree/',['id'=>Auth::getUser()->getUserId()]) }}">{{ trans('Binary') }}</a></li>--}}
+
+     <li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+       Partners <span class="caret"></span>
+      </a>
+
+      <ul class="dropdown-menu" role="menu">
+       <li><a href="{!! url('/partner')  !!}" class="">View</a></li>
+       <li><a href="{!! url('/partner/create')  !!}" class="">Create</a></li>
+      </ul>
+     </li>
+     <li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+       Trees <span class="caret"></span>
+      </a>
+
+      <ul class="dropdown-menu" role="menu">
+       <li><a href="{!! url('/tree/linear/index')  !!}" class="">Linear</a></li>
+       <li><a href="{!! url('/tree/binary/index')  !!}" class="">Binary</a></li>
+       <li><a href="{!! url('/tree/ternary/index')  !!}" class="">Ternary</a></li>
+      </ul>
+     </li>
+
     @endif
    </ul>
 

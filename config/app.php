@@ -169,8 +169,7 @@ return [
 
         Baum\Providers\BaumServiceProvider::class,
 
-
-
+        Mpociot\LaravelTestFactoryHelper\TestFactoryHelperServiceProvider::class,
       //  Kris\LaravelFormBuilder\FormBuilderServiceProvider::class,
 
         //Yab\Laracogs\LaracogsProvider::class,

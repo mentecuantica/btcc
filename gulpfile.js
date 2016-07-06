@@ -18,6 +18,7 @@ elixir(function(mix) {
         '../bower/jQuery/dist/jquery.min.js',
         '../bower/lodash/dist/lodash.min.js',
         '../bower/raphael/raphael.min.js',
+        '../bower/bootstrap-less/js/dropdown.js',
         '../vendor/treant/treant.js'
         
 

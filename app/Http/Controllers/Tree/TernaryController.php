@@ -36,7 +36,16 @@ class TernaryController extends Controller
 
         return view('tree.ternary.index');
     }
-    
 
+    public function showTernary()
+    {
+        $tree = new Tree(Tree::generateFakeData(60));
+
+        $tags = $tree->getUnorderedListHtml();
+
+
+        return view('tree.showTernary',compact('tags','tree'));
+
+    }
 
 }

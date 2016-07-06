@@ -13,6 +13,7 @@ class UsersTableSeeder extends Seeder {
 
 
 		DB::table('users')->delete();
+		DB::table('profiles')->delete();
 		DB::table('tree_linear')->delete();
 		DB::table('tree_binary')->delete();
 		DB::table('tree_ternary')->delete();
@@ -39,17 +40,15 @@ class UsersTableSeeder extends Seeder {
 	{
 		$initSequence = "SELECT setval('users_id_seq'::regclass,1,false)";
 		DB::connection()->getPdo()->exec($initSequence);
-		$credentials = [
+
+		factory(Btcc\Models\User::class,1)->create([
 			'email'    => 'admin@btcc.vgt',
-			'password' => bcrypt('123456'),
-			'name'     => $faker->firstName,
-			'role'     => 'admin',
-			'last_name'=>$faker->lastName,
-			'first_name'=>$faker->firstName,
-		];
-
-		$root = User::create($credentials);
-
+			'role'=>'admin'])->profile()->save(
+			factory(Btcc\Models\Profile::class)->make(
+				['package_id'=>0]
+			)
+		);
+		$root = User::find(1);
 		$root->linear->makeRoot();
 
 		DB::table('tree_ternary')->insert([
@@ -79,6 +78,21 @@ class UsersTableSeeder extends Seeder {
 	 */
 	protected function create3TopUsers($faker, $root)
 	{
+		$packageIds = \Btcc\Models\Package::all('id');
+
+		$users = factory(Btcc\Models\User::class,3)->create()
+			->each(function ($user) use ($packageIds,$root) {
+				$user->profile()->save(
+					factory(Btcc\Models\Profile::class)->make(
+						['package_id'=>$packageIds->random(1)->id]
+					)
+				);
+				$user->linear->parent_id = $root->id;
+				$user->linear->save();
+			});
+
+
+/*
 		foreach (range(1, 3) as $number) {
 			$credentials = [
 				'email'    => $faker->email,
@@ -93,7 +107,7 @@ class UsersTableSeeder extends Seeder {
 			$user->linear->parent_id = $root->id;
 			$user->linear->save();
 
-		}
+		}*/
 	}
 
 

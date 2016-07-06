@@ -22,7 +22,8 @@ class AccountController extends Controller {
         $user = \Auth::getUser();
 
 
-        return view('account.index', []);
+
+        return view('account.index', ['profile'=>$user->profile,'user'=>$user]);
     }
 
     public function profileUpdate(ProfileUpdateRequest $request)
