@@ -2,48 +2,160 @@
 
 namespace Btcc\Services\Users;
 
-use Btcc\Repositories\UserRepository;
+use Btcc\Events\ProfileWasUpdated;
+use Btcc\Http\Requests\Request;
+use Btcc\Http\Requests\AddNewUserRequest;
+use Btcc\Models\Profile;
+use Btcc\Models\Tree\TreeBinary;
+use Btcc\Models\Tree\TreeLinear;
+use Btcc\Models\User;
 
-class UserService
-{
-    public function __construct(UserRepository $userRepository)
+class UserService {
+
+    /**
+     * Creates new User, links with LinearTree, Profile
+     *
+     * @param \Btcc\Http\Requests\AddNewUserRequest $request
+     *
+     * @return bool|\Btcc\Models\User
+     * @throws \Exception
+     */
+    public function addNewUser(AddNewUserRequest $request)
     {
-        $this->repo = $userRepository;
+
+        \DB::beginTransaction();
+        try {
+
+            $newUser = $this->createUserModel($request);
+
+            $this->addLinearTree($newUser);
+
+            $this->addProfileToUser($request, $newUser);
+
+            $this->addBinaryRelation($request, $newUser);
+
+            \DB::commit();
+
+            return $newUser;
+        }
+        catch (\Exception $e) {
+            \DB::rollBack();
+            \Log::error('Creating user failed ' . $e->getMessage());
+            throw $e;
+
+        }
+
     }
 
-    public function all()
+    public static function testCreateTreeUserBundle()
     {
-        return $this->repo->all();
+        $email = 'test@repo.ru';
+
+        $oldUser = \Btcc\Models\User::with('linear')->where('email', '=', $email)->first();
+
+        if ($oldUser) {
+            /**@var User $oldUser * */
+            $oldUser->linear->delete();
+            $oldUser->profile->delete();
+            $oldUser->delete();
+        }
+
+        $user = [
+            'email'    => 'test@repo.ru',
+            'password' => '123456'
+        ];
+        $package_id = \Btcc\Models\Package::all('id')->random()->id;
+
+        $profile = [
+            'phone'      => '9222222222',
+            'package_id' => $package_id,
+        ];
+
+        $binary = [
+            'parent_id' => 4,
+            'position'  => 'R'
+        ];
+
+        static::addNewUser(1, $user, $profile, $binary);
     }
 
-    public function paginated()
+    /**
+     * @param \Btcc\Http\Requests\AddNewUserRequest $request
+     *
+     * @return User
+     */
+    protected function createUserModel(AddNewUserRequest $request)
     {
-        return $this->repo->paginated(env('paginate', 25));
+        $passwordPlain = \Illuminate\Support\Str::random(8);
+        $name = $request->first_name;
+        $newUser = User::create(array_merge($request->only([
+            'email',
+            'first_name',
+            'last_name'
+        ]), [
+            'password' => bcrypt($passwordPlain),
+            'name'     => $name
+        ]));
+
+        if ($newUser == FALSE) {
+            throw new \Exception(sprintf('Cannot create user'));
+        }
+
+        $newUser->passwordPlain = $passwordPlain;
+
+
+
+
+        return $newUser;
     }
 
-    public function search($input)
+    /**
+     * @param $newUser
+     *
+     * @return mixed
+     */
+    protected function addLinearTree(User $newUser)
     {
-        return $this->repo->search($input, env('paginate', 25));
+        $parentId = \Auth::user()->id;
+        $newUser->linear->parent_id = $parentId;
+        $status = $newUser->linear->save();
+
+        if ($status == FALSE) {
+            throw new \Exception(sprintf('Cannot save linear: parent %d, user %d occupied',$parentId,$newUser->id));
+        }
+
+        return $status;
     }
 
-    public function create($input)
+    /**
+     * @param \Btcc\Http\Requests\AddNewUserRequest $request
+     * @param                                       $newUser
+     *
+     * @throws \Exception
+     */
+    protected function addBinaryRelation(AddNewUserRequest $request, User $newUser)
     {
-        return $this->repo->create($input);
+        $parentId = $request->get('binary-parent-id');
+        $position = $request->get('binary-position');
+        $binaryId = TreeBinary::addToParent($parentId, $position, $newUser->id);
+
+        if ($binaryId == (-1 || FALSE)) {
+            throw new \Exception(sprintf('Binary: parent %d, position %s occupied',$parentId,$position));
+        }
     }
 
-    public function find($id)
+    /**
+     * @param \Btcc\Http\Requests\AddNewUserRequest $request
+     * @param                                       $newUser
+     */
+    protected function addProfileToUser(AddNewUserRequest $request, $newUser)
     {
-        return $this->repo->find($id);
+        $result = $newUser->profile()->create($request->only([
+            'country_code',
+            'package_id'
+        ]));
+        if ($result == FALSE) {
+            throw new \Exception(sprintf('Cannot add profile to user'));
+        }
     }
-
-    public function update($id, $input)
-    {
-        return $this->repo->update($id, $input);
-    }
-
-    public function destroy($id)
-    {
-        return $this->repo->destroy($id);
-    }
-
 }

@@ -105,9 +105,12 @@ class User  extends Authenticatable {
 
     }
 
-
-
-
+    public function setPasswordPlain($value)
+    {
+        $this->passwordPlain = $value;
+        $this->password = bcrypt($value);
+    }
+    
 
     /**
      *
@@ -129,7 +132,7 @@ class User  extends Authenticatable {
         'password',
         'last_name',
         'first_name',
-        'parent_id'
+        'passwordPlain'
     ];
 
     /**

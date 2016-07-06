@@ -62,12 +62,12 @@ class TransactionController extends Controller
         $userTransaction->status  = 0;
 
         if ($userTransaction->save()) {
-            Session::flash('flash_message', 'Transaction successfully added!');
+            \Flash::success('Transaction successfully added!');
             return redirect('transaction');
 
         };
 
-        return redirect()->withErrors()->back();
+        return back()->withErrors();
 
 
         //

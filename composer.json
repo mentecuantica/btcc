@@ -12,7 +12,8 @@
         "laracasts/utilities": "~2.0",
         "laracasts/flash":"~2.0",
         "baum/baum": "~1.1",
-        "typicms/nestablecollection": "^1.1"
+        "typicms/nestablecollection": "^1.1",
+        "watson/bootstrap-form": "^1.0"
 
 
     },

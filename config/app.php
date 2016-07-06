@@ -162,6 +162,7 @@ return [
 
 
         Collective\Html\HtmlServiceProvider::class,
+        Watson\BootstrapForm\BootstrapFormServiceProvider::class,
 
         Laracasts\Utilities\JavaScript\JavaScriptServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
@@ -225,7 +226,9 @@ return [
 
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
-    //    'FormBuilder' => Kris\LaravelFormBuilder\Facades\FormBuilder::class,
+
+        'BootForm' => Watson\BootstrapForm\Facades\BootstrapForm::class,
+        //    'FormBuilder' => Kris\LaravelFormBuilder\Facades\FormBuilder::class,
 
         'Debugbar'=>Barryvdh\Debugbar\Facade::class,
         'Flash' => Laracasts\Flash\Flash::class,

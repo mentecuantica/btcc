@@ -20,7 +20,7 @@ class UserRegisteredPartner extends Event
      *
      * @return void
      */
-    public function __construct(User $newPartner, string $passwordPlain)
+    public function __construct(User $newPartner, string $passwordPlain = '1')
     {
         $this->passwordPlain = $passwordPlain;
         $this->newPartner = $newPartner;

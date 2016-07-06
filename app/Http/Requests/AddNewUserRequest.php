@@ -7,7 +7,7 @@ use Btcc\Http\Requests\Request;
 use Btcc\Models\User;
 use Btcc\Repositories\Users\Transaction\Transaction;
 
-class UserCreateRequest extends Request
+class AddNewUserRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
