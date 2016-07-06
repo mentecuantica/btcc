@@ -11,7 +11,7 @@ class RegistrationTest extends TestCase
     public function testPartnerPage()
     {
         $credentials = [
-            'email'    => 'top@btcc.vgt',
+            'email'    => 'admin@btcc.vgt',
             'password' => '123456',
         ];
 
@@ -41,7 +41,7 @@ class RegistrationTest extends TestCase
     public function testAddPartnerPage()
     {
         $credentials = [
-            'email'    => 'top@btcc.vgt',
+            'email'    => 'admin@btcc.vgt',
             'password' => '123456',
         ];
 
@@ -57,7 +57,7 @@ class RegistrationTest extends TestCase
     public function testAddPartnerMailTaken()
     {
         $credentials = [
-            'email'    => 'top@btcc.vgt',
+            'email'    => 'admin@btcc.vgt',
             'password' => '123456',
         ];
 
@@ -85,7 +85,7 @@ class RegistrationTest extends TestCase
     public function testAddPartnerWrongBinary()
     {
         $credentials = [
-            'email'    => 'top@btcc.vgt',
+            'email'    => 'admin@btcc.vgt',
             'password' => '123456',
         ];
 
