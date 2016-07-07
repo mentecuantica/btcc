@@ -148,7 +148,7 @@ $factory->define(Btcc\Models\Transaction\BaseTransaction::class, function (Faker
     ];
 });
 
-$factory->define(Btcc\Models\Transaction::class, function (Faker\Generator $faker) {
+$factory->define(Btcc\Models\UserTransaction::class, function (Faker\Generator $faker) {
     return [
         'user_id' =>  $faker->randomNumber() ,
         'amount' =>  $faker->randomNumber() ,

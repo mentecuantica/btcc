@@ -44,7 +44,7 @@ class TernaryController extends Controller
         $tags = $tree->getUnorderedListHtml();
 
 
-        return view('tree.showTernary',compact('tags','tree'));
+        return view('tree.ternary.showTernary',compact('tags','tree'));
 
     }
 

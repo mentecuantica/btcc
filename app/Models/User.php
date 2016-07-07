@@ -19,24 +19,23 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
  * Class User
- *
  * @package Btcc\Models
  * @property integer $id
  * @property string $email
  * @property string $password
  * @property string $permissions
  * @property string $last_login
- * @property string $first_name
- * @property string $last_name
- * @property \Carbon\Carbon $created_at
- * @property \Carbon\Carbon $updated_at
- * @property-read \Btcc\Models\Tree\TreeBinary $binary
- * @property-read \Btcc\Models\Tree\TreeLinear $linear
- * @property-read \Btcc\Models\Profile $profile
- * @property-read \Btcc\Models\Wallet $wallet
- * @property-read \Illuminate\Database\Eloquent\Collection|\Btcc\Models\Invite[] $invitesIssued
- * @property-read \Illuminate\Database\Eloquent\Collection|\Btcc\Models\Transaction[] $transactionsSent
- * @property-read \Illuminate\Database\Eloquent\Collection|\Btcc\Models\Transaction[] $transactionsRecieved
+ * @property string                                                                       $first_name
+ * @property string                                                                       $last_name
+ * @property \Carbon\Carbon                                                               $created_at
+ * @property \Carbon\Carbon                                                               $updated_at
+ * @property-read \Btcc\Models\Tree\TreeBinary                                            $binary
+ * @property-read \Btcc\Models\Tree\TreeLinear                                            $linear
+ * @property-read \Btcc\Models\Profile                                                    $profile
+ * @property-read \Btcc\Models\Wallet                                                     $wallet
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Btcc\Models\Invite[]          $invitesIssued
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Btcc\Models\UserTransaction[] $transactionsSent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Btcc\Models\UserTransaction[] $transactionsRecieved
  * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\User whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\User whereEmail($value)
  * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\User wherePassword($value)
@@ -162,12 +161,12 @@ class User  extends Authenticatable {
 
     public function transactionsSent()
     {
-        return $this->hasMany(Transaction::class, 'sender');
+        return $this->hasMany(UserTransaction::class, 'sender');
     }
 
     public function transactionsRecieved()
     {
-        return $this->hasMany(Transaction::class, 'reciever');
+        return $this->hasMany(UserTransaction::class, 'reciever');
     }
 
 

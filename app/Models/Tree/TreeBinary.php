@@ -4,13 +4,11 @@ namespace Btcc\Models\Tree;
 
 
 use Btcc\Models\User;
-use Btcc\Traits\BinaryTreeTrait;
-use Btcc\Traits\Singleton;
 use DB;
+use Illuminate\Database\Query\Builder;
 
 class TreeBinary extends BaseTree
 {
-    use BinaryTreeTrait;
 
     //use Singleton
 
@@ -69,7 +67,7 @@ class TreeBinary extends BaseTree
      */
     private static function getAncestors($id)
     {
-        $ancestors = DB::select('SELECT ancestor as user_id, p FROM public.bt_get_ancestors(:id)',['id'=>$id]);
+        $ancestors = DB::select('SELECT ancestor, bt_position FROM public.bt_get_ancestors(:id)',['id'=>$id]);
         return $ancestors;
     }
 
@@ -84,9 +82,32 @@ class TreeBinary extends BaseTree
      */
     private static function getDescendants($userId, $level = 100)
     {
-        $descentants = DB::select('SELECT * FROM bt_get_descendants_with_parent(:id,:level)',['id'=>$userId,'level'=>100]);
+        $descentants = DB::select('SELECT id, parent_id, child_id, bt_position, depth, level 
+          FROM bt_get_descendants_with_parent(:id,:level)',['id'=>$userId,'level'=>100]);
         return $descentants;
     }
+
+    /**
+     * @param int $parentId
+     * @param int $depth
+     *
+     * @return Builder
+     */
+    public static function descendants(int $parentId,$depth = 5) {
+
+        $fnc = sprintf('bt_get_descendants_with_parent(%d,%d) as t',$parentId,$depth);
+        return DB::query()->addSelect(['t.child_id','t.parent_id','t.level','t.bt_position','t.level'])->from(DB::raw($fnc));
+    }
+
+    /**
+     * @return \Illuminate\Database\Query\Builder
+     */
+    public static function ancestors($parentId) {
+
+        $fnc = sprintf('bt_get_ancestors(%d) as t',$parentId);
+        return DB::query()->addSelect(['t.ancestor as user_id','t.bt_position as pos'])->from(DB::raw($fnc));
+    }
+
 
     /**
      * @return array
@@ -99,7 +120,13 @@ class TreeBinary extends BaseTree
         return $children;
     }
 
-
+    /**
+     * bt_get_descendants returns
+     *
+     * id, parent_id, child_id, bt_position, depth, level
+     *
+     * @return mixed
+     */
 
     public function countPartners()
     {
@@ -137,5 +164,88 @@ class TreeBinary extends BaseTree
     {
         // TODO: Implement getParentUser() method.
     }
+
+
+    /**
+     * @param $userId
+     *
+     * @return array
+     */
+    public static function generateJson($rows, $parentId)
+    {
+        //  $rows = static::getUserTree($userId);
+
+
+        if (count($rows) == 0) {
+            // no children
+
+            $parent = new \stdClass();
+            $parent->id = $parentId;
+            $parent->name = user()->email;
+            $jsonNodes = json_encode([]);
+
+            return [
+                $parent,
+                $jsonNodes
+            ];
+        }
+
+        /**
+         * If remove first element from rows, to make it parent
+         *      then buildTree fails
+
+         */
+        $revesedArray = array_reverse($rows, TRUE);
+        $parent = array_pop($revesedArray);
+        //unset($rows[0]);
+
+        $items = (new TreeDecorator([]))::stdClassToArray($rows);
+
+        $jsonNodes = json_encode(static::buildTree($items, $parentId));
+
+
+
+        return [
+            $parent,
+            $jsonNodes
+        ];
+    }
+
+    /**
+     * @param $elements
+     * @param int   $parentId
+     *
+     * @return array
+     */
+    public static function buildTree($elements, $parentId = 1)
+    {
+
+        $branch = [];
+
+        foreach ($elements as $node) {
+            $node['text'] = [
+                'name'  => $node['name'],
+                'title' => '' . $node['name'] . ' ID:' . $node['id'] . ' Level:' . $node['level'],
+                'desc'  => $node['bt_position'],
+
+            ];
+            $node['link'] = ['href' => url('/tree/binary/show', $node['id'])];
+            $node['HTMLclass'] = 'partner';
+
+            if ($node['parent_id'] == $parentId) {
+                // $node['HTMLclass']='boss';
+                $children = static::buildTree($elements, $node['id']);
+                if ($children) {
+                    $node['children'] = $children;
+                }
+                $branch[] = $node;
+            }
+        }
+
+        // \Debugbar::addMessage('Final ',$branch);
+
+        return $branch;
+    }
+
 
 }

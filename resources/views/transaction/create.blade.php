@@ -2,13 +2,13 @@
 
 @section('content')
     <div class="container">
-    <h1>{!! trans('Create transaction') !!}</h1>
+    <h1>{!! trans('Refund wallet') !!}</h1>
 
     {!! Form::model($transaction,['route'=>'transaction.store']) !!}
 
     <div class="form-group">
         {{ Form::label('Type')}}
-        {{ Form::select('type', \Btcc\Models\Transaction::getTransactionTypesValues(), ['class' => 'form-control']) }}
+        {{ Form::select('type', \Btcc\Models\UserTransaction::getTransactionTypesValues(), ['class' => 'form-control']) }}
     </div>
 
 

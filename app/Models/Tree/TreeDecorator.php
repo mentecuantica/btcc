@@ -52,7 +52,7 @@ class TreeDecorator implements TreeDecorable{
 
     }
 
-    public static function factory($items,string ...$names)
+    public static function factory($items = [],string ...$names)
     {
         if (count($names)>3) {
             $names = array_slice($names,0,3,true);
@@ -110,14 +110,14 @@ class TreeDecorator implements TreeDecorable{
         // TODO: Implement getPlainModels() method.
     }
 
-    public function toNestedArray($nodes, $topNodeId, $toArray = FALSE)
+    public function toNestedArray($topNodeId, $objElemToArray = FALSE)
     {
-        if ($toArray===FAlSe) {
-            return static::buildNestedArray($nodes,$topNodeId);
+        if ($objElemToArray===FAlSe) {
+            return static::buildNestedArray($this->items,$topNodeId);
         }
 
 
-        return static::buildNestedArraySmarty(static::stdClassToArray($nodes),$topNodeId);
+        return static::buildNestedArraySmarty(static::stdClassToArray($this->items),$topNodeId);
     }
 
     /**

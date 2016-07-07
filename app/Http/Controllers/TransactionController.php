@@ -2,7 +2,7 @@
 
 namespace Btcc\Http\Controllers;
 
-use Btcc\Models\Transaction;
+use Btcc\Models\Transaction\UserTransaction;
 use Illuminate\Http\Request;
 
 use Btcc\Http\Requests;
@@ -19,7 +19,7 @@ class TransactionController extends Controller
     {
         //todo List transactions
 
-        $transactions = Transaction::with('recieverUser')->whereSender(\Auth::id())->get();
+        $transactions = UserTransaction::with('reciever')->whereSenderId(\Auth::id())->get();
 
         return view('transaction.index')->with('transactions',$transactions);
     }
@@ -29,11 +29,12 @@ class TransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function refund()
     {
-        //dd(UsersTransaction::getTransactionTypes());
 
-        return view('transaction.create',['transaction'=>new Transaction()]);
+        
+
+        return view('transaction.refund',['transaction'=>new UserTransaction()]);
     }
 
     /**
@@ -44,7 +45,7 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
-        $request->possibleTypes = (new Transaction)->getPossibleTypes();
+        $request->possibleTypes = (new UserTransaction)->getPossibleTypes();
         
         $this->validate($request, [
             'reciever' => 'required|numeric|exists:users,id',
@@ -54,7 +55,7 @@ class TransactionController extends Controller
 
         $input = $request->all();
 
-        $userTransaction = new Transaction();
+        $userTransaction = new UserTransaction();
         $userTransaction->fill($input);
         $userTransaction->user_id = \Auth::id();
         $userTransaction->sender = \Auth::id();

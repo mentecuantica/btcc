@@ -13,64 +13,37 @@ use Illuminate\Http\Request;
 class BinaryController extends Controller
 {
 
+    
     /**
      * Show the application dashboard.
      *
      * @return \Illuminate\Http\Response
      */
-    public function showBinaryAll()
+    public function index()
     {
         $userId = 1;
+        $rows = $this->treeRepo->binaryChildren($userId,100)->joinUsers()->get();
+        list($parent, $jsonNodes) = TreeBinary::generateJson($rows, $userId);
 
-        list($parent, $jsonNodes) = TreeBinary::generateJsonBinary($userId);
-
+        dump($jsonNodes);
         return view('tree.indexBinary',compact('jsonNodes','parent'));
 
     }
 
-    public function showBinaryJson()
+
+
+    public function show($id)
     {
 
 
-        $userId = 0;
-        $rows =  TreeBinary::getUserTree($userId);
+        $rows = $this->treeRepo->binaryChildren($id,100)->joinUsers()->get();
 
-        $jsonNodes = TreeBinary::formNestedJson($rows,$userId);
-
-        return $jsonNodes;
-
-    }
-
-
-    public function showBinary($id)
-    {
-
-
-
-        $rows =  TreeBinary::getUserTree($id);
-
-        $jsonNodes = TreeBinary::formNestedJson($rows,$id);
+        list($parent, $jsonNodes)  = TreeBinary::generateJson($rows,$id);
 
         return view('tree.showBinary',compact('jsonNodes','id'));
 
     }
 
 
-    public function showBinaryFree($id)
-    {
-
-
-        $usersPlainCollection = TreeBinary::getUserDescendantsModels($id);
-
-        $parentUser =$usersPlainCollection->first();
-
-
-        $usersNestedArray = TreeBinary::buildNestedUserArray($usersPlainCollection,$parentUser->parent_id);
-
-        \JavaScript::put(['usersNestedArray'=>$usersNestedArray]);
-
-        return view('tree.showBinaryFree');
-
-    }
 
 }

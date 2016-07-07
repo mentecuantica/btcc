@@ -9,7 +9,7 @@
 
 namespace Btcc\Events\Transaction;
 use Btcc\Events\Event;
-use Btcc\Models\Transaction;
+use Btcc\Models\UserTransaction;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 /**
@@ -28,7 +28,7 @@ class TransactionChangeStatus extends Event {
      *
      * @return void
      */
-    public function __construct(Transaction $transaction)
+    public function __construct(UserTransaction $transaction)
     {
         $this->transaction = $transaction;
     }
