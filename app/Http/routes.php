@@ -17,10 +17,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/tree/binary/show/{id}', 'Tree\BinaryController@show');
 
 
-    Route::get('transactions', 'TransactionController@index');
-    Route::any('transactions/refund', 'TransactionController@refund');
-    Route::any('transactions/withdraw', 'TransactionController@withdraw');
-    Route::any('transactions/transfer', 'TransactionController@transfer');
+   // Route::get('transactions', 'TransactionController@index');
+    Route::get('transaction/refund', 'TransactionController@refund');
+    Route::resource('transaction', 'TransactionController',['only'=>['index','show','store']]);
+
+    Route::any('transaction/withdraw', 'TransactionController@withdraw');
+    Route::any('transaction/transfer', 'TransactionController@transfer');
 
     Route::resource('partner', 'PartnerController');
 

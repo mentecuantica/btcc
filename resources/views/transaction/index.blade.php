@@ -15,7 +15,7 @@
                 <th>AMOUNT</th>
                 <th>DEBIT</th>
                 <th>CREDIT</th>
-                <th class="text-right">OPTIONS</th>
+                <th>RECEIVER</th>
             </tr>
             </thead>
 
@@ -23,17 +23,18 @@
             @foreach($transactions as $t)
                 <tr>
                     <td>{{$t->id}}</td>
-                    <td>{{$t->user_id}}</td>
-                    <td>{{$t->name}}</td>
+                    <td>{{$t->issuedBy->email}}</td>
+                    <td>{{$t->getTypeText()}}</td>
+                    <td>{{$t->status}}</td>
+                    <td>{{$t->amount}}</td>
+                    <td>{{$t->debit_flag}}</td>
+                    <td>{{$t->credit_flag}}</td>
                     <td>{{$t->reciever->email}}</td>
-                    <td>{{$t->age}}</td>
-                    <td>{{$t->gender}}</td>
-                    <td>{{$t->about}}</td>
                 </tr>
                     @endforeach
             </tbody>
             </table>
-            {!! $transactions->render() !!}
+
     @else
         <div class="alert alert-info">
         	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>

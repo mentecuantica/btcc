@@ -49,10 +49,10 @@
       </a>
 
       <ul class="dropdown-menu" role="menu">
-       <li><a href="{!! url('/transactions/index')  !!}" class="">List</a></li>
-       <li><a href="{!! url('/transactions/refund')  !!}" class="">Refund</a></li>
-       <li><a href="{!! url('/transactions/withdraw')  !!}" class="">{!! trans('Withdraw') !!}</a></li>
-       <li><a href="{!! url('/transactions/transfer')  !!}" class="">{!! trans('transfer') !!}</a></li>
+       <li><a href="{!! url('/transaction')  !!}" class="">List</a></li>
+       <li><a href="{!! url('/transaction/refund')  !!}" class="">Refund</a></li>
+       <li><a href="{!! url('/transaction/withdraw')  !!}" class="">{!! trans('Withdraw') !!}</a></li>
+       <li><a href="{!! url('/transaction/transfer')  !!}" class="">{!! trans('transfer') !!}</a></li>
       </ul>
      </li>
     @endif

@@ -37,7 +37,7 @@
         @endif
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-default">Send transaction</button>
+            <button type="submit" class="btn btn-default">Add money</button>
         </div>
     </div>
 

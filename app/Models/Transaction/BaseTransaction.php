@@ -41,8 +41,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\Transaction\BaseTransaction ofType($type)
  * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\Transaction\BaseTransaction processed()
  */
-class BaseTransaction extends Model
+class BaseTransaction extends Model implements Transactable
 {
+    use TypeTrait;
 
     protected $table = 'users_transactions';
 
@@ -58,12 +59,26 @@ class BaseTransaction extends Model
         'comment',
     ];
 
+    public function getTypeText()
+    {
+        return static::getTransactionTypesValues()[$this->type];
+    }
+
+    /**
+     * Validation rules
+     *
+     * @var array
+     */
+    public static $rules = [
+        'amount' => 'required',
+    ];
+
     /**
      * @return User
      */
     public function issuedBy()
     {
-        return $this->belongsTo(User::class,'issuer_user_id');
+        return $this->belongsTo(User::class,'user_id');
     }
 
     /**

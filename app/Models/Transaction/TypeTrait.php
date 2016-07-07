@@ -13,7 +13,7 @@ namespace Btcc\Models\Transaction;
  * Class TypeTrait
  * @package Btcc\Models\Transaction
  */
-class TypeTrait implements Transactable {
+trait TypeTrait  {
 
     public function getPossibleTypes() {
         return array_keys(static::getTransactionTypesValues());

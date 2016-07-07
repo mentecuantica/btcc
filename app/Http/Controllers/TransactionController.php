@@ -2,6 +2,7 @@
 
 namespace Btcc\Http\Controllers;
 
+use Btcc\Models\Transaction\Transactable;
 use Btcc\Models\Transaction\UserTransaction;
 use Illuminate\Http\Request;
 
@@ -21,6 +22,8 @@ class TransactionController extends Controller
 
         $transactions = UserTransaction::with('reciever')->whereSenderId(\Auth::id())->get();
 
+
+
         return view('transaction.index')->with('transactions',$transactions);
     }
 
@@ -31,8 +34,11 @@ class TransactionController extends Controller
      */
     public function refund()
     {
+        $t =  new UserTransaction();
 
-        
+        $t->type = Transactable::TYPE_CASHIN_FUNDING;
+        $t->status = Transactable::STATUS_NEW;
+
 
         return view('transaction.refund',['transaction'=>new UserTransaction()]);
     }
@@ -43,28 +49,26 @@ class TransactionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Requests\CreateTransactionRequest $request)
     {
-        $request->possibleTypes = (new UserTransaction)->getPossibleTypes();
+        //$request->possibleTypes = (new UserTransaction)->getPossibleTypes();
         
-        $this->validate($request, [
-            'reciever' => 'required|numeric|exists:users,id',
-            //'type' => 'required|in_array:possibleTypes',
-            'amount' => 'required|numeric',
-        ]);
 
         $input = $request->all();
 
-        $userTransaction = new UserTransaction();
-        $userTransaction->fill($input);
-        $userTransaction->user_id = \Auth::id();
-        $userTransaction->sender = \Auth::id();
-        $userTransaction->debit_flag = true;
-        $userTransaction->status  = 0;
+        $t = new UserTransaction();
+        $t->fill($input);
+        $t->user_id = \Auth::id();
+        $t->sender_id = \Auth::id();
+        $t->reciever_id = \Auth::id();
+        $t->debit_flag = true;
+        $t->credit_flag = false;
+        $t->type = Transactable::TYPE_CASHIN_FUNDING;
+        $t->status = Transactable::STATUS_NEW;
 
-        if ($userTransaction->save()) {
+        if ($t->save()) {
             \Flash::success('Transaction successfully added!');
-            return redirect('transaction');
+            return redirect('transactions');
 
         };
 
@@ -82,40 +86,8 @@ class TransactionController extends Controller
      */
     public function show($id)
     {
-        return view('transaction.create');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
         return view('transaction.edit');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }
