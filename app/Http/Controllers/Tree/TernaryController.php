@@ -25,7 +25,7 @@ class TernaryController extends Controller
         $nodes = \DB::select($matrixQuery,['id'=>$userOnTop,'lim'=>$level]);
 
         $decorator = TreeDecorator::factory($nodes,'parent_id','user_id');
-        $matrixNestedArray = $decorator->toNestedArray($nodes,$userOnTop);
+        $matrixNestedArray = $decorator->toNestedArray($userOnTop);
 
         $parent = User::find(1);
         $parent->name = $parent->email;

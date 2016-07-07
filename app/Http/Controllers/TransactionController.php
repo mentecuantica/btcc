@@ -68,7 +68,7 @@ class TransactionController extends Controller
 
         if ($t->save()) {
             \Flash::success('Transaction successfully added!');
-            return redirect('transactions');
+            return redirect('transaction');
 
         };
 

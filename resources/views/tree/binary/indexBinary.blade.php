@@ -5,7 +5,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                @include('tree._binaryTreeChart')
+                @include('tree.binary._binaryTreeChart')
             </div>
 
         </div>
