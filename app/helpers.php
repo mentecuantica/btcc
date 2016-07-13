@@ -3,6 +3,8 @@
  * Filename: helpers.php
  */
 
+use Btcc\Models\User;
+
 if (! function_exists('user')) {
     /**
      * Generate a URL to a named route.

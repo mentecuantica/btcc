@@ -15,6 +15,7 @@
 <body id="app-layout">
 <script src="{{ asset('js/vendor.js') }}"></script>
 @include('_partials._navbar');
+
 @include('flash::message');
 
 

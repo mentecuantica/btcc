@@ -30,7 +30,7 @@ Route::group(['middleware' => ['auth']], function () {
                                    'uses' => 'AccountController@profileUpdate'
     ]);
 
-
+    Route::resource('supportTicket', 'SupportController',['only'=>['index','create','store']]);
 
 
 

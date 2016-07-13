@@ -42,9 +42,18 @@ class SupportTicket extends Model
      * @var array
      */
     public static $rules = [
-        'user_id' => 'required',
-        'status' => 'required',
+        //'user_id' => 'required',
+
+        //'status' => 'required',
         'message' => 'required',
         'subject'=> 'required',
     ];
+
+
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 }

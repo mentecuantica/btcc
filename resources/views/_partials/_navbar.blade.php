@@ -28,8 +28,8 @@
       </a>
 
       <ul class="dropdown-menu" role="menu">
-       <li><a href="{!! url('/partner')  !!}" class="">View</a></li>
-       <li><a href="{!! url('/partner/create')  !!}" class="">Create</a></li>
+       <li><a href="{!! url('/partner')  !!}" >View</a></li>
+       <li><a href="{!! url('/partner/create')  !!}" >Create</a></li>
       </ul>
      </li>
      <li class="dropdown">
@@ -38,9 +38,9 @@
       </a>
 
       <ul class="dropdown-menu" role="menu">
-       <li><a href="{!! url('/tree/linear/index')  !!}" class="">Linear</a></li>
-       <li><a href="{!! url('/tree/binary/index')  !!}" class="">Binary</a></li>
-       <li><a href="{!! url('/tree/ternary/index')  !!}" class="">Ternary</a></li>
+       <li><a href="{!! url('/tree/linear/index')  !!}" >Linear</a></li>
+       <li><a href="{!! url('/tree/binary/index')  !!}" >Binary</a></li>
+       <li><a href="{!! url('/tree/ternary/index')  !!}" >Ternary</a></li>
       </ul>
      </li>
      <li class="dropdown">
@@ -49,12 +49,13 @@
       </a>
 
       <ul class="dropdown-menu" role="menu">
-       <li><a href="{!! url('/transaction')  !!}" class="">List</a></li>
-       <li><a href="{!! url('/transaction/refund')  !!}" class="">Refund</a></li>
-       <li><a href="{!! url('/transaction/withdraw')  !!}" class="">{!! trans('Withdraw') !!}</a></li>
-       <li><a href="{!! url('/transaction/transfer')  !!}" class="">{!! trans('transfer') !!}</a></li>
+       <li><a href="{!! url('/transaction')  !!}" >List</a></li>
+       <li><a href="{!! url('/transaction/refund')  !!}" >Refund</a></li>
+       <li><a href="{!! url('/transaction/withdraw')  !!}" >{!! trans('Withdraw') !!}</a></li>
+       <li><a href="{!! url('/transaction/transfer')  !!}" >{!! trans('transfer') !!}</a></li>
       </ul>
      </li>
+     <li><a href="{{ route('supportTicket.index') }}">Support</a></li>
     @endif
    </ul>
 
@@ -73,6 +74,7 @@
       <ul class="dropdown-menu" role="menu">
        {{--    <li><a href="{{ url('/invite') }}"><i class="fa fa-btn fa-sign-out"></i>Invite</a></li>--}}
        <li><a href="{{ url('/account') }}"><i class="fa fa-btn fa-sign-out"></i>Account</a></li>
+       <li><a href="{{ url('/account/profile') }}"><i class="fa fa-btn fa-sign-out"></i>Profile</a></li>
        <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
       </ul>
      </li>

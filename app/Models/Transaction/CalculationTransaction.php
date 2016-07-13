@@ -12,7 +12,11 @@ namespace Btcc\Models;
 use Btcc\Models\Transaction\BaseTransaction;
 
 /**
- * Class Transaction
+ * Class CalculationTransaction
+ *
+ * This Class should be used on from Calculations Service (or Helper or ServiceProvider)
+ *
+ *
  * @package app\Models
  * Btcc\Models\Transaction
  * @property integer $id

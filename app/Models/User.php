@@ -153,6 +153,11 @@ class User  extends Authenticatable {
         return $this->hasOne(Profile::class);
     }
 
+    public function supportTickets()
+    {
+        return $this->hasMany(SupportTicket::class);
+    }
+
     public function wallet()
     {
 
