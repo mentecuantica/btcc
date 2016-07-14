@@ -13,7 +13,7 @@ class UsersTableSeeder extends Seeder {
 
     public function run()
     {
-        $this->packageIds = app(\Btcc\Services\Subscriptions\SubscribeForPackage::class)->getPackagesIds();
+        $this->packageIds = app(\Btcc\Services\PackageService::class)->getPackagesIds();
 
         //dd($this->packageIds);
         //DB::table('users')->truncate();

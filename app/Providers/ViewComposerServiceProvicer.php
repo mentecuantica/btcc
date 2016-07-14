@@ -10,7 +10,7 @@
 namespace Btcc\Providers;
 use Btcc\Http\ViewComposers\AccountComposer;
 use Btcc\Http\ViewComposers\SubmenuComposer;
-use Btcc\Services\Subscriptions\SubscribeForPackage;
+use Btcc\Services\PackageService;
 use Illuminate\Support\ServiceProvider;
 
 /**

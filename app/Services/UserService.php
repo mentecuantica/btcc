@@ -1,6 +1,6 @@
 <?php
 
-namespace Btcc\Services\Users;
+namespace Btcc\Services;
 
 use Btcc\Http\Requests\AddNewUserRequest;
 use Btcc\Models\Tree\TreeBinary;
@@ -46,8 +46,6 @@ class UserService {
 
     }
 
-
-
     /**
      * @param \Btcc\Http\Requests\AddNewUserRequest $request
      *
@@ -57,7 +55,6 @@ class UserService {
     protected function createUserModel(AddNewUserRequest $request)
     {
         $passwordPlain = $this->generateRandomPassword();
-
 
         $name = $request->first_name;
 
@@ -77,9 +74,6 @@ class UserService {
 
         $newUser->passwordPlain = $passwordPlain;
 
-
-
-
         return $newUser;
     }
 
@@ -95,7 +89,7 @@ class UserService {
         $status = $newUser->linear->save();
 
         if ($status == FALSE) {
-            throw new \Exception(sprintf('Cannot save linear: parent %d, user %d occupied',$parentId,$newUser->id));
+            throw new \Exception(sprintf('Cannot save linear: parent %d, user %d occupied', $parentId, $newUser->id));
         }
 
         return $status;
@@ -112,15 +106,12 @@ class UserService {
         $parentId = $request->get('binary-parent-id');
         $position = $request->get('binary-position');
 
-
         $binaryId = TreeBinary::addToParent($parentId, $position, $newUser->id);
 
-
-
-/*
-        if ($binaryId == (-1 || FALSE)) {
-            throw new \Exception(sprintf('Binary: parent %d, position %s occupied',$parentId,$position));
-        }*/
+        /*
+                if ($binaryId == (-1 || FALSE)) {
+                    throw new \Exception(sprintf('Binary: parent %d, position %s occupied',$parentId,$position));
+                }*/
     }
 
     /**

@@ -31,6 +31,7 @@ Route::group(['middleware' => ['auth']], function () {
     ]);
 
     Route::resource('supportTicket', 'SupportController',['only'=>['index','create','store']]);
+    Route::get('/faq', 'PagesController@faq');
 
 
 

@@ -2,7 +2,8 @@
 
 namespace Btcc\Http\Controllers;
 
-use Btcc\Services\Users\UserService;
+use Btcc\Services\PackageService;
+use Btcc\Services\UserService;
 use Btcc\Repositories\TreeRepository;
 
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -17,7 +18,7 @@ class Controller extends BaseController
 
     protected $userService;
     protected $treeRepo;
-
+    protected $packageService;
     /**
      * PHP 5 allows developers to declare constructor methods for classes.
      * Classes which have a constructor method call this method on each newly-created object,
@@ -28,9 +29,10 @@ class Controller extends BaseController
      * @return void
      * @link http://php.net/manual/en/language.oop5.decon.php
      */
-    public function __construct(UserService $userService, TreeRepository $treeRepo)
+    public function __construct(UserService $userService, TreeRepository $treeRepo, PackageService $packageService)
     {
         $this->userService = $userService;
         $this->treeRepo = $treeRepo;
+        $this->packageService = $packageService;
     }
 }

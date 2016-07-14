@@ -14,6 +14,8 @@ use Btcc\Models\Tree\TreeBinary;
 use Btcc\Models\Tree\TreeLinear;
 use Btcc\Models\Wallet;
 use Btcc\Services\BinaryTreeTrait;
+use Btcc\Services\PackageService;
+use Btcc\Services\Subscriptions\Package;
 use Btcc\Traits\UserWithTrees;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -179,22 +181,17 @@ class User  extends Authenticatable {
 
     }
 
-   /* public function transactionsTotalSum()
+    /**
+     * @return Package
+     */
+    public function getPackageAttribute()
     {
-        return $this->hasMany(UserTransaction::class, 'user_id')->selectRaw('sum(amount) as aggregate')->groupBy('user_id');
-    }*/
+        $package = app(PackageService::class)->find($this->package_id);
 
-    /*public function getTransactionsTotalSumAttribute()
-    {
-        if (! array_key_exists('transactionsTotalSum',$this->relations)) {
-            $this->load('transactionsTotalSum');
-        }
 
-        $related = $this->getRelation('transactionsTotalSum');
+        return $package;
 
-        return ($related) ? (int) $related->aggregate : 0;
-
-    }*/
+    }
 
     public function transactionsSent()
     {
@@ -225,4 +222,22 @@ class User  extends Authenticatable {
      {
          return $this->hasOne(TreeBinary::class,'parent_id','id');
      }*/
+
+    /* public function transactionsTotalSum()
+   {
+       return $this->hasMany(UserTransaction::class, 'user_id')->selectRaw('sum(amount) as aggregate')->groupBy('user_id');
+   }*/
+
+    /*public function getTransactionsTotalSumAttribute()
+    {
+        if (! array_key_exists('transactionsTotalSum',$this->relations)) {
+            $this->load('transactionsTotalSum');
+        }
+
+        $related = $this->getRelation('transactionsTotalSum');
+
+        return ($related) ? (int) $related->aggregate : 0;
+
+    }*/
+
 }

@@ -10,7 +10,7 @@
 namespace Btcc\Http\ViewComposers;
 
 
-use Btcc\Services\Subscriptions\SubscribeForPackage;
+use Btcc\Services\PackageService;
 use Illuminate\Contracts\View\View;
 
 /**
@@ -33,11 +33,11 @@ class AccountComposer {
      * In order to run a parent constructor, a call to parent::__construct() within the child constructor is required.
      * param [ mixed $args [, $... ]]
      *
-     * @param \Btcc\Services\Subscriptions\SubscribeForPackage $packages
+     * @param \Btcc\Services\PackageService$packages
      *
      * @link http://php.net/manual/en/language.oop5.decon.php
      */
-    public function __construct(SubscribeForPackage $packages)
+    public function __construct(PackageService$packages)
     {
         $this->packages= collect($packages);
 
@@ -53,11 +53,14 @@ class AccountComposer {
         $view->with([
             //'partners'=>[],
 
-            'wallet'=>['balance'=>user()->totalSum],
+            'wallet'=>['balance'=>user()->totalSum,
+                       'packageName'=>user()->getPackageAttribute()->name],
+            'package'=>[user()->getPackageAttribute()],
             'packages'=>collect($this->packages),
             
             //'partners1'=>$this->partners1,
 
         ]);
+
     }
 }

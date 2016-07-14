@@ -56,11 +56,11 @@ use Illuminate\Database\Eloquent\Builder;
 class UserTransaction extends BaseTransaction {
 
 
-    protected $typeToAggregate = self::TYPE_CASHIN_FUNDING;
+    protected static $CASHIN_FUNDING= self::TYPE_CASHIN_FUNDING;
 
-    public function scopeType(Builder $query)
+    public function scopeTypePlus(Builder $query)
     {
-        return $query->where(['type'=>$this->typeToAggregate]);
+        return $query->where(['type'=>static::$CASHIN_FUNDING]);
     }
 
     public function totalAmount()

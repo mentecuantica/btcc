@@ -7,8 +7,9 @@
  * Filename: Packages.php
  */
 
-namespace Btcc\Services\Subscriptions;
+namespace Btcc\Services;
 
+use Btcc\Services\Subscriptions\Package;
 use Countable;
 use Exception;
 use ArrayIterator;
@@ -20,7 +21,7 @@ use IteratorAggregate;
  * Class Packages
  * @package Btcc\Services\Subscriptions
  */
-class SubscribeForPackage implements Countable, IteratorAggregate, JsonSerializable {
+class PackageService implements Countable, IteratorAggregate, JsonSerializable {
     /**
      * All of the defined packages.
      * @var array

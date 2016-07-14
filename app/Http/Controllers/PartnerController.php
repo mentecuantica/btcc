@@ -5,10 +5,12 @@ namespace Btcc\Http\Controllers;
 use Btcc\Events\Event;
 use Btcc\Events\UserRegisteredPartner;
 use Btcc\Http\Requests\AddNewUserRequest;
+use Btcc\Jobs\PayForNewUserPackage;
 use Btcc\Models\Tree\TreeBinary;
 use Btcc\Models\User;
 
 use Illuminate\Http\Request;
+use Illuminate\Validation\Validator;
 use JavaScript;
 use Btcc\Http\Requests;
 use Illuminate\Support\Facades\Session;
@@ -22,15 +24,11 @@ class PartnerController extends Controller {
      */
     public function index()
     {
-        //todo List transactions
-
-        //$partners = \Auth::user()->subPartners(5);
-        $user = \Auth::getUser();
 
         /**@var User $user * */
 
         // get an nested collection of LinearTree with User inside
-        $binaryPartnersCount = $user->getTreeBinary()->countPartners();
+        $binaryPartnersCount = user()->getTreeBinary()->countPartners();
 
         $partners = [];
 
@@ -65,27 +63,41 @@ class PartnerController extends Controller {
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Btcc\Http\Requests\AddNewUserRequest|\Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\Response
      */
     public function store(AddNewUserRequest $request)
     {
 
-        $user = $this->userService->addNewUser($request);
+        $this->validate($request, [
+            'package_id' => 'enoughMoney'
+        ], ['error' => 'Not enough money'], ['packages' => $this->packageService]);
 
-        if ($user instanceof User) {
-            event(new UserRegisteredPartner($user));
-            \Flash::success('Partner successfully added!');
+        $newUser = $this->userService->addNewUser($request);
 
-            \Flash::warning(sprintf('Partner %s successfully added! Remember his password <b>%s</b>', $user->email, $user->passwordPlain));
+        if (!($newUser instanceof User)) {
+            \Log::critical('Cannot create user threesine');
+            \Flash::error('Partner successfully added!' . $newUser);
 
-            return redirect(route('partner.index'));
+            return redirect()->back();
+
         }
 
-        return redirect()->back()->withInput($request->except('password'));
-        //return redirect(route('partner.create'))->back()->withInput($request->except('password'));
+        event(new UserRegisteredPartner($newUser));
+
+        \Log::critical('Before Job', [$newUser]);
+        $this->dispatchNow(new PayForNewUserPackage($newUser));
+
+        \Log::critical('After dispath Job', [$newUser]);
+
+        \Flash::warning(sprintf('Partner %s successfully to plan %s added! Remember his password <b>%s</b>', $newUser->email, $newUser->getPackageAttribute()->name, $newUser->passwordPlain));
+
+        return redirect(route('partner.index'));
+
     }
+
+    //return redirect(route('partner.create'))->back()->withInput($request->except('password'));
 
     /**
      * Display the specified resource.

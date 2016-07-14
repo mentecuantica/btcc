@@ -50,6 +50,7 @@ class BaseTransaction extends Model implements Transactable
 
     protected $original = [
       'status'=>0,
+
     ];
 
     protected $fillable = [
@@ -57,6 +58,8 @@ class BaseTransaction extends Model implements Transactable
         'amount',
         'reciever_id',
         'comment',
+        'debit_flag',
+        'credit_flag',
     ];
 
     public function getTypeText()
@@ -70,7 +73,7 @@ class BaseTransaction extends Model implements Transactable
      * @var array
      */
     public static $rules = [
-        'amount' => 'required',
+        'amount' => 'required|numeric',
     ];
 
     /**

@@ -11,8 +11,8 @@
 |
 */
 
-use Btcc\Services\Subscriptions\SubscribeForPackage;
-$packageIds = app(SubscribeForPackage::class)->getPackagesIds();
+use Btcc\Services\PackageService;
+$packageIds = app(PackageService::class)->getPackagesIds();
 
 $factory->define(Btcc\Models\User::class, function (Faker\Generator $faker) use ($packageIds) {
     return [
