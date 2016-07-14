@@ -132,7 +132,8 @@ class User  extends Authenticatable {
         'password',
         'last_name',
         'first_name',
-        'passwordPlain'
+        'passwordPlain',
+        'package_id',
     ];
 
     /**

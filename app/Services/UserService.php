@@ -112,19 +112,15 @@ class UserService {
         $parentId = $request->get('binary-parent-id');
         $position = $request->get('binary-position');
 
-        $binaryId = -1;
-        try {
-            $binaryId = TreeBinary::addToParent($parentId, $position, $newUser->id);
-        }
 
-        catch (\Exception $e) {
-            \Log::error($e->getMessage());
-            throw $e;
-        }
+        $binaryId = TreeBinary::addToParent($parentId, $position, $newUser->id);
 
+
+
+/*
         if ($binaryId == (-1 || FALSE)) {
             throw new \Exception(sprintf('Binary: parent %d, position %s occupied',$parentId,$position));
-        }
+        }*/
     }
 
     /**

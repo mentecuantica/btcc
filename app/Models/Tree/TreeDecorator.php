@@ -23,7 +23,7 @@ class TreeDecorator implements TreeDecorable{
 
 
 
-    const NAMES = ['parent_id','child_id','children'];
+    const NAMES = ['parent_id','user_id','children'];
 
     protected static $attributes = self::NAMES;
 

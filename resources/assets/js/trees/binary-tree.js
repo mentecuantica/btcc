@@ -36,7 +36,7 @@ class BinaryTreeOutput {
             },
             nodeStructure: {
                 HTMLclass: "owner",
-                child_id: this.parentNode.child_id,
+                child_id: this.parentNode.user_id,
                 collapsed: true,
                 text: {
                     title: "You",
@@ -59,20 +59,20 @@ class BinaryTreeOutput {
 
             // Children есть
             if (!node.hasOwnProperty('children')) {
-                this.getVirtualFreeNode(node.child_id, binaryPositions)
+                this.getVirtualFreeNode(node.user_id, binaryPositions)
                 return;
             }
 
             length = node.children.length;
             if (0 === length) {
-                this.getVirtualFreeNode(node.child_id, binaryPositions)
+                this.getVirtualFreeNode(node.user_id, binaryPositions)
             }
             ;
 
             if (1 === length) {
                 var existingPostion = node.bt_position;
                 var singlePositionArray = existingPostion == 'R' ? ['L'] : ['R'];
-                this.getVirtualFreeNode(node.child_id, singlePositionArray);
+                this.getVirtualFreeNode(node.user_id, singlePositionArray);
                 //
                 this.analyzeTree(node.children);
             }
@@ -96,11 +96,11 @@ class BinaryTreeOutput {
                 this.modifyTree(node.children);
             }
 
-            if (!node.hasOwnProperty('child_id')) {
+            if (!node.hasOwnProperty('user_id')) {
                 return;
             }
 
-            var childId = node.child_id;
+            var childId = node.user_id;
             if (true == _.includes(_.map(this.freeNodes, obj=> {
                     return obj.searchId
                 }), childId)) {

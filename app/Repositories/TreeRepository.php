@@ -35,7 +35,7 @@ class TreeRepository {
      */
     public function binaryChildren(int $parentId, int $depth = 5)
     {
-        $this->userKey = 'child_id';
+        $this->userKey = 'user_id';
        $this->query = TreeBinary::descendants($parentId, $depth);
         return $this;
 

@@ -57,7 +57,7 @@ Route::get('/ququ',function(\Btcc\Repositories\TreeRepository $repository) {
 
 //    $result = DB::table('tree_ternary')->pluck('path_to_root');
 
-  //  $result = DB::query()->select('child_id',DB::raw('parent_id FROM bt_get_descendants(:id)'))->addSelect('pp')->toSql(); // (['parent_id, child_id, bt_position, depth, level'],)
+  //  $result = DB::query()->select('user_id',DB::raw('parent_id FROM bt_get_descendants(:id)'))->addSelect('pp')->toSql(); // (['parent_id, user_id, bt_position, depth, level'],)
 
    // dump(DB::query()->selectRaw(':id,:bd',[':id'=>1,':bd'=>1])->getBindings());
 
@@ -84,9 +84,9 @@ Route::get('/ququ',function(\Btcc\Repositories\TreeRepository $repository) {
 
 
     $result = $repository->binaryChildren(4);
-    //dump(DB::query()->addSelect('child_id')->select('parent_id')->selectRaw('FROM bt_get_descendants(:id) as bd',[':id'=>1])->toSql());
-    //dump(DB::query()->addSelect('child_id')->select('parent_id')->selectRaw('FROM bt_get_descendants(:id) as bd',[':id'=>1])->toSql());
-    //dump(DB::query()->selectSub('SELECT child_id, parent_id FROM bt_get_descendants(:id)','d')->addSelect(['d.child_id'])->toSql());
+    //dump(DB::query()->addSelect('user_id')->select('parent_id')->selectRaw('FROM bt_get_descendants(:id) as bd',[':id'=>1])->toSql());
+    //dump(DB::query()->addSelect('user_id')->select('parent_id')->selectRaw('FROM bt_get_descendants(:id) as bd',[':id'=>1])->toSql());
+    //dump(DB::query()->selectSub('SELECT user_id, parent_id FROM bt_get_descendants(:id)','d')->addSelect(['d.user_id'])->toSql());
 
 
     //dd($result);

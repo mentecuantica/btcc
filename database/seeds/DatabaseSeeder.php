@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder {
     {
         Model::unguard();
 
-        $this->call(PackageTableSeeder::class);
+        //$this->call(PackageTableSeeder::class);
 
 
        // $this->call(PackageTableSeeder::class);

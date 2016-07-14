@@ -82,7 +82,7 @@ class TreeBinary extends BaseTree
      */
     private static function getDescendants($userId, $level = 100)
     {
-        $descentants = DB::select('SELECT id, parent_id, child_id, bt_position, depth, level 
+        $descentants = DB::select('SELECT user_id, parent_id, bt_position, depth, level 
           FROM bt_get_descendants_with_parent(:id,:level)',['id'=>$userId,'level'=>100]);
         return $descentants;
     }
@@ -96,7 +96,7 @@ class TreeBinary extends BaseTree
     public static function descendants(int $parentId,$depth = 5) {
 
         $fnc = sprintf('bt_get_descendants_with_parent(%d,%d) as t',$parentId,$depth);
-        return DB::query()->addSelect(['t.child_id','t.parent_id','t.level','t.bt_position','t.level'])->from(DB::raw($fnc));
+        return DB::query()->addSelect(['t.user_id','t.parent_id','t.level','t.bt_position','t.level'])->from(DB::raw($fnc));
     }
 
     /**
@@ -115,7 +115,7 @@ class TreeBinary extends BaseTree
     public function getPartners()
     {
 
-        $children = \DB::select('SELECT gc.*,tc.email,tc.id as uid FROM bt_get_descendants(:id) as gc, users as tc WHERE gc.child_id = tc.id', ['id' => $this->userId]);
+        $children = \DB::select('SELECT gc.*,tc.email,tc.id as uid FROM bt_get_descendants(:id) as gc, users as tc WHERE gc.user_id = tc.user_id', ['id' => $this->userId]);
         \Debugbar::addMessage('Loaded raw:',$children);
         return $children;
     }
@@ -123,7 +123,7 @@ class TreeBinary extends BaseTree
     /**
      * bt_get_descendants returns
      *
-     * id, parent_id, child_id, bt_position, depth, level
+     * id, parent_id, user_id, bt_position, depth, level
      *
      * @return mixed
      */
@@ -180,7 +180,7 @@ class TreeBinary extends BaseTree
             // no children
 
             $parent = new \stdClass();
-            $parent->id = $parentId;
+            $parent->user_id = $parentId;
             $parent->name = user()->email;
             $jsonNodes = json_encode([]);
 
@@ -225,16 +225,16 @@ class TreeBinary extends BaseTree
         foreach ($elements as $node) {
             $node['text'] = [
                 'name'  => $node['name'],
-                'title' => '' . $node['name'] . ' ID:' . $node['id'] . ' Level:' . $node['level'],
+                'title' => '' . $node['name'] . ' ID:' . $node['user_id'] . ' Level:' . $node['level'],
                 'desc'  => $node['bt_position'],
 
             ];
-            $node['link'] = ['href' => url('/tree/binary/show', $node['id'])];
+            $node['link'] = ['href' => url('/tree/binary/show', $node['user_id'])];
             $node['HTMLclass'] = 'partner';
 
             if ($node['parent_id'] == $parentId) {
                 // $node['HTMLclass']='boss';
-                $children = static::buildTree($elements, $node['id']);
+                $children = static::buildTree($elements, $node['user_id']);
                 if ($children) {
                     $node['children'] = $children;
                 }

@@ -11,7 +11,10 @@
 |
 */
 
-$factory->define(Btcc\Models\User::class, function (Faker\Generator $faker) {
+use Btcc\Services\Subscriptions\SubscribeForPackage;
+$packageIds = app(SubscribeForPackage::class)->getPackagesIds();
+
+$factory->define(Btcc\Models\User::class, function (Faker\Generator $faker) use ($packageIds) {
     return [
         'name' => $faker->name,
         'first_name' => $faker->firstName,
@@ -19,8 +22,86 @@ $factory->define(Btcc\Models\User::class, function (Faker\Generator $faker) {
         'email' => $faker->safeEmail,
         'password' => bcrypt('123456'),
         'remember_token' => str_random(10),
+        'package_id'=>$faker->randomElement($packageIds->toArray()),
     ];
 });
+
+
+
+
+$factory->define(Btcc\Models\SupportTicket::class, function (Faker\Generator $faker) {
+    return [
+        'user_id' =>  $faker->randomNumber() ,
+        'status' =>  $faker->randomNumber() ,
+        'operator_id' =>  $faker->randomNumber() ,
+        'subject' =>  $faker->word ,
+        'message' =>  $faker->text ,
+    ];
+});
+
+$factory->define(Btcc\Models\Transaction\BaseTransaction::class, function (Faker\Generator $faker) {
+    return [
+        'user_id' =>  function () {
+             return factory(Btcc\Models\User::class)->create()->id;
+        } ,
+        'reciever_id' =>  function () {
+             return factory(Btcc\Models\User::class)->create()->id;
+        } ,
+        'sender_id' =>  function () {
+             return factory(Btcc\Models\User::class)->create()->id;
+        } ,
+    ];
+});
+
+$factory->define(Btcc\Models\UserTransaction::class, function (Faker\Generator $faker) {
+    return [
+        'user_id' =>  $faker->randomNumber() ,
+        'amount' =>  $faker->randomNumber() ,
+        'type' =>  $faker->randomNumber() ,
+        'status' =>  $faker->randomNumber() ,
+        'sender_id' =>  $faker->randomNumber() ,
+        'reciever_id' =>  $faker->randomNumber() ,
+        'debit_flag' =>  $faker->boolean ,
+        'credit_flag' =>  $faker->boolean ,
+        'comment' =>  $faker->word ,
+        'hash' =>  $faker->word ,
+        'parent_user_id' =>  function () {
+             return factory(Btcc\Models\User::class)->create()->id;
+        } ,
+        'reciever' =>  function () {
+             return factory(Btcc\Models\User::class)->create()->id;
+        } ,
+        'sender' =>  function () {
+             return factory(Btcc\Models\User::class)->create()->id;
+        } ,
+    ];
+});
+
+$factory->define(Btcc\Models\Wallet::class, function (Faker\Generator $faker) {
+    return [
+        'user_id' =>  function () {
+             return factory(Btcc\Models\User::class)->create()->id;
+        } ,
+    ];
+});
+
+$factory->define(Btcc\Models\Profile::class, function (Faker\Generator $faker) {
+    return [
+       /*'user_id' =>  function () {
+             return factory(Btcc\Models\User::class)->create()->id;
+        } ,*/
+       // 'package_id' =>  $faker->randomNumber() ,
+        'country_code' =>  $faker->randomElement(['ru','us','uk']) ,
+        'phone' =>  $faker->phoneNumber ,
+        'city_id' =>  $faker->randomNumber() ,
+    ];
+});
+
+/***
+ * FAKER SAMPLES
+ *
+ *
+ */
 
 
 $factory->define(Btcc\Models\Package::class, function (Faker\Generator $faker) {
@@ -30,8 +111,6 @@ $factory->define(Btcc\Models\Package::class, function (Faker\Generator $faker) {
         'description' => $faker->sentence,
     ];
 });
-
-
 
 
 $factory->define(Itabletki\ContentPage::class, function (Faker\Generator $faker) {
@@ -110,85 +189,3 @@ $factory->define(Itabletki\DrugRating::class, function (Faker\Generator $faker) 
 
     ];
 });
-/*
-|--------------------------------------------------------------------------
-| Transaction Factory
-|--------------------------------------------------------------------------
-*/
-
-$factory->define(Btcc\Repositories\Users\Transaction\Transaction::class, function (Faker\Generator $faker) {
-    return [
-
-        // Transaction table data
-
-    ];
-});
-
-$factory->define(Btcc\Models\SupportTicket::class, function (Faker\Generator $faker) {
-    return [
-        'user_id' =>  $faker->randomNumber() ,
-        'status' =>  $faker->randomNumber() ,
-        'operator_id' =>  $faker->randomNumber() ,
-        'subject' =>  $faker->word ,
-        'message' =>  $faker->text ,
-    ];
-});
-
-$factory->define(Btcc\Models\Transaction\BaseTransaction::class, function (Faker\Generator $faker) {
-    return [
-        'parent_user_id' =>  function () {
-             return factory(Btcc\Models\User::class)->create()->id;
-        } ,
-        'reciever' =>  function () {
-             return factory(Btcc\Models\User::class)->create()->id;
-        } ,
-        'sender' =>  function () {
-             return factory(Btcc\Models\User::class)->create()->id;
-        } ,
-    ];
-});
-
-$factory->define(Btcc\Models\UserTransaction::class, function (Faker\Generator $faker) {
-    return [
-        'user_id' =>  $faker->randomNumber() ,
-        'amount' =>  $faker->randomNumber() ,
-        'type' =>  $faker->randomNumber() ,
-        'status' =>  $faker->randomNumber() ,
-        'sender_id' =>  $faker->randomNumber() ,
-        'reciever_id' =>  $faker->randomNumber() ,
-        'debit_flag' =>  $faker->boolean ,
-        'credit_flag' =>  $faker->boolean ,
-        'comment' =>  $faker->word ,
-        'hash' =>  $faker->word ,
-        'parent_user_id' =>  function () {
-             return factory(Btcc\Models\User::class)->create()->id;
-        } ,
-        'reciever' =>  function () {
-             return factory(Btcc\Models\User::class)->create()->id;
-        } ,
-        'sender' =>  function () {
-             return factory(Btcc\Models\User::class)->create()->id;
-        } ,
-    ];
-});
-
-$factory->define(Btcc\Models\Wallet::class, function (Faker\Generator $faker) {
-    return [
-        'user_id' =>  function () {
-             return factory(Btcc\Models\User::class)->create()->id;
-        } ,
-    ];
-});
-
-$factory->define(Btcc\Models\Profile::class, function (Faker\Generator $faker) {
-    return [
-       /*'user_id' =>  function () {
-             return factory(Btcc\Models\User::class)->create()->id;
-        } ,*/
-        'package_id' =>  $faker->randomNumber() ,
-        'country_code' =>  $faker->randomElement(['ru','us','uk']) ,
-        'phone' =>  $faker->phoneNumber ,
-        'city_id' =>  $faker->randomNumber() ,
-    ];
-});
-

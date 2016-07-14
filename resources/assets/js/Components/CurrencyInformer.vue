@@ -11,7 +11,7 @@
 export default {
     data () {
         return {
-            currency : { BTC: 2048.1 }
+            currency : { BTC: '' }
         };
     },
     created: function () {
@@ -21,16 +21,15 @@ export default {
     methods: {
         fetchData: function () {
             var self = this;
-            //self.currency.BTC = 6969.69;
 
             this.$http.get("https://api.coinapult.com/api/ticker", {
 
             }).then((response) => {
-                console.log(response);
+               // console.log(response);
                 self.currency.BTC =response.data.index;
-                  setTimeout(self.fetchData,1000);
+                  setTimeout(self.fetchData,10000);
             }, (response)=> {
-                console.log('Error',response);
+                //console.log('Error',response);
 
             });
         }

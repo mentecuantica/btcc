@@ -12,6 +12,7 @@ namespace Btcc\Services\Subscriptions;
 use Countable;
 use Exception;
 use ArrayIterator;
+use Illuminate\Support\Collection;
 use JsonSerializable;
 use IteratorAggregate;
 
@@ -48,14 +49,20 @@ class SubscribeForPackage implements Countable, IteratorAggregate, JsonSerializa
      */
     public function __construct(array $packagesConfig = [])
     {
-       // $this->packages = $packages;
-
         foreach ($packagesConfig as $c) {
-
-
             $this->create($c['name'],$c['id'])->price($c['price'])->features($c['features']);
         }
 
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getPackagesIds()
+    {
+        return collect($this->packages)->map(function(Package $package) {
+            return $package->id;
+        });
     }
 
     /**
@@ -195,10 +202,5 @@ class SubscribeForPackage implements Countable, IteratorAggregate, JsonSerializa
         return $this->packages;
     }
 
-    public function getPackagesIds()
-    {
-        return collect($this->packages)->map(function(Package $package) {
-            return $package->id;
-        });
-    }
+
 }

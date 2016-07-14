@@ -28230,7 +28230,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = {
     data: function data() {
         return {
-            currency: { BTC: 2048.1 }
+            currency: { BTC: '' }
         };
     },
 
@@ -28240,14 +28240,14 @@ exports.default = {
     methods: {
         fetchData: function fetchData() {
             var self = this;
-            //self.currency.BTC = 6969.69;
 
             this.$http.get("https://api.coinapult.com/api/ticker", {}).then(function (response) {
-                console.log(response);
+                // console.log(response);
                 self.currency.BTC = response.data.index;
-                setTimeout(self.fetchData, 1000);
+                setTimeout(self.fetchData, 10000);
             }, function (response) {
-                console.log('Error', response);
+                //console.log('Error',response);
+
             });
         }
     }
@@ -28370,7 +28370,7 @@ var BinaryTreeOutput = function () {
                 },
                 nodeStructure: {
                     HTMLclass: "owner",
-                    child_id: this.parentNode.child_id,
+                    child_id: this.parentNode.user_id,
                     collapsed: true,
                     text: {
                         title: "You",
@@ -28394,20 +28394,20 @@ var BinaryTreeOutput = function () {
 
                 // Children есть
                 if (!node.hasOwnProperty('children')) {
-                    _this.getVirtualFreeNode(node.child_id, binaryPositions);
+                    _this.getVirtualFreeNode(node.user_id, binaryPositions);
                     return;
                 }
 
                 length = node.children.length;
                 if (0 === length) {
-                    _this.getVirtualFreeNode(node.child_id, binaryPositions);
+                    _this.getVirtualFreeNode(node.user_id, binaryPositions);
                 }
                 ;
 
                 if (1 === length) {
                     var existingPostion = node.bt_position;
                     var singlePositionArray = existingPostion == 'R' ? ['L'] : ['R'];
-                    _this.getVirtualFreeNode(node.child_id, singlePositionArray);
+                    _this.getVirtualFreeNode(node.user_id, singlePositionArray);
                     //
                     _this.analyzeTree(node.children);
                 }
@@ -28431,11 +28431,11 @@ var BinaryTreeOutput = function () {
                     _this2.modifyTree(node.children);
                 }
 
-                if (!node.hasOwnProperty('child_id')) {
+                if (!node.hasOwnProperty('user_id')) {
                     return;
                 }
 
-                var childId = node.child_id;
+                var childId = node.user_id;
                 if (true == _.includes(_.map(_this2.freeNodes, function (obj) {
                     return obj.searchId;
                 }), childId)) {

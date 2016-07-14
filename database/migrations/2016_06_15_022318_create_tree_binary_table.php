@@ -33,16 +33,13 @@ class CreateTreeBinaryTable extends Migration
 
         $schema->create('tree_binary', function (ExtendedBlueprint $table) {
             //$table->integer('id',true,true);
-            $table->integer('user_id');
             $table->integer('parent_id')->nullable();
-
+            $table->integer('user_id');
             $table->enum_pg('bt_position','e_binary_position');
-
-            //$table->enum('bt_position',['L','R','N']);
+            $table->integer('depth')->nullable();
             $table->integer('l')->nullable();
             $table->integer('r')->nullable();
             $table->integer('refer_id')->nullable();
-            $table->integer('depth')->nullable();
          //   $table->json('info')->nullable();
             $table->unique(['parent_id','user_id']);
             $table->unique(['parent_id','user_id','bt_position']);
