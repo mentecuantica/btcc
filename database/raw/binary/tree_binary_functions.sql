@@ -1,9 +1,7 @@
-
-
 --- FUNCTIONS
 
-CREATE OR REPLACE FUNCTION public.bt_add_to_parent(new_node_parent_id INT8, new_position e_binary_position,
-                                                   user_id       INT8)
+CREATE OR REPLACE FUNCTION public.bt_add_to_parent(new_node_parent_id INTEGER, new_position e_binary_position,
+                                                   new_user_id            INTEGER)
   RETURNS INT
 AS
 $BODY$
@@ -14,64 +12,63 @@ DECLARE
 
   existing_children INTEGER ARRAY;
   children_count    INTEGER;
-  json_result JSON;
-  new_node_id INTEGER;
-  new_depth INTEGER;
+  json_result       JSON;
+  new_node_id       INTEGER;
+  new_depth         INTEGER;
 BEGIN
 
   SELECT EXISTS(SELECT 1
                 FROM tree_binary
-                WHERE parent_id=0 AND bt_position = 'N') INTO is_root_exists;
+                WHERE parent_id = 0 AND bt_position = 'N')
+  INTO is_root_exists;
 
 
   IF is_root_exists IS FALSE
   THEN
     RAISE EXCEPTION 'No root in the table please use bt_add_root()';
-
-    RETURN FALSE ;
-
+    RETURN -1;
   END IF;
 
-  RAISE NOTICE 'Root found';
 
   --check if parent exitst
-  -- тот к кому мы хотим добавить, он должен быть обязательно хотя бы раз встречаться в поле child_id
+  -- тот к кому мы хотим добавить, он должен быть обязательно хотя бы раз встречаться в поле user_id
   SELECT EXISTS(SELECT 1
                 FROM tree_binary
-                WHERE child_id = new_node_parent_id)
+                WHERE user_id = new_node_parent_id)
   INTO is_parent_exists;
 
   IF is_parent_exists IS FALSE
   THEN
     RAISE EXCEPTION 'Nonexistent ID --> %', new_node_parent_id
     USING HINT = 'Please check your PARENT ID';
-  ELSE
-    RAISE NOTICE 'Parent with id:% exists', new_node_parent_id;
+    RETURN -1;
+  END IF;
 
 
-    /*SELECT json_object_agg(p,json_build_array(child_id,depth,parent_id)) INTO json_result
+    --@todo Change depth algorithn
+    SELECT depth + 1
+    INTO new_depth
     FROM tree_binary
-    WHERE parent_id = new_node_parent_id;*/
+    WHERE user_id = new_node_parent_id;
 
-    --SELECT json_result::jsonb <@ new_position INTO is_free_place;
 
-    SELECT depth+1 INTO new_depth FROM tree_binary WHERE child_id = new_node_parent_id;
-
-    SELECT array_agg(child_id)
+    SELECT array_agg(user_id)
     INTO existing_children
     FROM tree_binary
     WHERE parent_id = new_node_parent_id;
 
 
-
-    IF existing_children IS NULL THEN
-      INSERT INTO tree_binary (parent_id, child_id, bt_position, depth)
-      VALUES (new_node_parent_id, user_id, new_position,new_depth) RETURNING id INTO new_node_id;
+    IF existing_children IS NULL
+    THEN
+      INSERT INTO tree_binary (parent_id, user_id, bt_position, depth)
+      VALUES (new_node_parent_id, new_user_id, new_position, new_depth)
+      RETURNING id
+        INTO new_node_id;
       RETURN new_node_id;
     END IF;
 
 
-    children_count = array_length(existing_children,1);
+    children_count = array_length(existing_children, 1);
 
     CASE children_count
       WHEN 2
@@ -86,121 +83,124 @@ BEGIN
     END CASE;
 
     -- проверка на свободную ячейку
-    SELECT NOT EXISTS (SELECT 1 FROM tree_binary
-    WHERE parent_id = new_node_parent_id AND bt_position = new_position) INTO is_free_place;
-
-    -- подсчет детей
-    /*SELECT COUNT(child_id)
-    INTO is_free_place
-    FROM tree_binary
-    WHERE parent_id = new_node_parent_id AND p = new_position;*/
-
-    IF is_free_place IS TRUE
-    THEN
-      RAISE NOTICE 'Place is free';
-      INSERT INTO tree_binary (parent_id, child_id, bt_position)
-      VALUES (new_node_parent_id, user_id, new_position) RETURNING id INTO new_node_id;
-      RETURN new_node_id;
-
-    ELSE
-      RAISE WARNING 'No place ';
-      RETURN -1;
-    END IF;
+    SELECT * FROM bt_is_free_position(new_node_parent_id, new_position) INTO is_free_place;
 
 
-  END IF;
+-- подсчет детей
+/*SELECT COUNT(user_id)
+INTO is_free_place
+FROM tree_binary
+WHERE parent_id = new_node_parent_id AND p = new_position;*/
 
-
+IF NOT is_free_place THEN
   RETURN 0;
+END IF ;
+
+
+INSERT INTO tree_binary (parent_id, user_id, bt_position)
+  VALUES (new_node_parent_id, new_user_id, new_position)
+  RETURNING id
+    INTO new_node_id;
+  RETURN new_node_id;
+
+
+
+RETURN 0;
 END
 $BODY$
 LANGUAGE plpgsql VOLATILE;
 
 
-
-
 CREATE OR REPLACE FUNCTION bt_get_ancestors(item_id INTEGER)
-  RETURNS TABLE(ancestor int, bt_position e_binary_position) AS $$
+  RETURNS TABLE(ancestor INT, bt_position e_binary_position) AS $$
 DECLARE
 
-  some_number INTEGER;
+some_number INTEGER;
 BEGIN
 
-  RETURN QUERY
-  WITH RECURSIVE child_nodes AS (
-    SELECT
-      child_id,
-      ARRAY[]::integer[] AS ancestors,
-      ARRAY[]::e_binary_position[] AS positions
-    FROM tree_binary
-    WHERE parent_id = 0 AND tree_binary.bt_position='N' --todo depends on INDEXES, UNIQUES, PK
+RETURN QUERY
+WITH RECURSIVE child_nodes AS (
+  SELECT
+    user_id,
+    ARRAY [] :: INTEGER []           AS ancestors,
+    ARRAY [] :: e_binary_position [] AS positions
+  FROM tree_binary
+  WHERE parent_id = 0 AND tree_binary.bt_position = 'N' --todo depends on INDEXES, UNIQUES, PK
 
-    UNION ALL
+  UNION ALL
 
-    SELECT
-      bt.child_id,
-      cn.ancestors || bt.parent_id,
-      cn.positions || bt.bt_position
-    FROM tree_binary bt, child_nodes cn
-    WHERE bt.parent_id = cn.child_id
-  ) SELECT unnest(ancestors) AS ancestor,unnest(positions) AS position
-    FROM child_nodes
-    WHERE child_id = item_id;
+  SELECT
+    bt.user_id,
+    cn.ancestors || bt.parent_id,
+    cn.positions || bt.bt_position
+  FROM tree_binary bt, child_nodes cn
+  WHERE bt.parent_id = cn.user_id
+) SELECT
+    unnest(ancestors) AS ancestor,
+    unnest(positions) AS position
+  FROM child_nodes
+  WHERE user_id = item_id;
 
 END;
 $$ LANGUAGE 'plpgsql';
 
 
 CREATE OR REPLACE FUNCTION bt_get_descendants(parentId INTEGER, maxLevel INTEGER DEFAULT 3)
-  RETURNS TABLE(id int,parent_id int , child_id int,  bt_position e_binary_position, depth int, level int) AS $$
+  RETURNS TABLE(id INT, parent_id INT, user_id INT, bt_position e_binary_position, depth INT, level INT) AS $$
 DECLARE
-  parent_level INTEGER;
+parent_level INTEGER;
 BEGIN
 
-  SELECT
-    bt.depth INTO parent_level
-  FROM tree_binary bt
-  WHERE bt.parent_id = parentId;
+SELECT bt.depth
+INTO parent_level
+FROM tree_binary bt
+WHERE bt.parent_id = parentId;
 
-  RAISE NOTICE 'Parent depth level is %', parent_level;
-
-
-  maxLevel:=maxLevel + parent_level;
-
-  RAISE NOTICE 'Relative max depth level is %', maxLevel;
+RAISE NOTICE 'Parent depth level is %', parent_level;
 
 
-  RETURN QUERY
-  WITH RECURSIVE child_nodes AS (
-    (
-      SELECT
-        bt.*, 1 as auto_level
-      FROM tree_binary bt
-      WHERE bt.parent_id = parentId
-    )
-    UNION
+maxLevel:=maxLevel + parent_level;
+
+RAISE NOTICE 'Relative max depth level is %', maxLevel;
+
+
+RETURN QUERY
+WITH RECURSIVE child_nodes AS (
+  (
     SELECT
-      bt.*, cn.auto_level+1 as auto_level
-    FROM child_nodes cn, tree_binary bt
-    WHERE bt.parent_id = cn.child_id
+      bt.*,
+      1 AS auto_level
+    FROM tree_binary bt
+    WHERE bt.parent_id = parentId
+  )
+  UNION
+  SELECT
+    bt.*,
+    cn.auto_level + 1 AS auto_level
+  FROM child_nodes cn, tree_binary bt
+  WHERE bt.parent_id = cn.user_id
 
-  ) SELECT
-      cn.id, cn.parent_id, cn.child_id, cn.bt_position, cn.depth, auto_level
-    FROM child_nodes cn WHERE auto_level <= maxLevel;
+) SELECT
+    cn.id,
+    cn.parent_id,
+    cn.user_id,
+    cn.bt_position,
+    cn.depth,
+    auto_level
+  FROM child_nodes cn
+  WHERE auto_level <= maxLevel;
 END;
 $$ LANGUAGE 'plpgsql';
-
-
 
 
 CREATE OR REPLACE FUNCTION bt_get_descendants_with_parent(parentId INTEGER, maxLevel INTEGER DEFAULT 3)
-  RETURNS TABLE(id int,parent_id int , child_id int,  bt_position e_binary_position, depth int, level int) AS $$
+  RETURNS TABLE(id INT, parent_id INT, user_id INT, bt_position e_binary_position, depth INT, level INT) AS $$
 DECLARE
   parent_level INTEGER;
 BEGIN
 
-  SELECT
-    bt.depth INTO parent_level
+  SELECT bt.depth
+  INTO parent_level
   FROM tree_binary bt
   WHERE bt.parent_id = parentId;
 
@@ -216,22 +216,118 @@ BEGIN
   WITH RECURSIVE child_nodes AS (
     (
       SELECT
-        bt.*, 1 as auto_level
+        bt.*,
+        1 AS auto_level
       FROM tree_binary bt
-      WHERE bt.child_id = parentId
+      WHERE bt.user_id = parentId
     )
     UNION
     SELECT
-      bt.*, cn.auto_level+1 as auto_level
+      bt.*,
+      cn.auto_level + 1 AS auto_level
     FROM child_nodes cn, tree_binary bt
-    WHERE bt.parent_id = cn.child_id
+    WHERE bt.parent_id = cn.user_id
 
   ) SELECT
-      cn.id, cn.parent_id, cn.child_id, cn.bt_position, cn.depth, auto_level
-    FROM child_nodes cn WHERE auto_level <= maxLevel;
+      cn.id,
+      cn.parent_id,
+      cn.user_id,
+      cn.bt_position,
+      cn.depth,
+      auto_level
+    FROM child_nodes cn
+    WHERE auto_level <= maxLevel;
 END;
 $$ LANGUAGE 'plpgsql';
 
 
 
 
+CREATE OR REPLACE FUNCTION bt_is_free_position(parentId INTEGER, new_position e_binary_position)
+  RETURNS BOOLEAN AS $$
+DECLARE
+  if_exists BOOLEAN;
+BEGIN
+
+  SELECT NOT EXISTS(SELECT 1
+                    FROM tree_binary
+                    WHERE parent_id = parentId AND bt_position = new_position) INTO if_exists;
+ RETURN if_exists;
+END;
+$$ LANGUAGE 'plpgsql';
+
+
+
+CREATE OR REPLACE FUNCTION bt_validate_position(bt_parent_id INTEGER, new_position e_binary_position)
+  RETURNS TABLE(validation VARCHAR(10), result BOOLEAN) AS $$
+BEGIN
+  RETURN QUERY SELECT
+    unnest(ARRAY['root_exists', 'parent_exists', 'free_place']::VARCHAR[]) AS validation,
+    unnest(ARRAY [r, p, f])                                      AS result
+  FROM (
+
+         SELECT
+           EXISTS(SELECT 1
+                  FROM tree_binary
+                  WHERE parent_id = 0 AND bt_position = 'N') AS r,
+           EXISTS(
+               SELECT 1
+               FROM
+                 tree_binary
+               WHERE
+                 user_id = bt_parent_id
+           )                                                 AS p,
+           NOT EXISTS(
+               SELECT 1
+               FROM
+                 tree_binary
+               WHERE
+                 parent_id = bt_parent_id
+                 AND bt_position = new_position
+           )                                                 AS f) AS t;
+END;
+$$ LANGUAGE 'plpgsql';
+
+
+
+CREATE OR REPLACE FUNCTION bt_validate_position_json(bt_parent_id INTEGER, new_position e_binary_position)
+  RETURNS JSON AS $$
+
+DECLARE
+  result JSON;
+
+BEGIN
+
+
+  /*SELECT json_object_agg(p,json_build_array(user_id,depth,parent_id)) INTO json_result
+  FROM tree_binary
+  WHERE parent_id = new_node_parent_id;*/
+
+  --SELECT json_result::jsonb <@ new_position INTO is_free_place;
+
+  SELECT
+    json_object(ARRAY['root_exists', 'parent_exists', 'free_place']::TEXT[], ARRAY [r, p, f]::TEXT[]) AS validation_result --                                      AS result
+  FROM (
+
+         SELECT
+           EXISTS(SELECT 1
+                  FROM tree_binary
+                  WHERE parent_id = 0 AND bt_position = 'N') AS r,
+           EXISTS(
+               SELECT 1
+               FROM
+                 tree_binary
+               WHERE
+                 user_id = bt_parent_id
+           )                                                 AS p,
+           NOT EXISTS(
+               SELECT 1
+               FROM
+                 tree_binary
+               WHERE
+                 parent_id = bt_parent_id
+                 AND bt_position = new_position
+           )                                                 AS f) AS t INTO result;
+  RETURN result;
+END;
+$$ LANGUAGE 'plpgsql';

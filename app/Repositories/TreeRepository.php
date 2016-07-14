@@ -29,6 +29,8 @@ class TreeRepository {
     /**
      * @param int $parentId
      *
+     * @example $repository->binaryChildren(1,10)->joinUsers()->get();
+     *
      * @return TreeRepository
      */
     public function binaryChildren(int $parentId, int $depth = 5)
@@ -38,6 +40,9 @@ class TreeRepository {
         return $this;
 
     }
+
+
+
 
     public function binaryParents(int $userId)
     {
