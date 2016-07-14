@@ -8,6 +8,7 @@
  */
 
 namespace Btcc\Http\Controllers;
+use Btcc\Services\Subscriptions\SubscribeForPackage;
 
 /**
  * Class DashboardController
@@ -15,8 +16,9 @@ namespace Btcc\Http\Controllers;
  */
 class DashboardController extends Controller {
 
-    public function index()
+    public function index(SubscribeForPackage $packages)
     {
+
         return view('dashboard.index');
     }
 }

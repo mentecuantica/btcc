@@ -3,12 +3,31 @@
 namespace Btcc\Http\Requests;
 
 use Auth;
-use Btcc\Http\Requests\Request;
-use Btcc\Models\User;
-use Btcc\Repositories\Users\Transaction\Transaction;
+use Btcc\Services\Subscriptions\Package;
+use Btcc\Services\Subscriptions\SubscribeForPackage;
 
 class AddNewUserRequest extends Request
 {
+
+
+    /**
+     * Validate the class instance.
+     *
+     * @return void
+     */
+    public function validate()
+    {
+        $instance = $this->getValidatorInstance();
+
+        if(! $this->passesAuthorization()) {
+            $this->failedAuthorization();
+        }
+
+        elseif (! $instance->passes()) {
+            $this->failedValidation($instance);
+        }
+    }
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -23,6 +42,7 @@ class AddNewUserRequest extends Request
         return false;
     }
 
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -30,14 +50,19 @@ class AddNewUserRequest extends Request
      */
     public function rules()
     {
+
+
+
         return [
+
                     'email'           => 'required|email|max:255|unique:users',
                     'first_name' => 'required',
                     'last_name' => 'required',
                     'country_code' => 'required',
-                    'package_id' => 'required|integer|exists:packages,id',
+                    'package_id' => 'required|min:4|max:4|is_package_exists',
                     'binary-position'=>'required|in:L,R',
                     'binary-parent-id'=>'required|integer|exists:users,id',
+
 
             ];
 

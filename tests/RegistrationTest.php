@@ -122,4 +122,36 @@ class RegistrationTest extends TestCase
             ->see($email);
 
     }
+
+    public static function testCreateTreeUserBundle()
+    {
+        $email = 'test@repo.ru';
+
+        $oldUser = \Btcc\Models\User::with('linear')->where('email', '=', $email)->first();
+
+        if ($oldUser) {
+            /**@var User $oldUser * */
+            $oldUser->linear->delete();
+            $oldUser->profile->delete();
+            $oldUser->delete();
+        }
+
+        $user = [
+            'email'    => 'test@repo.ru',
+            'password' => '123456'
+        ];
+        $package_id = \Btcc\Models\Package::all('id')->random()->id;
+
+        $profile = [
+            'phone'      => '9222222222',
+            'package_id' => $package_id,
+        ];
+
+        $binary = [
+            'parent_id' => 4,
+            'position'  => 'R'
+        ];
+
+        static::addNewUser(1, $user, $profile, $binary);
+    }
 }

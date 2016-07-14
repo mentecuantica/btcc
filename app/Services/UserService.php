@@ -2,15 +2,14 @@
 
 namespace Btcc\Services\Users;
 
-use Btcc\Events\ProfileWasUpdated;
-use Btcc\Http\Requests\Request;
 use Btcc\Http\Requests\AddNewUserRequest;
-use Btcc\Models\Profile;
 use Btcc\Models\Tree\TreeBinary;
-use Btcc\Models\Tree\TreeLinear;
 use Btcc\Models\User;
+use League\Flysystem\Exception;
 
 class UserService {
+
+    protected $passwordLength = 8;
 
     /**
      * Creates new User, links with LinearTree, Profile
@@ -47,54 +46,29 @@ class UserService {
 
     }
 
-    public static function testCreateTreeUserBundle()
-    {
-        $email = 'test@repo.ru';
 
-        $oldUser = \Btcc\Models\User::with('linear')->where('email', '=', $email)->first();
-
-        if ($oldUser) {
-            /**@var User $oldUser * */
-            $oldUser->linear->delete();
-            $oldUser->profile->delete();
-            $oldUser->delete();
-        }
-
-        $user = [
-            'email'    => 'test@repo.ru',
-            'password' => '123456'
-        ];
-        $package_id = \Btcc\Models\Package::all('id')->random()->id;
-
-        $profile = [
-            'phone'      => '9222222222',
-            'package_id' => $package_id,
-        ];
-
-        $binary = [
-            'parent_id' => 4,
-            'position'  => 'R'
-        ];
-
-        static::addNewUser(1, $user, $profile, $binary);
-    }
 
     /**
      * @param \Btcc\Http\Requests\AddNewUserRequest $request
      *
-     * @return User
+     * @return \Btcc\Models\User
+     * @throws \Exception
      */
     protected function createUserModel(AddNewUserRequest $request)
     {
-        $passwordPlain = \Illuminate\Support\Str::random(8);
+        $passwordPlain = $this->generateRandomPassword();
+
+
         $name = $request->first_name;
+
         $newUser = User::create(array_merge($request->only([
             'email',
             'first_name',
-            'last_name'
+            'last_name',
+            'package_id',
         ]), [
             'password' => bcrypt($passwordPlain),
-            'name'     => $name
+            'name'     => $name,
         ]));
 
         if ($newUser == FALSE) {
@@ -137,7 +111,16 @@ class UserService {
     {
         $parentId = $request->get('binary-parent-id');
         $position = $request->get('binary-position');
-        $binaryId = TreeBinary::addToParent($parentId, $position, $newUser->id);
+
+        $binaryId = -1;
+        try {
+            $binaryId = TreeBinary::addToParent($parentId, $position, $newUser->id);
+        }
+
+        catch (\Exception $e) {
+            \Log::error($e->getMessage());
+            throw $e;
+        }
 
         if ($binaryId == (-1 || FALSE)) {
             throw new \Exception(sprintf('Binary: parent %d, position %s occupied',$parentId,$position));
@@ -152,10 +135,19 @@ class UserService {
     {
         $result = $newUser->profile()->create($request->only([
             'country_code',
-            'package_id'
+
         ]));
         if ($result == FALSE) {
             throw new \Exception(sprintf('Cannot add profile to user'));
         }
+    }
+
+    /**
+     * @return string
+     */
+    protected function generateRandomPassword()
+    {
+        return str_random($this->passwordLength);
+
     }
 }

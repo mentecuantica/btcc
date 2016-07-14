@@ -27,7 +27,7 @@ use Illuminate\Database\Eloquent\Model;
 class Profile extends Model
 {
 
-    protected $fillable = ['name','surname','package_id','country_code'];
+    protected $fillable = ['name','surname','country_code'];
 
     /**
      * New inline validation from
@@ -39,7 +39,7 @@ class Profile extends Model
         //'name'   => 'required',
         'country_code'   => 'required',
         //'surname'    => 'required|unique:posts,slug',
-        'package_id' => 'required|exists:packages,id'
+       // 'package_id' => 'required|exists:packages,id'
     ];
     
     public function user()
@@ -47,8 +47,8 @@ class Profile extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function package()
+  /*  public function package()
     {
         return $this->hasOne(Package::class);
-    }
+    }*/
 }

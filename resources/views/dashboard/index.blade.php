@@ -4,6 +4,12 @@
 
 @section('content')
 
-{!! \Auth::getUser()->email !!}
+
+    @forelse($packages as $package)
+
+        <li>{{$package->name}}</li>
+    @empty
+            <p>No Packages</p>
+            @endforelse
 
 @endsection

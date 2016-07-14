@@ -9,6 +9,7 @@
 
 namespace Btcc\Models;
 use Baum\Extensions\Eloquent\Collection;
+use Btcc\Models\Transaction\UserTransaction;
 use Btcc\Models\Tree\TreeBinary;
 use Btcc\Models\Tree\TreeLinear;
 use Btcc\Models\Wallet;
@@ -164,14 +165,45 @@ class User  extends Authenticatable {
         return $this->hasOne(Wallet::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function transactions()
+    {
+        return $this->hasMany(UserTransaction::class, 'user_id');
+    }
+
+    public function getTotalSumAttribute() {
+        return static::join('users_transactions','user_id','=','users.id')->where(['users.id'=>$this->id])->groupBy('user_id')->sum('amount');
+
+    }
+
+   /* public function transactionsTotalSum()
+    {
+        return $this->hasMany(UserTransaction::class, 'user_id')->selectRaw('sum(amount) as aggregate')->groupBy('user_id');
+    }*/
+
+    /*public function getTransactionsTotalSumAttribute()
+    {
+        if (! array_key_exists('transactionsTotalSum',$this->relations)) {
+            $this->load('transactionsTotalSum');
+        }
+
+        $related = $this->getRelation('transactionsTotalSum');
+
+        return ($related) ? (int) $related->aggregate : 0;
+
+    }*/
+
     public function transactionsSent()
     {
-        return $this->hasMany(UserTransaction::class, 'sender');
+
+        return $this->hasMany(UserTransaction::class, 'sender_id');
     }
 
     public function transactionsRecieved()
     {
-        return $this->hasMany(UserTransaction::class, 'reciever');
+        return $this->hasMany(UserTransaction::class, 'reciever_id');
     }
 
 

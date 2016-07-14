@@ -3,7 +3,7 @@
 @section('content')
     <h3>{!! trans('Transaction List') !!}</h3>
 
-    @if($transactions->count())
+    @if(count($transactions))
 
         <table class="table table-condensed table-striped">
             <thead>

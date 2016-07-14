@@ -6532,6 +6532,41 @@ button.close {
   padding: 3px;
   margin: 0;
 }
+.subscription-packages-group {
+  display: -ms-flexbox;
+  display: flex;
+  border: 1px solid #CAD0D2;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.subscription-packages-group .subscription-package {
+  -ms-flex-negative: 1;
+  flex-shrink: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  -ms-flex-preferred-size: 0&;
+  flex-basis: 0&;
+  -ms-flex-align: center;
+  align-items: center;
+  border: none;
+  border-radius: 0;
+}
+.subscription-packages-group .subscription-package .package-description {
+  text-align: center;
+  /**
+     * We're doing almost the exact same thing here as
+     * we did above. The difference is that its
+     * flex-basis is auto, so now the size of its content
+     * will affect how large it is.
+     */
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+}
+.subscription-packages-group .subscription-package .package-description .price {
+  color: #333333;
+  background-color: #f5f5f5;
+  border-color: #d3e0e9;
+}
 
 #landing-layout {
   background-color: seagreen;

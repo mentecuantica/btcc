@@ -19,7 +19,7 @@
 
                 </div>
                 <div class="panel panel-default">
-                    <div class="panel-heading">Add partner</div>
+                    <div class="panel-heading">Add partner </div>
                     <div class="panel-body">
 
                         {!! Form::open(['route' => 'partner.store']) !!}

@@ -151,12 +151,12 @@ return [
         /*
          * Application Service Providers...
          */
+        Btcc\Providers\ViewComposerServiceProvicer::class,
         Btcc\Providers\AppServiceProvider::class,
         Btcc\Providers\AuthServiceProvider::class,
         Btcc\Providers\EventServiceProvider::class,
         Btcc\Providers\RouteServiceProvider::class,
 
-        
         Barryvdh\Debugbar\ServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 

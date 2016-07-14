@@ -4,6 +4,7 @@ namespace Btcc\Http\Controllers;
 
 use Btcc\Models\Transaction\Transactable;
 use Btcc\Models\Transaction\UserTransaction;
+use Btcc\Models\User;
 use Illuminate\Http\Request;
 
 use Btcc\Http\Requests;
@@ -20,7 +21,9 @@ class TransactionController extends Controller
     {
         //todo List transactions
 
-        $transactions = UserTransaction::with('reciever')->whereSenderId(\Auth::id())->get();
+
+        //$transactions = UserTransaction::with('reciever')->whereSenderId(\Auth::id())->get();
+        $transactions = user()->with('transactions')->find(1)->transactions;
 
 
 

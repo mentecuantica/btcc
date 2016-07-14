@@ -68,7 +68,7 @@
     @else
      <li class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-       {{ Auth::getUser()->email }} <span class="caret"></span>
+       {{ Auth::getUser()->email }} ({{ $wallet['balance'] or '0.0' }})   <span class="caret"></span>
       </a>
 
       <ul class="dropdown-menu" role="menu">

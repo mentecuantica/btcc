@@ -22,14 +22,7 @@
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="form-group">
 
-        {!! Form::label('package_id',trans('Package type')) !!}
-        {!! Form::select('package_id', \Btcc\Models\Package::pluck('name','id'), ['required','type'=>'nubmer','class' => 'form-control']) !!}
-
-    </div>
-</div>
 
 
 <div class="row">
@@ -39,37 +32,75 @@
             {!! Form::select('country_code', \Btcc\Utilities\Countries::getCountries() , NULL , ['required','class' => 'form-control']) !!}
 
         </div>
+
+    </div>
+    <div class="form-group">
+        <div class="col-sm-6">
+            {!! Form::label('binary-parent-id',trans('parentid')) !!}
+            {!! Form::text('binary-parent-id', NULL,
+                 ['required',
+
+                       'type'=>'number'
+                       ]) !!}
+            {!! Form::label('binary-position',trans('pos')) !!}
+            {!! Form::select('binary-position', ['L'=>'Left','R'=>'Right'], ['required', 'id'=>'binary-position']) !!}
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<div class="row">
+    <div class="subscription-packages-group">
+        @forelse($packages as $package)
+            <div class="subscription-package">
+                <div class="package-description">
+                    <h4>{{$package->name}}</h4>
+                    @foreach($package->features as $feature)
+                        <p>{{$feature}}</p>
+                    @endforeach
+                    <div class="price"> Price: {{$package->price}}</div>
+                </div>
+                {{Form::radio('package_id',$package->id )}}
+            </div>
+        @empty
+            <p>No Packages</p>
+        @endforelse
+
+    </div>
+
+    <?php// dd($packages);?>
+
+    <div class="alert alert-success">
+        <p>Your balance is: {{ $wallet['balance'] or '0.0' }}</p>
+    </div>
+
+
+
+</div>
+<div class="row">
+    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
         <div class="form-group">
             {!! Form::label('user_agreement',trans('User agreement')) !!}
             {!! Form::checkbox('user_agreement', 1, false,
                  ['required',
-                       'class'=>'form-control',
+
                        ]) !!}
 
         </div>
     </div>
+
+</div>
+
+<div class="row">
     <div class="form-group">
-        <div class="col-sm-3">
-            {!! Form::label('binary-parent-id',trans('Binary parent user id')) !!}
-            {!! Form::text('binary-parent-id', NULL,
-                 ['required',
-                       'class'=>'form-control',
-                       'type'=>'number'
-                       ]) !!}
-        </div>
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-            {!! Form::label('binary-position',trans('Binary pos')) !!}
-            {!! Form::select('binary-position', ['L'=>'Left','R'=>'Right'], ['required','class' => 'form-control','id'=>'binary-position']) !!}
+        <div class="col-sm-offset-10 col-sm-2">
 
+            <button type="submit" class="btn btn-danger">Add partner</button>
         </div>
-
     </div>
 
 </div>
 
-
-<div class="form-group">
-    <div class="col-md-6 col-md-offset-4">
-        {{ Form::submit('Add partner') }}
-    </div>
-</div>

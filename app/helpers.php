@@ -12,6 +12,6 @@ if (! function_exists('user')) {
      */
     function user()
     {
-        return \Auth::getUser();
+        return  \Auth::getUser()==NULL ? new \Btcc\Services\User\NullUser() : \Auth::getUser();
     }
 }

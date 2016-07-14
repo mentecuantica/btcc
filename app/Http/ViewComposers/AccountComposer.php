@@ -10,6 +10,7 @@
 namespace Btcc\Http\ViewComposers;
 
 
+use Btcc\Services\Subscriptions\SubscribeForPackage;
 use Illuminate\Contracts\View\View;
 
 /**
@@ -19,29 +20,41 @@ use Illuminate\Contracts\View\View;
 class AccountComposer {
 
 
-    protected $user;
     protected $partners;
     protected $partnersCount;
+    protected $wallet = [];
+    protected $packages;
 
-    public function __construct()
+    /**
+     * PHP 5 allows developers to declare constructor methods for classes.
+     * Classes which have a constructor method call this method on each newly-created object,
+     * so it is suitable for any initialization that the object may need before it is used.
+     * Note: Parent constructors are not called implicitly if the child class defines a constructor.
+     * In order to run a parent constructor, a call to parent::__construct() within the child constructor is required.
+     * param [ mixed $args [, $... ]]
+     *
+     * @param \Btcc\Services\Subscriptions\SubscribeForPackage $packages
+     *
+     * @link http://php.net/manual/en/language.oop5.decon.php
+     */
+    public function __construct(SubscribeForPackage $packages)
     {
+        $this->packages= collect($packages);
 
-        /*if (\Auth::user()) {
-            $this->user = \Auth::user();
-            $this->partnersCount = \Auth::user()->descendants()->count();
 
-            //        $this->partners2 = \Auth::user()->partners;
 
-        } */
+        //$view->with(['packages'=>$packages]);
+
     }
 
     public function compose(View $view)
     {
+     //   $this->test =  user()->transactions->totalAmount();
         $view->with([
             //'partners'=>[],
 
-            'partnersCount'=>$this->partnersCount,
-            //'partners'=>$this->partners2,
+            'wallet'=>['balance'=>user()->totalSum],
+            'packages'=>collect($this->packages),
             
             //'partners1'=>$this->partners1,
 

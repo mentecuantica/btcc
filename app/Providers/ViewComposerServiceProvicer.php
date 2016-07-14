@@ -10,6 +10,7 @@
 namespace Btcc\Providers;
 use Btcc\Http\ViewComposers\AccountComposer;
 use Btcc\Http\ViewComposers\SubmenuComposer;
+use Btcc\Services\Subscriptions\SubscribeForPackage;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -32,15 +33,15 @@ class ViewComposerServiceProvicer extends ServiceProvider{
 
            // view()->composer('*', SubmenuComposer::class);
 
-           /* view()->composer(
-                '*', AccountComposer::class
+            view()->composer(
+                ['layouts.app','dashboard.index','partner.*'], AccountComposer::class
 
-            );*/
+            );
 
         // Using Closure based composers...
-      /*  view()->composer('dashboard', function ($view) {
-                
-        });*/
+        view()->composer('dashboard.index', function ($view) {
+
+        });
     }
 
 
