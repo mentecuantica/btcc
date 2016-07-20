@@ -92,7 +92,7 @@ $factory->define(Btcc\Models\Profile::class, function (Faker\Generator $faker) {
         } ,*/
        // 'package_id' =>  $faker->randomNumber() ,
         'country_code' =>  $faker->randomElement(['ru','us','uk']) ,
-        'phone' =>  $faker->phoneNumber ,
+        'phone' =>  $faker->creditCardNumber() ,
         'city_id' =>  $faker->randomNumber() ,
     ];
 });
@@ -104,13 +104,13 @@ $factory->define(Btcc\Models\Profile::class, function (Faker\Generator $faker) {
  */
 
 
-$factory->define(Btcc\Models\Package::class, function (Faker\Generator $faker) {
+/*$factory->define(Btcc\Models\Package::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
         'start_balance' => $faker->numberBetween(100,1000),
         'description' => $faker->sentence,
     ];
-});
+});*/
 
 
 $factory->define(Itabletki\ContentPage::class, function (Faker\Generator $faker) {
