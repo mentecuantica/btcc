@@ -64,4 +64,6 @@ function initTernaryTree(containerID, parentNode, childrenNodes) {
 
 };
 
+
+
 export default initTernaryTree;
