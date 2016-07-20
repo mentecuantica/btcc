@@ -22,8 +22,9 @@ class TransactionController extends Controller
         //todo List transactions
 
 
+
         //$transactions = UserTransaction::with('reciever')->whereSenderId(\Auth::id())->get();
-        $transactions = user()->with('transactions')->find(1)->transactions;
+        $transactions = User::with('transactions')->find(user()->id)->transactions;
 
 
 

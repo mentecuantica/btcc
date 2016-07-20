@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 /**
  * Class Transaction
+ *
  * @package app\Models
  * Btcc\Models\Transaction
  * @property integer $id
@@ -52,6 +53,8 @@ use Illuminate\Database\Eloquent\Builder;
  * @property integer $reciever_id
  * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\UserTransaction whereSenderId($value)
  * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\UserTransaction whereRecieverId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\Transaction\UserTransaction typePlus()
+ * @property-read \Btcc\Models\User $issuedBy
  */
 class UserTransaction extends BaseTransaction {
 

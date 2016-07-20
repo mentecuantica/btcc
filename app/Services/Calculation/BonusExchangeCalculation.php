@@ -13,7 +13,7 @@ namespace Btcc\Services\Calculation;
  * Class NullCalculation
  * @package Btcc\Services
  */
-class BonusExchangeCalculation extends Calculation {
+class BonusExchangeCalculation extends BaseCalculation {
 
     public function calculate()
     {

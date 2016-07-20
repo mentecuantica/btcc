@@ -33,8 +33,9 @@
     height: 13px;
     display: block;
     border: 1px solid black;
+    background-color: royalblue;
     position: absolute;
-    top: 1px;
+    top: -10px;
     right: 1px;
     cursor: pointer;
   }
@@ -45,7 +46,6 @@
   }
 }
 
-
 /*
 .Treant.Treant-loaded .node,
 .Treant.Treant-loaded .pseudo {
@@ -53,39 +53,71 @@
 }
 */
 
-
-
 .binary-tree-chart {
   margin: 5px;
   margin: 5px auto;
-  margin-top: 100px;
-  padding-top: 100px;
+  margin-top: 10px;
+  padding-top: 10px;
   border: 3px solid #DDD;
   border-radius: 3px;
   height: 600px;
 }
 
 .node {
-  color: #9CB5ED;
-  border: 2px solid #C8C8C8;
+  color: black;
+  border: 1px solid #C8C8C8;
   border-radius: 3px;
+
+
 
   &.owner {
     background-color: green;
+    padding: 15px;
 
   }
 
   &.partner {
-    background-color: midnightblue;
+    background-color:  	rgb(0, 177, 225);
 
+    &.partner-R {
+      border-top-right-radius: 20px;
+      border-bottom-right-radius: 20px;
+      text-align: right;
+      padding: 5px;
+    }
+
+    &.partner-L {
+      border-top-left-radius: 20px;
+      border-bottom-left-radius: 20px;
+      text-align: left;
+      padding: 5px;
+
+    }
+  }
+
+  &.free {
+    color:#444;
+    padding: 16px;
+    cursor:pointer;
+    border-radius: 50px;
+
+    &.free-L {
+      background-color: rgb(246, 187, 66);
+    }
+    &.free-R {
+      background-color: rgb(55, 188, 155);
+    }
   }
 
   p {
-    font-size: 20px;
+    font-size: 12px;
     line-height: 20px;
     height: 20px;
-    font-weight: bold;
     padding: 3px;
     margin: 0;
+    &.node-title {
+      font-weight: bold ;
+      font-size: 20px;
+    }
   }
 }

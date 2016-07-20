@@ -13,7 +13,7 @@ namespace Btcc\Services\Calculation;
  * Class NullCalculation
  * @package Btcc\Services
  */
-class BinaryCalculation extends Calculation {
+class BinaryCalculation extends BaseCalculation {
 
     /**
      * Get User -> and his direct children

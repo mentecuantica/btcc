@@ -24,7 +24,6 @@
 </div>
 
 
-
 <div class="row">
     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
         <div class="form-group">
@@ -51,8 +50,9 @@
 
 </div>
 
-
+<hr/>
 <div class="row">
+    <h3>Select package</h3>
     <div class="subscription-packages-group">
         @forelse($packages as $package)
             <div class="subscription-package">
@@ -62,8 +62,11 @@
                         <p>{{$feature}}</p>
                     @endforeach
                     <div class="price"> Price: {{$package->price}}</div>
+
+
+                    {{Form::radio('package_id',$package->id )}}
                 </div>
-                {{Form::radio('package_id',$package->id )}}
+
             </div>
         @empty
             <p>No Packages</p>
@@ -71,12 +74,11 @@
 
     </div>
 
-    <?php// dd($packages);?>
+    <hr/>
 
     <div class="alert alert-success">
         <p>Your balance is: {{ $wallet['balance'] or '0.0' }}</p>
     </div>
-
 
 
 </div>
@@ -85,9 +87,9 @@
         <div class="form-group">
             {!! Form::label('user_agreement',trans('User agreement')) !!}
             {!! Form::checkbox('user_agreement', 1, false,
-                 ['required',
+            ['required',
 
-                       ]) !!}
+            ]) !!}
 
         </div>
     </div>
@@ -97,7 +99,6 @@
 <div class="row">
     <div class="form-group">
         <div class="col-sm-offset-10 col-sm-2">
-
             <button type="submit" class="btn btn-danger">Add partner</button>
         </div>
     </div>

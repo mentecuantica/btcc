@@ -28254,7 +28254,7 @@ exports.default = {
 
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div>\n    <h3>BTC ticker</h3>\n    <p>{{ currency.BTC  }} $</p>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"navbar-brand currency-informer\">\n   <p>BTC: <strong>{{ currency.BTC }} $</strong></p>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -28286,7 +28286,6 @@ var Vue = require('vue');
 var VueResource = require('vue-resource');
 Vue.use(VueResource);
 
-
 window.Btcc = window.Btcc || {};
 
 if (Btcc == {}) {} else {
@@ -28299,7 +28298,7 @@ if (Btcc == {}) {} else {
 }
 
 new Vue({
-    el: "#widgets",
+    el: "#app-layout",
     components: {
         currencyinformer: _CurrencyInformer2.default
     }
@@ -28361,7 +28360,7 @@ var BinaryTreeOutput = function () {
     _createClass(BinaryTreeOutput, [{
         key: "generateTreeConfig",
         value: function generateTreeConfig(containerID) {
-            var treeConfig = {
+            return {
                 chart: {
                     container: containerID,
                     node: {
@@ -28371,7 +28370,7 @@ var BinaryTreeOutput = function () {
                 nodeStructure: {
                     HTMLclass: "owner",
                     child_id: this.parentNode.user_id,
-                    collapsed: true,
+                    collapsed: false,
                     text: {
                         title: "You",
                         desc: this.parentNode.name
@@ -28380,7 +28379,6 @@ var BinaryTreeOutput = function () {
                     children: this.nodes
                 }
             };
-            return treeConfig;
         }
     }, {
         key: "analyzeTree",
@@ -28500,14 +28498,14 @@ var BinaryTreeOutput = function () {
                 var pos = positions[i];
                 var newNode = {
                     parent_id: parentNodeId,
-                    HTMLclass: "free",
+                    HTMLclass: "free free-" + pos,
                     bt_position: pos,
-                    name: "Free position",
-                    text: {
-                        title: "Free position",
-                        desc: "Binary:" + pos
-                    },
-                    innerHTML: "<div class='binary-data' data-binary-position=\"" + pos + "\" data-parent-id=\"" + parentNodeId + "\">Free " + pos + " position</div>",
+                    //  name: "Free position",
+                    //text: {
+                    //    title: `${pos}`,
+                    // //    desc: "Binary:" + pos,
+                    //   },
+                    innerHTML: "<div class='binary-data' data-binary-position=\"" + pos + "\" data-parent-id=\"" + parentNodeId + "\">" + pos + "</div>",
                     is_new: true
                 };
                 newNodes.push(newNode);

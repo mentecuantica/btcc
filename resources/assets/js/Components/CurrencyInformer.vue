@@ -1,7 +1,6 @@
 <template>
-    <div>
-        <h3>BTC ticker</h3>
-        <p>{{ currency.BTC  }} $</p>
+    <div class="navbar-brand currency-informer">
+       <p>BTC: <strong>{{ currency.BTC }} $</strong></p>
     </div>
 </template>
 

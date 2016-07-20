@@ -15,6 +15,7 @@
    <a class="navbar-brand" href="{{ url('/') }}">
     Btcc
    </a>
+    <currencyinformer></currencyinformer>
   </div>
 
   <div class="collapse navbar-collapse" id="app-navbar-collapse">
@@ -34,7 +35,7 @@
      </li>
      <li class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-       Trees <span class="caret"></span>
+       Users <strong>({{ $stat['registeredUsers']  }})</strong> <span class="caret"></span>
       </a>
 
       <ul class="dropdown-menu" role="menu">
@@ -68,7 +69,7 @@
     @else
      <li class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-       {{ Auth::getUser()->email }} ({{ $wallet['balance'] or '0.0'}}), {{ $wallet['packageName'] }}   <span class="caret"></span>
+       {{ Auth::getUser()->email }} ({{ $wallet['balance'] or '0.0' }} $), {{ $profile['package']->name }}   <span class="caret"></span>
       </a>
 
       <ul class="dropdown-menu" role="menu">
@@ -87,6 +88,6 @@
 </nav>
 <div class="container">
  <div id="widgets">
-   <currencyinformer></currencyinformer>
+
  </div>
 </div>

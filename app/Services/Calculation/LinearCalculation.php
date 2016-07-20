@@ -13,7 +13,7 @@ namespace Btcc\Services\Calculation;
  * Class LinearCalculation
  * @package Btcc\Services
  */
-class LinearCalculation extends Calculation {
+class LinearCalculation extends BaseCalculation {
 
 
 

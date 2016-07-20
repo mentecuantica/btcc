@@ -24,7 +24,7 @@
         </ul>
 
 
-    {{--    {{ \Auth::user()::buildTree($partners) }}--}}
+    {{--    {{ \Auth::user()::buildRigidArrayTreeStructureForTreant($partners) }}--}}
 
     @else
         <div class="alert alert-info">

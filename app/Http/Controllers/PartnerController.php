@@ -9,6 +9,8 @@ use Btcc\Jobs\PayForNewUserPackage;
 use Btcc\Models\Tree\TreeBinary;
 use Btcc\Models\User;
 
+use ClassPreloader\Factory;
+use Faker\Generator;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Validator;
 use JavaScript;
@@ -19,28 +21,19 @@ use Laracasts\Flash\Flash;
 class PartnerController extends Controller {
 
     /**
-     * Display a listing of the resource.
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-
-        /**@var User $user * */
-
-        // get an nested collection of LinearTree with User inside
-        $binaryPartnersCount = user()->getTreeBinary()->countPartners();
-
-        $partners = [];
-
-        return view('partner.index', compact('binaryPartnersCount', 'partners'));
-
-    }
-
-    /**
+     * @todo Show tree uncollapsed
+     * @todo Show highlight free items
+     * @todo R-L - var Highlight
+     * @todo Mouse pointer on free items
+     * @todo Automatically adds Faker Name, Last, Email
+     * @todo
      * Show the form for creating a new resource.
+     *
+     * @param Generator $faker
+     *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Generator $faker)
     {
 
         $user = user();
@@ -57,7 +50,34 @@ class PartnerController extends Controller {
         ]);
 
         //dd($userId,$jsonNodes,$parent);
-        return view('partner.create');
+
+
+
+        $newUser = new User();
+        $newUser->first_name = $faker->firstName;
+        $newUser->last_name = $faker->lastName;
+        $newUser->email = $faker->email;
+        return view('partner.create', ['newUser'=>$newUser]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+
+        /**@var User $user * */
+
+        // get an nested collection of LinearTree with User inside
+        $binaryPartnersCount = user()->getTreeBinary()->countPartners();
+
+        
+
+        $partners = [];
+
+        return view('partner.index', compact('binaryPartnersCount', 'partners'));
+
     }
 
     /**

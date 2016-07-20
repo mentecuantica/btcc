@@ -14,7 +14,7 @@ use Btcc\Services\Calculation\Contracts\Calculatable;
  * Class Calculation
  * @package Btcc\Services\Calculation
  */
-abstract class Calculation implements Calculatable {
+abstract class BaseCalculation implements Calculatable {
 
     protected $user;
 

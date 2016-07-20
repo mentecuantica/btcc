@@ -192,7 +192,7 @@ class TreeBinary extends BaseTree
 
         /**
          * If remove first element from rows, to make it parent
-         *      then buildTree fails
+         *      then buildRigidArrayTreeStructureForTreant fails
 
          */
         $revesedArray = array_reverse($rows, TRUE);
@@ -201,7 +201,7 @@ class TreeBinary extends BaseTree
 
         $items = (new TreeDecorator([]))::stdClassToArray($rows);
 
-        $jsonNodes = json_encode(static::buildTree($items, $parentId));
+        $jsonNodes = json_encode(static::buildRigidArrayTreeStructureForTreant($items, $parentId));
 
 
 
@@ -217,28 +217,29 @@ class TreeBinary extends BaseTree
      *
      * @return array
      */
-    public static function buildTree($elements, $parentId = 1)
+    public static function buildRigidArrayTreeStructureForTreant($elements, $parentId = 1)
     {
 
         $branch = [];
 
-        foreach ($elements as $node) {
-            $node['text'] = [
-                'name'  => $node['name'],
-                'title' => '' . $node['name'] . ' ID:' . $node['user_id'] . ' Level:' . $node['level'],
-                'desc'  => $node['bt_position'],
+        foreach ($elements as $n) {
+            $stringPosition = $n['bt_position'];
+
+            $n['text'] = [
+                'title' => $stringPosition,
+                'desc' =>'ID:' . $n['user_id'] . ' LEV:' . $n['level'], //$n['name'] . ,
 
             ];
-            $node['link'] = ['href' => url('/tree/binary/show', $node['user_id'])];
-            $node['HTMLclass'] = 'partner';
+            $n['link'] = ['href' => url('/tree/binary/show', $n['user_id'])];
+            $n['HTMLclass'] = 'partner partner-'.$stringPosition;
 
-            if ($node['parent_id'] == $parentId) {
-                // $node['HTMLclass']='boss';
-                $children = static::buildTree($elements, $node['user_id']);
+            if ($n['parent_id'] == $parentId) {
+
+                $children = static::buildRigidArrayTreeStructureForTreant($elements, $n['user_id']);
                 if ($children) {
-                    $node['children'] = $children;
+                    $n['children'] = $children;
                 }
-                $branch[] = $node;
+                $branch[] = $n;
             }
         }
 

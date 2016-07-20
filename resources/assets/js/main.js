@@ -1,6 +1,7 @@
 var Vue = require('vue');
 var VueResource= require('vue-resource');
 Vue.use(VueResource);
+
 import initTernaryTree from './trees/ternary-init.js';
 import BinaryTreeOutput from './trees/binary-tree';
 import CurrencyInformer from './components/CurrencyInformer.vue';
@@ -20,7 +21,7 @@ else {
 }
 
 new Vue({
-    el: "#widgets",
+    el: "#app-layout",
     components: {
         currencyinformer: CurrencyInformer
     }

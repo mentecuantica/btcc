@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.2.39 on 2016-07-06.
+ * Generated for Laravel 5.2.39 on 2016-07-15.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -6655,11 +6655,10 @@ namespace {
          * @param mixed $data
          * @param string $queue
          * @return mixed 
-         * @throws \Exception|\Throwable
          * @static 
          */
         public static function push($job, $data = '', $queue = null){
-            return \Illuminate\Queue\SyncQueue::push($job, $data, $queue);
+            return \Illuminate\Queue\DatabaseQueue::push($job, $data, $queue);
         }
         
         /**
@@ -6672,7 +6671,7 @@ namespace {
          * @static 
          */
         public static function pushRaw($payload, $queue = null, $options = array()){
-            return \Illuminate\Queue\SyncQueue::pushRaw($payload, $queue, $options);
+            return \Illuminate\Queue\DatabaseQueue::pushRaw($payload, $queue, $options);
         }
         
         /**
@@ -6682,11 +6681,37 @@ namespace {
          * @param string $job
          * @param mixed $data
          * @param string $queue
-         * @return mixed 
+         * @return void 
          * @static 
          */
         public static function later($delay, $job, $data = '', $queue = null){
-            return \Illuminate\Queue\SyncQueue::later($delay, $job, $data, $queue);
+            \Illuminate\Queue\DatabaseQueue::later($delay, $job, $data, $queue);
+        }
+        
+        /**
+         * Push an array of jobs onto the queue.
+         *
+         * @param array $jobs
+         * @param mixed $data
+         * @param string $queue
+         * @return mixed 
+         * @static 
+         */
+        public static function bulk($jobs, $data = '', $queue = null){
+            return \Illuminate\Queue\DatabaseQueue::bulk($jobs, $data, $queue);
+        }
+        
+        /**
+         * Release a reserved job back onto the queue.
+         *
+         * @param string $queue
+         * @param \StdClass $job
+         * @param int $delay
+         * @return mixed 
+         * @static 
+         */
+        public static function release($queue, $job, $delay){
+            return \Illuminate\Queue\DatabaseQueue::release($queue, $job, $delay);
         }
         
         /**
@@ -6697,7 +6722,50 @@ namespace {
          * @static 
          */
         public static function pop($queue = null){
-            return \Illuminate\Queue\SyncQueue::pop($queue);
+            return \Illuminate\Queue\DatabaseQueue::pop($queue);
+        }
+        
+        /**
+         * Delete a reserved job from the queue.
+         *
+         * @param string $queue
+         * @param string $id
+         * @return void 
+         * @static 
+         */
+        public static function deleteReserved($queue, $id){
+            \Illuminate\Queue\DatabaseQueue::deleteReserved($queue, $id);
+        }
+        
+        /**
+         * Get the underlying database instance.
+         *
+         * @return \Illuminate\Database\Connection 
+         * @static 
+         */
+        public static function getDatabase(){
+            return \Illuminate\Queue\DatabaseQueue::getDatabase();
+        }
+        
+        /**
+         * Get the expiration time in seconds.
+         *
+         * @return int|null 
+         * @static 
+         */
+        public static function getExpire(){
+            return \Illuminate\Queue\DatabaseQueue::getExpire();
+        }
+        
+        /**
+         * Set the expiration time in seconds.
+         *
+         * @param int|null $seconds
+         * @return void 
+         * @static 
+         */
+        public static function setExpire($seconds){
+            \Illuminate\Queue\DatabaseQueue::setExpire($seconds);
         }
         
         /**
@@ -6711,7 +6779,7 @@ namespace {
          */
         public static function pushOn($queue, $job, $data = ''){
             //Method inherited from \Illuminate\Queue\Queue            
-            return \Illuminate\Queue\SyncQueue::pushOn($queue, $job, $data);
+            return \Illuminate\Queue\DatabaseQueue::pushOn($queue, $job, $data);
         }
         
         /**
@@ -6726,21 +6794,7 @@ namespace {
          */
         public static function laterOn($queue, $delay, $job, $data = ''){
             //Method inherited from \Illuminate\Queue\Queue            
-            return \Illuminate\Queue\SyncQueue::laterOn($queue, $delay, $job, $data);
-        }
-        
-        /**
-         * Push an array of jobs onto the queue.
-         *
-         * @param array $jobs
-         * @param mixed $data
-         * @param string $queue
-         * @return mixed 
-         * @static 
-         */
-        public static function bulk($jobs, $data = '', $queue = null){
-            //Method inherited from \Illuminate\Queue\Queue            
-            return \Illuminate\Queue\SyncQueue::bulk($jobs, $data, $queue);
+            return \Illuminate\Queue\DatabaseQueue::laterOn($queue, $delay, $job, $data);
         }
         
         /**
@@ -6752,7 +6806,7 @@ namespace {
          */
         public static function setContainer($container){
             //Method inherited from \Illuminate\Queue\Queue            
-            \Illuminate\Queue\SyncQueue::setContainer($container);
+            \Illuminate\Queue\DatabaseQueue::setContainer($container);
         }
         
         /**
@@ -6764,7 +6818,7 @@ namespace {
          */
         public static function setEncrypter($crypt){
             //Method inherited from \Illuminate\Queue\Queue            
-            \Illuminate\Queue\SyncQueue::setEncrypter($crypt);
+            \Illuminate\Queue\DatabaseQueue::setEncrypter($crypt);
         }
         
     }
@@ -11942,6 +11996,485 @@ namespace {
          */
         public static function componentCall($method, $parameters){
             return \Collective\Html\HtmlBuilder::componentCall($method, $parameters);
+        }
+        
+    }
+
+
+    class BootForm extends \Watson\BootstrapForm\Facades\BootstrapForm{
+        
+        /**
+         * Open a form while passing a model and the routes for storing or updating
+         * the model. This will set the correct route along with the correct
+         * method.
+         *
+         * @param array $options
+         * @return string 
+         * @static 
+         */
+        public static function open($options = array()){
+            return \Watson\BootstrapForm\BootstrapForm::open($options);
+        }
+        
+        /**
+         * Reset and close the form.
+         *
+         * @return string 
+         * @static 
+         */
+        public static function close(){
+            return \Watson\BootstrapForm\BootstrapForm::close();
+        }
+        
+        /**
+         * Open a vertical (standard) Bootstrap form.
+         *
+         * @param array $options
+         * @return string 
+         * @static 
+         */
+        public static function vertical($options = array()){
+            return \Watson\BootstrapForm\BootstrapForm::vertical($options);
+        }
+        
+        /**
+         * Open an inline Bootstrap form.
+         *
+         * @param array $options
+         * @return string 
+         * @static 
+         */
+        public static function inline($options = array()){
+            return \Watson\BootstrapForm\BootstrapForm::inline($options);
+        }
+        
+        /**
+         * Open a horizontal Bootstrap form.
+         *
+         * @param array $options
+         * @return string 
+         * @static 
+         */
+        public static function horizontal($options = array()){
+            return \Watson\BootstrapForm\BootstrapForm::horizontal($options);
+        }
+        
+        /**
+         * Create a Bootstrap static field.
+         *
+         * @param string $name
+         * @param string $label
+         * @param string $value
+         * @param array $options
+         * @return string 
+         * @static 
+         */
+        public static function staticField($name, $label = null, $value = null, $options = array()){
+            return \Watson\BootstrapForm\BootstrapForm::staticField($name, $label, $value, $options);
+        }
+        
+        /**
+         * Create a Bootstrap text field input.
+         *
+         * @param string $name
+         * @param string $label
+         * @param string $value
+         * @param array $options
+         * @return string 
+         * @static 
+         */
+        public static function text($name, $label = null, $value = null, $options = array()){
+            return \Watson\BootstrapForm\BootstrapForm::text($name, $label, $value, $options);
+        }
+        
+        /**
+         * Create a Bootstrap email field input.
+         *
+         * @param string $name
+         * @param string $label
+         * @param string $value
+         * @param array $options
+         * @return string 
+         * @static 
+         */
+        public static function email($name = 'email', $label = null, $value = null, $options = array()){
+            return \Watson\BootstrapForm\BootstrapForm::email($name, $label, $value, $options);
+        }
+        
+        /**
+         * Create a Bootstrap URL field input.
+         *
+         * @param string $name
+         * @param string $label
+         * @param string $value
+         * @param array $options
+         * @return string 
+         * @static 
+         */
+        public static function url($name, $label = null, $value = null, $options = array()){
+            return \Watson\BootstrapForm\BootstrapForm::url($name, $label, $value, $options);
+        }
+        
+        /**
+         * Create a Bootstrap tel field input.
+         *
+         * @param string $name
+         * @param string $label
+         * @param string $value
+         * @param array $options
+         * @return string 
+         * @static 
+         */
+        public static function tel($name, $label = null, $value = null, $options = array()){
+            return \Watson\BootstrapForm\BootstrapForm::tel($name, $label, $value, $options);
+        }
+        
+        /**
+         * Create a Bootstrap number field input.
+         *
+         * @param string $name
+         * @param string $label
+         * @param string $value
+         * @param array $options
+         * @return string 
+         * @static 
+         */
+        public static function number($name, $label = null, $value = null, $options = array()){
+            return \Watson\BootstrapForm\BootstrapForm::number($name, $label, $value, $options);
+        }
+        
+        /**
+         * Create a Bootstrap date field input.
+         *
+         * @param string $name
+         * @param string $label
+         * @param string $value
+         * @param array $options
+         * @return string 
+         * @static 
+         */
+        public static function date($name, $label = null, $value = null, $options = array()){
+            return \Watson\BootstrapForm\BootstrapForm::date($name, $label, $value, $options);
+        }
+        
+        /**
+         * Create a Bootstrap textarea field input.
+         *
+         * @param string $name
+         * @param string $label
+         * @param string $value
+         * @param array $options
+         * @return string 
+         * @static 
+         */
+        public static function textarea($name, $label = null, $value = null, $options = array()){
+            return \Watson\BootstrapForm\BootstrapForm::textarea($name, $label, $value, $options);
+        }
+        
+        /**
+         * Create a Bootstrap password field input.
+         *
+         * @param string $name
+         * @param string $label
+         * @param array $options
+         * @return string 
+         * @static 
+         */
+        public static function password($name = 'password', $label = null, $options = array()){
+            return \Watson\BootstrapForm\BootstrapForm::password($name, $label, $options);
+        }
+        
+        /**
+         * Create a Bootstrap checkbox input.
+         *
+         * @param string $name
+         * @param string $label
+         * @param string $value
+         * @param bool $checked
+         * @param array $options
+         * @return string 
+         * @static 
+         */
+        public static function checkbox($name, $label = null, $value = 1, $checked = null, $options = array()){
+            return \Watson\BootstrapForm\BootstrapForm::checkbox($name, $label, $value, $checked, $options);
+        }
+        
+        /**
+         * Create a single Bootstrap checkbox element.
+         *
+         * @param string $name
+         * @param string $label
+         * @param string $value
+         * @param bool $checked
+         * @param bool $inline
+         * @param array $options
+         * @return string 
+         * @static 
+         */
+        public static function checkboxElement($name, $label = null, $value = 1, $checked = null, $inline = false, $options = array()){
+            return \Watson\BootstrapForm\BootstrapForm::checkboxElement($name, $label, $value, $checked, $inline, $options);
+        }
+        
+        /**
+         * Create a collection of Bootstrap checkboxes.
+         *
+         * @param string $name
+         * @param string $label
+         * @param array $choices
+         * @param array $checkedValues
+         * @param bool $inline
+         * @param array $options
+         * @return string 
+         * @static 
+         */
+        public static function checkboxes($name, $label = null, $choices = array(), $checkedValues = array(), $inline = false, $options = array()){
+            return \Watson\BootstrapForm\BootstrapForm::checkboxes($name, $label, $choices, $checkedValues, $inline, $options);
+        }
+        
+        /**
+         * Create a Bootstrap radio input.
+         *
+         * @param string $name
+         * @param string $label
+         * @param string $value
+         * @param bool $checked
+         * @param array $options
+         * @return string 
+         * @static 
+         */
+        public static function radio($name, $label = null, $value = null, $checked = null, $options = array()){
+            return \Watson\BootstrapForm\BootstrapForm::radio($name, $label, $value, $checked, $options);
+        }
+        
+        /**
+         * Create a single Bootstrap radio input.
+         *
+         * @param string $name
+         * @param string $label
+         * @param string $value
+         * @param bool $checked
+         * @param bool $inline
+         * @param array $options
+         * @return string 
+         * @static 
+         */
+        public static function radioElement($name, $label = null, $value = null, $checked = null, $inline = false, $options = array()){
+            return \Watson\BootstrapForm\BootstrapForm::radioElement($name, $label, $value, $checked, $inline, $options);
+        }
+        
+        /**
+         * Create a collection of Bootstrap radio inputs.
+         *
+         * @param string $name
+         * @param string $label
+         * @param array $choices
+         * @param string $checkedValue
+         * @param bool $inline
+         * @param array $options
+         * @return string 
+         * @static 
+         */
+        public static function radios($name, $label = null, $choices = array(), $checkedValue = null, $inline = false, $options = array()){
+            return \Watson\BootstrapForm\BootstrapForm::radios($name, $label, $choices, $checkedValue, $inline, $options);
+        }
+        
+        /**
+         * Create a Bootstrap label.
+         *
+         * @param string $name
+         * @param string $value
+         * @param array $options
+         * @return string 
+         * @static 
+         */
+        public static function label($name, $value = null, $options = array()){
+            return \Watson\BootstrapForm\BootstrapForm::label($name, $value, $options);
+        }
+        
+        /**
+         * Create a Boostrap submit button.
+         *
+         * @param string $value
+         * @param array $options
+         * @return string 
+         * @static 
+         */
+        public static function submit($value = null, $options = array()){
+            return \Watson\BootstrapForm\BootstrapForm::submit($value, $options);
+        }
+        
+        /**
+         * Create a Boostrap file upload button.
+         *
+         * @param string $name
+         * @param string $label
+         * @param array $options
+         * @return string 
+         * @static 
+         */
+        public static function file($name, $label = null, $options = array()){
+            return \Watson\BootstrapForm\BootstrapForm::file($name, $label, $options);
+        }
+        
+        /**
+         * Create the input group for an element with the correct classes for errors.
+         *
+         * @param string $type
+         * @param string $name
+         * @param string $label
+         * @param string $value
+         * @param array $options
+         * @return string 
+         * @static 
+         */
+        public static function input($type, $name, $label = null, $value = null, $options = array()){
+            return \Watson\BootstrapForm\BootstrapForm::input($type, $name, $label, $value, $options);
+        }
+        
+        /**
+         * Create a hidden field.
+         *
+         * @param string $name
+         * @param string $value
+         * @param array $options
+         * @return string 
+         * @static 
+         */
+        public static function hidden($name, $value = null, $options = array()){
+            return \Watson\BootstrapForm\BootstrapForm::hidden($name, $value, $options);
+        }
+        
+        /**
+         * Create a select box field.
+         *
+         * @param string $name
+         * @param string $label
+         * @param array $list
+         * @param string $selected
+         * @param array $options
+         * @return string 
+         * @static 
+         */
+        public static function select($name, $label = null, $list = array(), $selected = null, $options = array()){
+            return \Watson\BootstrapForm\BootstrapForm::select($name, $label, $list, $selected, $options);
+        }
+        
+        /**
+         * Get a form group.
+         *
+         * @param string $name
+         * @param string $element
+         * @return string 
+         * @static 
+         */
+        public static function getFormGroup($name, $element){
+            return \Watson\BootstrapForm\BootstrapForm::getFormGroup($name, $element);
+        }
+        
+        /**
+         * Get the form type.
+         *
+         * @return string 
+         * @static 
+         */
+        public static function getType(){
+            return \Watson\BootstrapForm\BootstrapForm::getType();
+        }
+        
+        /**
+         * Determine if the form is of a horizontal type.
+         *
+         * @return bool 
+         * @static 
+         */
+        public static function isHorizontal(){
+            return \Watson\BootstrapForm\BootstrapForm::isHorizontal();
+        }
+        
+        /**
+         * Set the form type.
+         *
+         * @param string $type
+         * @return void 
+         * @static 
+         */
+        public static function setType($type){
+            \Watson\BootstrapForm\BootstrapForm::setType($type);
+        }
+        
+        /**
+         * Get the column class for the left column of a horizontal form.
+         *
+         * @return string 
+         * @static 
+         */
+        public static function getLeftColumnClass(){
+            return \Watson\BootstrapForm\BootstrapForm::getLeftColumnClass();
+        }
+        
+        /**
+         * Set the column class for the left column of a horizontal form.
+         *
+         * @param string $class
+         * @return void 
+         * @static 
+         */
+        public static function setLeftColumnClass($class){
+            \Watson\BootstrapForm\BootstrapForm::setLeftColumnClass($class);
+        }
+        
+        /**
+         * Get the column class for the left column offset of a horizontal form.
+         *
+         * @return string 
+         * @static 
+         */
+        public static function getLeftColumnOffsetClass(){
+            return \Watson\BootstrapForm\BootstrapForm::getLeftColumnOffsetClass();
+        }
+        
+        /**
+         * Set the column class for the left column offset of a horizontal form.
+         *
+         * @param string $class
+         * @return void 
+         * @static 
+         */
+        public static function setLeftColumnOffsetClass($class){
+            \Watson\BootstrapForm\BootstrapForm::setLeftColumnOffsetClass($class);
+        }
+        
+        /**
+         * Get the column class for the right column of a horizontal form.
+         *
+         * @return string 
+         * @static 
+         */
+        public static function getRightColumnClass(){
+            return \Watson\BootstrapForm\BootstrapForm::getRightColumnClass();
+        }
+        
+        /**
+         * Set the column class for the right column of a horizontal form.
+         *
+         * @param string $lcass
+         * @return void 
+         * @static 
+         */
+        public static function setRightColumnClass($class){
+            \Watson\BootstrapForm\BootstrapForm::setRightColumnClass($class);
+        }
+        
+        /**
+         * Flatten arrayed field names to work with the validator, including removing "[]",
+         * and converting nested arrays like "foo[bar][baz]" to "foo.bar.baz".
+         *
+         * @param string $field
+         * @return string 
+         * @static 
+         */
+        public static function flattenFieldName($field){
+            return \Watson\BootstrapForm\BootstrapForm::flattenFieldName($field);
         }
         
     }

@@ -23,6 +23,12 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\Profile whereUpdatedAt($value)
  * @mixin \Eloquent
  * @property-read \Btcc\Models\Package $package
+ * @property string $country_code
+ * @property string $phone
+ * @property string $city_id
+ * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\Profile whereCountryCode($value)
+ * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\Profile wherePhone($value)
+ * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\Profile whereCityId($value)
  */
 class Profile extends Model
 {

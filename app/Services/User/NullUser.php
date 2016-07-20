@@ -12,7 +12,9 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class NullUser
+ *
  * @package Btcc\Services\User
+ * @mixin \Eloquent
  */
 class NullUser extends Model {
 

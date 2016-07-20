@@ -22,6 +22,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
  * Class User
+ *
  * @package Btcc\Models
  * @property integer $id
  * @property string $email
@@ -49,6 +50,18 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\User whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\User whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property string $name
+ * @property string $role
+ * @property string $package_id
+ * @property string $remember_token
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Btcc\Models\SupportTicket[] $supportTickets
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Btcc\Models\Transaction\UserTransaction[] $transactions
+ * @property-read mixed $total_sum
+ * @property-read mixed $package
+ * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\User whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\User whereRole($value)
+ * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\User wherePackageId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\User whereRememberToken($value)
  */
 class User  extends Authenticatable {
 

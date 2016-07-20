@@ -10,20 +10,25 @@
 namespace Btcc\Http\ViewComposers;
 
 
+use Btcc\Models\User;
 use Btcc\Services\PackageService;
 use Illuminate\Contracts\View\View;
 
 /**
+ * @todo Only for registered users
+ *
  * Class ViewComposers
  * @package Btcc\Http\ViewComposers
  */
-class AccountComposer {
+class UserInfoComposer {
 
 
     protected $partners;
     protected $partnersCount;
-    protected $wallet = [];
-    protected $packages;
+    //protected $wallet = [];
+
+    protected $packages = [];
+    private $isUserLoaded = false;
 
     /**
      * PHP 5 allows developers to declare constructor methods for classes.
@@ -33,13 +38,20 @@ class AccountComposer {
      * In order to run a parent constructor, a call to parent::__construct() within the child constructor is required.
      * param [ mixed $args [, $... ]]
      *
-     * @param \Btcc\Services\PackageService$packages
+     * @param \Btcc\Services\PackageService    $packages
      *
      * @link http://php.net/manual/en/language.oop5.decon.php
      */
-    public function __construct(PackageService$packages)
+    public function __construct(User $user)
     {
-        $this->packages= collect($packages);
+        if (\Auth::guest() == true) {
+            return false;
+
+        }
+
+        $this->isUserLoaded = true;
+
+       // $this->packages= collect($packages);
 
 
 
@@ -49,16 +61,29 @@ class AccountComposer {
 
     public function compose(View $view)
     {
-     //   $this->test =  user()->transactions->totalAmount();
-        $view->with([
-            //'partners'=>[],
+        if ($this->isUserLoaded == false) {
+            return;
 
-            'wallet'=>['balance'=>user()->totalSum,
-                       'packageName'=>user()->getPackageAttribute()->name],
-            'package'=>[user()->getPackageAttribute()],
-            'packages'=>collect($this->packages),
+
+        }
+
+        $view->with([
+            'profile'=>[
+                'package'=>user()->getPackageAttribute(),
+            ],
+
+            'wallet'=>[
+                'balance'=>user()->totalSum,
+
+            ],
+            'stat'=>
+            [
+                'registeredUsers'=>User::count(),
+
+
+            ],
+
             
-            //'partners1'=>$this->partners1,
 
         ]);
 

@@ -27,7 +27,7 @@ class BinaryTreeOutput {
 
 
     generateTreeConfig(containerID) {
-        var treeConfig = {
+        return {
             chart: {
                 container: containerID,
                 node: {
@@ -37,7 +37,7 @@ class BinaryTreeOutput {
             nodeStructure: {
                 HTMLclass: "owner",
                 child_id: this.parentNode.user_id,
-                collapsed: true,
+                collapsed: false,
                 text: {
                     title: "You",
                     desc: this.parentNode.name,
@@ -46,13 +46,12 @@ class BinaryTreeOutput {
                 children: this.nodes
             }
         };
-        return treeConfig;
     }
 
 
     analyzeTree(treeObj) {
         // обходим все Node из списка в поисках Children
-        var binaryPositions = ['L', 'R'];
+        const binaryPositions = ['L', 'R'];
 
 
         jQuery(treeObj).each((index, node)=> {
@@ -168,14 +167,14 @@ class BinaryTreeOutput {
             var pos = positions[i];
             var newNode = {
                 parent_id: parentNodeId,
-                HTMLclass: "free",
+                HTMLclass: `free free-${pos}`,
                 bt_position: pos,
-                name: "Free position",
-                text: {
-                    title: "Free position",
-                    desc: "Binary:" + pos,
-                },
-                innerHTML: `<div class='binary-data' data-binary-position="${pos}" data-parent-id="${parentNodeId}">Free ${pos} position</div>`,
+              //  name: "Free position",
+                //text: {
+                //    title: `${pos}`,
+               // //    desc: "Binary:" + pos,
+             //   },
+                innerHTML: `<div class='binary-data' data-binary-position="${pos}" data-parent-id="${parentNodeId}">${pos}</div>`,
                 is_new: true,
             };
             newNodes.push(newNode);

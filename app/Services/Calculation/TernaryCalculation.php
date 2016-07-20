@@ -13,7 +13,7 @@ namespace Btcc\Services\Calculation;
  * Class TernaryCalculation
  * @package Btcc\Services
  */
-class TernaryCalculation extends Calculation {
+class TernaryCalculation extends BaseCalculation {
 
     /**
      *

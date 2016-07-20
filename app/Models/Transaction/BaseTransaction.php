@@ -40,6 +40,13 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \Btcc\Models\User $senderUser
  * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\Transaction\BaseTransaction ofType($type)
  * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\Transaction\BaseTransaction processed()
+ * @property integer $sender_id
+ * @property integer $reciever_id
+ * @property boolean $credit_flag
+ * @property-read \Btcc\Models\User $issuedBy
+ * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\Transaction\BaseTransaction whereSenderId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\Transaction\BaseTransaction whereRecieverId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\Transaction\BaseTransaction whereCreditFlag($value)
  */
 class BaseTransaction extends Model implements Transactable
 {
