@@ -134,6 +134,84 @@ class TreeBinary extends BaseTree
         return $descentants[0]->count;
     }
 
+    public static function extractParentRowJson($rows,$parentId)
+    {
+        if (count($rows)>0) {
+            $revesedArray = array_reverse($rows, TRUE);
+            return array_pop($revesedArray);
+        }
+            // no children
+
+            $parent = new \stdClass();
+            $parent->user_id = $parentId;
+            $parent->name = user()->email;
+            return $parent;
+    }
+
+
+    /**
+     * @param $userId
+     *
+     * @return array
+     */
+    public static function generateJson($rows, $parentId)
+    {
+
+        if (count($rows) == 0) {
+            return json_encode([]);
+        }
+
+        /**
+         * If remove first element from rows, to make it parent
+         *      then buildRigidArrayTreeStructureForTreant fails
+
+         */
+        //$revesedArray = array_reverse($rows, TRUE);
+        //$parent = array_pop($revesedArray);
+        //unset($rows[0]);
+
+        $items = (new TreeDecorator([]))::stdClassToArray($rows);
+
+        return json_encode(static::buildRigidArrayTreeStructureForTreant($items, $parentId));
+
+    }
+
+    /**
+     * @param $elements
+     * @param int   $parentId
+     *
+     * @return array
+     */
+    public static function buildRigidArrayTreeStructureForTreant($elements, $parentId = 1)
+    {
+
+        $branch = [];
+
+        foreach ($elements as $n) {
+            $stringPosition = $n['bt_position'];
+
+            $n['text'] = [
+                'title' => $stringPosition,
+                'desc' =>'ID:' . $n['user_id'] . ' LEV:' . $n['level'], //$n['name'] . ,
+
+            ];
+            //$n['link'] = ['href' => url('/tree/binary/show', $n['user_id'])];
+            $n['HTMLclass'] = 'partner partner-'.$stringPosition;
+
+            if ($n['parent_id'] == $parentId) {
+
+                $children = static::buildRigidArrayTreeStructureForTreant($elements, $n['user_id']);
+                if ($children) {
+                    $n['children'] = $children;
+                }
+                $branch[] = $n;
+            }
+        }
+
+
+        return $branch;
+    }
+
 
 
     public function getParents()
@@ -164,89 +242,4 @@ class TreeBinary extends BaseTree
     {
         // TODO: Implement getParentUser() method.
     }
-
-
-    /**
-     * @param $userId
-     *
-     * @return array
-     */
-    public static function generateJson($rows, $parentId)
-    {
-        //  $rows = static::getUserTree($userId);
-
-
-        if (count($rows) == 0) {
-            // no children
-
-            $parent = new \stdClass();
-            $parent->user_id = $parentId;
-            $parent->name = user()->email;
-            $jsonNodes = json_encode([]);
-
-            return [
-                $parent,
-                $jsonNodes
-            ];
-        }
-
-        /**
-         * If remove first element from rows, to make it parent
-         *      then buildRigidArrayTreeStructureForTreant fails
-
-         */
-        $revesedArray = array_reverse($rows, TRUE);
-        $parent = array_pop($revesedArray);
-        //unset($rows[0]);
-
-        $items = (new TreeDecorator([]))::stdClassToArray($rows);
-
-        $jsonNodes = json_encode(static::buildRigidArrayTreeStructureForTreant($items, $parentId));
-
-
-
-        return [
-            $parent,
-            $jsonNodes
-        ];
-    }
-
-    /**
-     * @param $elements
-     * @param int   $parentId
-     *
-     * @return array
-     */
-    public static function buildRigidArrayTreeStructureForTreant($elements, $parentId = 1)
-    {
-
-        $branch = [];
-
-        foreach ($elements as $n) {
-            $stringPosition = $n['bt_position'];
-
-            $n['text'] = [
-                'title' => $stringPosition,
-                'desc' =>'ID:' . $n['user_id'] . ' LEV:' . $n['level'], //$n['name'] . ,
-
-            ];
-            $n['link'] = ['href' => url('/tree/binary/show', $n['user_id'])];
-            $n['HTMLclass'] = 'partner partner-'.$stringPosition;
-
-            if ($n['parent_id'] == $parentId) {
-
-                $children = static::buildRigidArrayTreeStructureForTreant($elements, $n['user_id']);
-                if ($children) {
-                    $n['children'] = $children;
-                }
-                $branch[] = $n;
-            }
-        }
-
-        // \Debugbar::addMessage('Final ',$branch);
-
-        return $branch;
-    }
-
-
 }

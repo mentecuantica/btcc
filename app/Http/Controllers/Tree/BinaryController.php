@@ -23,7 +23,10 @@ class BinaryController extends Controller
     {
         $userId = 1;
         $rows = $this->treeRepo->binaryChildren($userId,100)->joinUsers()->get();
-        list($parent, $jsonNodes) = TreeBinary::generateJson($rows, $userId);
+
+        $parent = TreeBinary::extractParentRowJson($rows,$userId);
+
+        $jsonNodes = TreeBinary::generateJson($rows, $userId);
 
        // dump($jsonNodes);
         return view('tree.binary.indexBinary',compact('jsonNodes','parent'));
@@ -38,7 +41,8 @@ class BinaryController extends Controller
 
         $rows = $this->treeRepo->binaryChildren($id,100)->joinUsers()->get();
 
-        list($parent, $jsonNodes)  = TreeBinary::generateJson($rows,$id);
+        $parent = TreeBinary::extractParentRowJson($rows,$id);
+        $jsonNodes  = TreeBinary::generateJson($rows,$id);
 
         return view('tree.binary.showBinary',compact('jsonNodes','id'));
 

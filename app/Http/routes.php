@@ -38,6 +38,8 @@ Route::group(['middleware' => ['auth']], function () {
 
 
 
+
+
 });
 //Route::group(['middleware'=>'web'], function () {
 Route::get('/', function () {
@@ -53,53 +55,6 @@ Route::get('/', function () {
 Route::get('/phpinfo', function() {
     phpinfo();
 });
-
-Route::get('/ququ',function(\Btcc\Repositories\TreeRepository $repository) {
-
-//    $result = DB::table('tree_ternary')->pluck('path_to_root');
-
-  //  $result = DB::query()->select('user_id',DB::raw('parent_id FROM bt_get_descendants(:id)'))->addSelect('pp')->toSql(); // (['parent_id, user_id, bt_position, depth, level'],)
-
-   // dump(DB::query()->selectRaw(':id,:bd',[':id'=>1,':bd'=>1])->getBindings());
-
-    /**
-     * @param int $parentId
-     * @param int $depth
-     *
-     * @return \Illuminate\Database\Query\Builder
-     */
-
-
-
-
-        /**@var \Illuminate\Database\Query\Builder $builder **/
-
-        //return $builder;
-
-    //};
-
-    $fnc = sprintf('bt_get_ancestors(%d) as t',1);
-    //dd(DB::query()->addSelect(['t.ss','t.bt_position'])->from(DB::raw($fnc))->toSql());
-
-    dump( $repository->binaryChildren(1,10)->joinUsers()->get());
-
-
-    $result = $repository->binaryChildren(4);
-    //dump(DB::query()->addSelect('user_id')->select('parent_id')->selectRaw('FROM bt_get_descendants(:id) as bd',[':id'=>1])->toSql());
-    //dump(DB::query()->addSelect('user_id')->select('parent_id')->selectRaw('FROM bt_get_descendants(:id) as bd',[':id'=>1])->toSql());
-    //dump(DB::query()->selectSub('SELECT user_id, parent_id FROM bt_get_descendants(:id)','d')->addSelect(['d.user_id'])->toSql());
-
-
-    //dd($result);
-    //$result =  collect($result);
-    //dd($result);
-    return view('blanco',compact('result'));
-});
-
-
-/**
- * For edu and test
- */
 
 
 

@@ -21,11 +21,7 @@ use Laracasts\Flash\Flash;
 class PartnerController extends Controller {
 
     /**
-     * @todo Show tree uncollapsed
      * @todo Show highlight free items
-     * @todo R-L - var Highlight
-     * @todo Mouse pointer on free items
-     * @todo Automatically adds Faker Name, Last, Email
      * @todo
      * Show the form for creating a new resource.
      *
@@ -40,7 +36,8 @@ class PartnerController extends Controller {
 
         $tree = $this->treeRepo->binaryChildren($user->id, 10)->joinUsers()->get();
 
-        list($parent, $jsonNodes) = TreeBinary::generateJson($tree, $user->id);
+        $parent = TreeBinary::extractParentRowJson($tree, $user->id);
+         $jsonNodes = TreeBinary::generateJson($tree, $user->id);
 
         JavaScript::put([
             'childrenNodes' => $jsonNodes,

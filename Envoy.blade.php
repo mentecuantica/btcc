@@ -14,7 +14,7 @@ links
     cd  /home/deploy
     rm -rf btcc-old
     mv -f btcc btcc-old
-    git clone -b master git@bitbucket.org:cagenic/btcc.git
+    git clone -b todeploy git@bitbucket.org:cagenic/btcc.git
 @endtask
 
 @task('folders')
@@ -26,6 +26,13 @@ mkdir bootstrap/cache
 chmod -R 777 bootstrap/cache
 chmod -R 777 storage/
 
+@endtask
+
+@task('mybad')
+cd /home/deploy
+cd btcc
+chmod -R 777 bootstrap/cache
+chmod -R 777 storage/
 @endtask
 
 @task('composer')

@@ -2,27 +2,35 @@ import * as _ from "lodash";
 
 class BinaryTreeOutput {
 
-    constructor(nodes = '[]', parentNode, containerID="#tree-container") {
+    constructor(nodes = '[]', parentNode, containerID = "#tree-container") {
+        let treantInstance, treeInstanceConfig;
         this.nodes = JSON.parse(nodes);
         this.parentNode = parentNode;
         this.freeNodes = [];
+
         //this.parsedChildrenNodes = JSON.parse(childrenNodes);
 
-        var treeInstanceConfig = this.generateTreeConfig(containerID);
+        treeInstanceConfig = this.generateTreeConfig(containerID);
 
         this.analyzeTree(treeInstanceConfig.nodeStructure);
 
+        let freeNodesClone = _.cloneDeep(this.freeNodes);
+
+        console.log(this.freeNodes);
+
         this.modifyTree(treeInstanceConfig.nodeStructure);
 
-        var treantInstance = new Treant(treeInstanceConfig);
+        console.log(freeNodesClone);
+
+        treantInstance = new Treant(treeInstanceConfig);
 
 
-        jQuery(containerID).on("click", ".node.free", function (elem) {
-            var dataElement = jQuery(this).children(".binary-data").data();
+        jQuery(containerID).on("click", ".node.free", function () {
+            let dataElement = jQuery(this).children(".binary-data").data();
 
             jQuery("#binary-position").val(dataElement.binaryPosition);
             jQuery("#binary-parent-id").val(dataElement.parentId);
-        })
+        });
     }
 
 
@@ -56,42 +64,46 @@ class BinaryTreeOutput {
 
         jQuery(treeObj).each((index, node)=> {
 
-            // Children есть
+            let singlePositionArray, existingPostion, childrenLength;
+
             if (!node.hasOwnProperty('children')) {
-                this.getVirtualFreeNode(node.user_id, binaryPositions)
+                this.getVirtualFreeNode(node.user_id, binaryPositions);
                 return;
             }
 
-            length = node.children.length;
-            if (0 === length) {
-                this.getVirtualFreeNode(node.user_id, binaryPositions)
-            }
-            ;
+            childrenLength = node.children.length;
 
-            if (1 === length) {
-                var existingPostion = node.bt_position;
-                var singlePositionArray = existingPostion == 'R' ? ['L'] : ['R'];
+            if (0 === childrenLength) {
+                this.getVirtualFreeNode(node.user_id, binaryPositions);
+            }
+
+
+            if (1 === childrenLength) {
+                existingPostion = node.children[0].bt_position;  //
+                singlePositionArray = existingPostion == 'R' ? ['L'] : ['R'];  // RUDE EXCLUSION, IF existing = L, then ['R']
+
+
                 this.getVirtualFreeNode(node.user_id, singlePositionArray);
-                //
                 this.analyzeTree(node.children);
             }
 
-            if (length === 2) {
+            if (childrenLength === 2) {
                 // iterate again
                 this.analyzeTree(node.children);
             }
-            ;
+
 
         });
-    };
+    }
 
 
-    modifyTree (nodes) {
+    modifyTree(nodes) {
 
         jQuery(nodes).each((index, node)=> {
 
+            let childrenToAdd, ifIncludes, newChildrenObj;
+
             if (node.hasOwnProperty('children')) {
-                console.log('Modify node has children: ', node);
                 this.modifyTree(node.children);
             }
 
@@ -99,34 +111,41 @@ class BinaryTreeOutput {
                 return;
             }
 
-            var childId = node.user_id;
-            if (true == _.includes(_.map(this.freeNodes, obj=> {
-                    return obj.searchId
-                }), childId)) {
-                console.log('We need add to node', childId);
 
+            // VERY COMPLEX  // obj.searchID - who is the parent? check with node user_id
+            ifIncludes = true == _.includes(_.map(this.freeNodes, obj=> {
+                    return obj.searchId;
+                }), node.user_id);
 
-                var newChildrenObj = _.find(this.freeNodes, obj => {
-                    return obj.searchId == childId
+            if (ifIncludes) {
+                newChildrenObj = _.find(this.freeNodes, obj => {
+                    return obj.searchId == node.user_id;
                 });
 
                 if (undefined !== newChildrenObj) {
-                    var childrenToAdd = newChildrenObj.children;
-                    // merge with someone
-                    if (node.hasOwnProperty('children')) {
-                        var realChildren = node.children;
+                    let newChildren = newChildrenObj.children;
 
-                        childrenToAdd = realChildren.concat(childrenToAdd);
+                    if (newChildren.length == 2) {          // if children.lenght =2 , then inject to node and leave (2 IS MAX)
+                        node.children = newChildren;  // if children.lenght =2 , then inject to node and leave (2 IS MAX)
+                        return;
                     }
 
-                    node["children"] = childrenToAdd;
+                    //if (node.hasOwnProperty('children')) { // at this moment we mix L or R
+                    console.log('Modify by adding 1 this: ', newChildren, 'to this', node.children);
+
+                    childrenToAdd = node.children.concat(newChildren);
+
+                    if (childrenToAdd[0].bt_position == 'R') {
+                        let tempR = childrenToAdd[0];
+                        let tempL = childrenToAdd[1];
+                        childrenToAdd = [tempL, tempR];
+                    }
+
+                    node.children = childrenToAdd;
 
 
                 }
-
             }
-
-            ;
 
 
         });
@@ -140,13 +159,14 @@ class BinaryTreeOutput {
      * @param positions
      */
     getVirtualFreeNode(parentNodeId, positions) {
+        let newNodes;
         if (parentNodeId === undefined) {
             parentNodeId = window.Btcc.parent.id;
-            console.log('Add free root:', parentNodeId, positions);
+            //console.log('Add free root:', parentNodeId, positions);
         }
-        console.log('Add free node to:', parentNodeId, positions);
+        // console.log('Add free node to:', parentNodeId, positions);
 
-        var newNodes = this.createChildrenNodes(positions, parentNodeId);
+        newNodes = BinaryTreeOutput.createChildrenNodes(positions, parentNodeId);
 
         this.freeNodes.push({searchId: parentNodeId, children: newNodes});
 
@@ -161,26 +181,22 @@ class BinaryTreeOutput {
      * @param parentNodeId
      * @returns {Array}
      */
-     createChildrenNodes(positions, parentNodeId) {
-        var newNodes = [];
-        for (var i = 0; i < positions.length; i++) {
-            var pos = positions[i];
-            var newNode = {
+    static createChildrenNodes(positions, parentNodeId) {
+        let i, newNode, pos, newNodes = [];
+
+        for (i = 0; i < positions.length; i++) {
+            pos = positions[i];
+            newNode = {
                 parent_id: parentNodeId,
                 HTMLclass: `free free-${pos}`,
                 bt_position: pos,
-              //  name: "Free position",
-                //text: {
-                //    title: `${pos}`,
-               // //    desc: "Binary:" + pos,
-             //   },
                 innerHTML: `<div class='binary-data' data-binary-position="${pos}" data-parent-id="${parentNodeId}">${pos}</div>`,
                 is_new: true,
             };
             newNodes.push(newNode);
         }
         return newNodes;
-    };
+    }
 }
 
 export default BinaryTreeOutput;

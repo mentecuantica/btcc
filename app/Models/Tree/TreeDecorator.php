@@ -79,37 +79,6 @@ class TreeDecorator implements TreeDecorable{
 
 
 
-
-    public function getNestedArray()
-    {
-        // TODO: Implement getNestedArray() method.
-    }
-
-    public function getNestedJson()
-    {
-        // TODO: Implement getNestedJson() method.
-    }
-
-    public function getNestedModels()
-    {
-        // TODO: Implement getNestedModels() method.
-    }
-
-    public function getPlainArray()
-    {
-        // TODO: Implement getPlainArray() method.
-    }
-
-    public function getPlainJson()
-    {
-        // TODO: Implement getPlainJson() method.
-    }
-
-    public function getPlainModels()
-    {
-        // TODO: Implement getPlainModels() method.
-    }
-
     public function toNestedArray($topNodeId, $objElemToArray = FALSE)
     {
         if ($objElemToArray===FAlSe) {
@@ -221,8 +190,40 @@ class TreeDecorator implements TreeDecorable{
     {
         return static::$attributes[2];
     }
-    
 
 
+
+
+
+
+    public function getNestedArray()
+    {
+        // TODO: Implement getNestedArray() method.
+    }
+
+    public function getNestedJson()
+    {
+        // TODO: Implement getNestedJson() method.
+    }
+
+    public function getNestedModels()
+    {
+        // TODO: Implement getNestedModels() method.
+    }
+
+    public function getPlainArray()
+    {
+        // TODO: Implement getPlainArray() method.
+    }
+
+    public function getPlainJson()
+    {
+        // TODO: Implement getPlainJson() method.
+    }
+
+    public function getPlainModels()
+    {
+        // TODO: Implement getPlainModels() method.
+    }
 
 }
