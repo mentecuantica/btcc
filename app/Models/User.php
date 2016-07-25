@@ -189,8 +189,14 @@ class User  extends Authenticatable {
         return $this->hasMany(UserTransaction::class, 'user_id');
     }
 
-    public function getTotalSumAttribute() {
+    public function getTotalStupudSumAttribute() {
         return static::join('users_transactions','user_id','=','users.id')->where(['users.id'=>$this->id])->groupBy('user_id')->sum('amount');
+
+    }
+
+    public function getTotalSumAttribute() {
+
+        return UserTransaction::getSummary($this->id); //->groupBy('user_id')->sum('amount');
 
     }
 

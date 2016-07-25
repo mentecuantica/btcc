@@ -3,6 +3,7 @@
 
 namespace Btcc\Services;
 use Illuminate\Validation\Validator;
+use LinusU\Bitcoin\AddressValidator;
 
 /**
  * Class Validation
@@ -14,7 +15,7 @@ class Validation extends Validator {
      *
      * @var array
      */
-    protected $myImplicitRules = ['treebinaryfree','enoughMoney'];
+    protected $myImplicitRules = ['treebinaryfree','enoughMoney','bitcoinAddress','hasEnoughFunds'];
 
     /**
      * Determine if a given rule implies the attribute is required.
@@ -71,9 +72,47 @@ class Validation extends Validator {
 
         return true;
 
+    }
 
+
+
+    public function validateBitcoinAddress($attribute, $value, $messages,  $parameters)
+    {
+        $isValid = AddressValidator::isValid($value);
+
+        if (!$isValid) {
+            $message = sprintf('Bitcoin addsess %s is invalid',$value);
+            $this->messages()->add('validation.bitcoin_address',$message);
+           // $this->invalid();
+            return false;
+        }
+
+        return true;
 
     }
+
+    public function validateHasEnoughFunds($attribute, $value, $messages,  $parameters)
+    {
+
+
+        $userFinances = user()->totalSum;
+
+
+
+
+        if ($userFinances<=$value) {
+            $message =
+                sprintf('Amount to withdraw %d $ is more then you have % $',
+                    $value, $userFinances);
+            $this->messages()->add('validateHasEnoughFunds',$message);
+            $this->invalid();
+            return false;
+        }
+
+        return true;
+
+    }
+
 
     /**
      * Validate that a required attribute exists.

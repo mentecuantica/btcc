@@ -34,6 +34,13 @@ class PartnerController extends Controller {
 
         $user = user();
 
+        //$this->authorize('addPartner');
+
+        if ($user->cannot('addPartner')) {
+            \Flash::warning('You have no funds to add user');
+           // return redirect('')->
+        };
+
         $tree = $this->treeRepo->binaryChildren($user->id, 10)->joinUsers()->get();
 
         $parent = TreeBinary::extractParentRowJson($tree, $user->id);

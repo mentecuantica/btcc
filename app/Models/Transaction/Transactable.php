@@ -10,10 +10,29 @@
 namespace Btcc\Models\Transaction;
 
 interface Transactable {
+
+    /**
+     * Funding for new user on registration
+     */
     const TYPE_REGISTER_FUNDING =1;
+
+    /**
+     *
+     * Withdraw from current user wallet while registering new user
+     *
+     */
     const TYPE_REGISTER_WITHDRAW =2;
 
+    /**
+     * Funding from external source
+     *
+     */
     const TYPE_CASHIN_FUNDING =4;
+
+    /**
+     * Withdraw for other user, or other waller
+     *
+     */
     const TYPE_CASHOUT_WITHDRAW =6;
 
     const TYPE_UNARY_PAYMENT =12;

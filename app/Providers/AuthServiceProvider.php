@@ -2,6 +2,8 @@
 
 namespace Btcc\Providers;
 
+use Btcc\Models\User;
+use Btcc\Policies\UserPolicy;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -15,6 +17,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         'Btcc\Model' => 'Btcc\Policies\ModelPolicy',
+        User::class => UserPolicy::class,
     ];
 
     /**

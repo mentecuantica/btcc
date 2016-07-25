@@ -19,10 +19,9 @@ Route::group(['middleware' => ['auth']], function () {
 
    // Route::get('transactions', 'TransactionController@index');
     Route::get('transaction/refund', 'TransactionController@refund');
-    Route::resource('transaction', 'TransactionController',['only'=>['index','show','store']]);
-
     Route::any('transaction/withdraw', 'TransactionController@withdraw');
     Route::any('transaction/transfer', 'TransactionController@transfer');
+    Route::resource('transaction', 'TransactionController',['only'=>['index','show','store']]);
 
     Route::resource('partner', 'PartnerController');
 
@@ -54,6 +53,14 @@ Route::get('/', function () {
 
 Route::get('/phpinfo', function() {
     phpinfo();
+});
+
+
+Route::get('/test', function() {
+
+    return \Btcc\Models\Transaction\UserTransaction::getSummary(1);
+
+
 });
 
 
