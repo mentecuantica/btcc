@@ -15,7 +15,8 @@ class CreateUsersTransactionsTable extends Migration
         Schema::create('users_transactions', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+          //  $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id'); //->references('id')->on('users');
             $table->integer('amount');
             $table->integer('type');
             $table->integer('status');

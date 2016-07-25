@@ -47,7 +47,6 @@ class AddNewUserRequest extends Request {
 
                     $castedValue = ($isValid==="true") ? true : FALSE;
 
-                    //$isValid = boolval($isValid);
                     $passedBinaryValidation = ($passedBinaryValidation and $castedValue);
                     if ($passedBinaryValidation) {
                         continue;

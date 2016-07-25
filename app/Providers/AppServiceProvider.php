@@ -49,7 +49,6 @@ class AppServiceProvider extends ServiceProvider
             return new Validation($translator, $data, $rules, $messages);
         });
 
-       // $this->initialiszeSubscriptionPackages();
     }
 
     /**
