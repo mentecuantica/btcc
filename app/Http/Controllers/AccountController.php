@@ -26,36 +26,37 @@ class AccountController extends Controller {
         return view('account.index', ['profile'=>$user->profile,'user'=>$user]);
     }
 
+    public function profile(Request $request)
+    {
+
+        return view('account.profile', ['profile'=>$request->user()->profile,'user'=>$request->user()]);
+
+    }
+
     public function profileUpdate(ProfileUpdateRequest $request)
     {
-        $user_id = \Auth::user()->id;
-        $profile = \Auth::user()->profile;
-        if ($profile == NULL) {
-            $profile = new Profile;
-            $profile->user_id = $user_id;
-            $profile->fill($request->all());
 
-            if (\Auth::user()->profile()->save($profile) !== FALSE) {
-                event(new ProfileWasUpdated($profile, TRUE));
-            }
+        $user = $request->user();
 
-        }
-        else {
+        /**@var  User $user **/;
 
-            if ($profile->update($request->all())) {
-                event(new ProfileWasUpdated($profile));
+        $user->fill($request->only(['first_name','last_name']));
+        $user->profile->fill($request->only(['country_code','phone']));
 
-                return redirect('/account')->with(['message' => 'Success']);
-            }
+        if ($user->update() && $user->profile->update()) {
+
+            \Flash::success('Profile been updated');
+            return redirect('/account');
 
         }
 
+
+        \Flash::error('Some error occured');
+
+        return back();
+
     }
 
-    public function login()
-    {
-    
-    }
 
   
 

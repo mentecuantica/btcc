@@ -33,7 +33,7 @@ use Illuminate\Database\Eloquent\Model;
 class Profile extends Model
 {
 
-    protected $fillable = ['name','surname','country_code'];
+    protected $fillable = ['name','surname','country_code','phone'];
 
     /**
      * New inline validation from

@@ -24,8 +24,10 @@ class ProfileUpdateRequest extends Request
     public function rules()
     {
         return [
-            'name'=>'required|max:20',
-            'surname'=>'required|max:30',
+            'first_name'=>'required|max:20',
+            'last_name'=>'required|max:30',
+            'phone'=>'string|max:30',
+            'country_code'=>'required|string|max:4',
         ];
     }
 }

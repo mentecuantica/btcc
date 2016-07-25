@@ -57,6 +57,7 @@
       </ul>
      </li>
      <li><a href="{{ route('supportTicket.index') }}">Support</a></li>
+     <li><a href="{{ url('/faq') }}">FAQ</a></li>
     @endif
    </ul>
 

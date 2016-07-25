@@ -25,7 +25,12 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::resource('partner', 'PartnerController');
 
-    Route::post('account/profile', ['as'   => 'profile.update',
+    Route::get('account/profile', ['as'   => 'acoount.profile',
+                                   'uses' => 'AccountController@profile'
+    ]);
+
+
+    Route::post('account/profile/update', ['as'   => 'acoount.profile.update',
                                    'uses' => 'AccountController@profileUpdate'
     ]);
 

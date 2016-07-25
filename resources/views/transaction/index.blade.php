@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+    <div class="container">
+        <div class="page-header">
+            <h1>Wallet<small>all transactions</small></h1>
+        </div>
+
     <h3>{!! trans('Transaction List') !!}</h3>
 
     @if(count($transactions))
@@ -41,4 +46,5 @@
         	<strong>You have no transactions</strong>
         </div>
     @endif
+    </div>
 @stop

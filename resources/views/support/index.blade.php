@@ -4,8 +4,12 @@
 @section('content')
     <div class="container">
 
-        @if (count($tickets)>0)
-            <h2>Your support tickets list</h2>
+        <div class="page-header">
+            <h1>Tickets<small>feel free ask out support</small></h1>
+        </div>
+
+    @if (count($tickets)>0)
+            <h3>Your support tickets list</h3>
 
             <table class="table table-condensed table-striped">
                 <thead>

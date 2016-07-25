@@ -3,7 +3,7 @@
 
 @section('content')
 <section id="ternary-tree">
-    <div class="container-fluid">
+    <div class="container">
         <h2>Linear tree</h2>
 
         {!! $htmlList !!}
