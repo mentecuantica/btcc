@@ -11,8 +11,8 @@ namespace Btcc\Traits;
 
 use Btcc\Models\Tree\TreeBinary;
 use Btcc\Models\Tree\TreeLinear;
+use Btcc\Models\Tree\TreeTernary;
 use Btcc\Models\Tree\UserTreeable;
-use Btcc\Models\User;
 
 trait UserWithTrees {
 
@@ -30,6 +30,12 @@ trait UserWithTrees {
     protected $treeBinary;
 
 
+    /**
+     * @var TreeBinary
+     */
+    protected $treeTernary;
+
+
 
     /**
      * @return UserTreeable
@@ -41,6 +47,20 @@ trait UserWithTrees {
         }
 
         return $this->treeBinary;
+
+    }
+
+
+    /**
+     * @return UserTreeable
+     */
+    public function getTreeTernary()
+    {
+        if ($this->treeTernary === null) {
+            $this->treeTernary = $this->createTreeTernary();
+        }
+
+        return $this->treeTernary;
 
     }
 
@@ -64,6 +84,15 @@ trait UserWithTrees {
         return new TreeBinary($this);
     }
 
+
+    /**
+     * @return \Btcc\Models\Tree\TreeTernary
+     */
+    public function createTreeTernary()
+    {
+        return new TreeTernary($this);
+    }
+
     /**
      * @return \Btcc\Models\Tree\TreeLinear
      * @throws \Exception
@@ -79,20 +108,11 @@ trait UserWithTrees {
 
         return new $treeLinear;
     }
-/*
-    public function createTreeLinear2(User $owner)
-    {
-        $treeLinear = TreeLinear::where(['user_id'=>$owner->getUserId()])->get();
-        return new $treeLinear;
-    }
 
-    public function createTreeBinary2(User $owner)
-    {
-        return new TreeBinary($owner);
-    }*/
 
 
     protected static $linearTree;
+
     /**
      * @return mixed
      */

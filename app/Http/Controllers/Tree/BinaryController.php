@@ -21,8 +21,11 @@ class BinaryController extends Controller
      */
     public function index()
     {
-        $userId = 1;
-        $rows = $this->treeRepo->binaryChildren($userId,100)->joinUsers()->get();
+        $userId = \Auth::id();
+
+        $rows = \Auth::user()->binary->queryChildren()->joinUsers()->get();
+
+        //$rows = $this->treeRepo->binaryChildren($userId,100)->joinUsers()->get();
 
         $parent = TreeBinary::extractParentRowJson($rows,$userId);
 
@@ -37,6 +40,7 @@ class BinaryController extends Controller
 
     public function show($id)
     {
+
 
 
         $rows = $this->treeRepo->binaryChildren($id,100)->joinUsers()->get();

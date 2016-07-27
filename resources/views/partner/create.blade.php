@@ -22,7 +22,7 @@
 
                         {{ csrf_field() }}
 
-                            @include('partner._form');
+                            @include('partner._form',['wallet'=>$wallet]);
 
 
                         {!! Form::close() !!}

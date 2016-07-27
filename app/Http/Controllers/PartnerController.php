@@ -8,7 +8,7 @@ use Btcc\Http\Requests\AddNewUserRequest;
 use Btcc\Jobs\PayForNewUserPackage;
 use Btcc\Models\Tree\TreeBinary;
 use Btcc\Models\User;
-
+use Gate;
 use ClassPreloader\Factory;
 use Faker\Generator;
 use Illuminate\Http\Request;
@@ -29,14 +29,20 @@ class PartnerController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Generator $faker)
+    public function create()
     {
 
         $user = user();
 
         //$this->authorize('addPartner');
 
-        if ($user->cannot('addPartner')) {
+/*        if (policy($user)->addPartner($user)) {
+            \Debugbar::addMessage('policy helper - can','error');
+        }*/
+
+
+        if ($user->cannot('add-partner')) {
+            \Debugbar::addMessage('User can user can','error');
             \Flash::warning('You have no funds to add user');
            // return redirect('')->
         };
@@ -55,12 +61,7 @@ class PartnerController extends Controller {
 
         //dd($userId,$jsonNodes,$parent);
 
-
-
-        $newUser = new User();
-        $newUser->first_name = $faker->firstName;
-        $newUser->last_name = $faker->lastName;
-        $newUser->email = $faker->email;
+        $newUser = $this->createFakerFilledUser();
         return view('partner.create', ['newUser'=>$newUser]);
     }
 
@@ -74,13 +75,15 @@ class PartnerController extends Controller {
         /**@var User $user * */
 
         // get an nested collection of LinearTree with User inside
-        $binaryPartnersCount = user()->getTreeBinary()->countPartners();
+        $partnersCount = user()->linear->countPartners();
 
-        
+        $partners = [] ; // user()->linear->getPartners();
 
-        $partners = [];
 
-        return view('partner.index', compact('binaryPartnersCount', 'partners'));
+
+
+
+        return view('partner.index', compact('partnersCount','partners'));
 
     }
 
@@ -101,7 +104,6 @@ class PartnerController extends Controller {
         $newUser = $this->userService->addNewUser($request);
 
         if (!($newUser instanceof User)) {
-            \Log::critical('Cannot create user threesine');
             \Flash::error('Partner successfully added!' . $newUser);
 
             return redirect()->back();
@@ -110,10 +112,8 @@ class PartnerController extends Controller {
 
         event(new UserRegisteredPartner($newUser));
 
-        \Log::critical('Before Job', [$newUser]);
         $this->dispatchNow(new PayForNewUserPackage($newUser));
 
-        \Log::critical('After dispath Job', [$newUser]);
 
         \Flash::warning(sprintf('Partner %s successfully to plan %s added! Remember his password <b>%s</b>', $newUser->email, $newUser->getPackageAttribute()->name, $newUser->passwordPlain));
 
@@ -121,20 +121,26 @@ class PartnerController extends Controller {
 
     }
 
-    //return redirect(route('partner.create'))->back()->withInput($request->except('password'));
+
+
 
     /**
-     * Display the specified resource.
+     * @param \Faker\Generator $faker
      *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Btcc\Models\User
      */
-    public function show(User $partner)
+    protected function createFakerFilledUser()
     {
 
-        return $partner;
-        // return view('partner.create');
-    }
+        $faker = \Faker\Factory::create();
+
+
+        $newUser = new User();
+        $newUser->first_name = $faker->firstName;
+        $newUser->last_name = $faker->lastName;
+        $newUser->email = $faker->email;
+
+        return $newUser;
+}
 
 }

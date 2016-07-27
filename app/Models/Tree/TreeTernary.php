@@ -3,16 +3,16 @@
 namespace Btcc\Models\Tree;
 
 
-use DB;
 use Btcc\Models\User;
+use DB;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Collection;
-class TreeBinary extends BaseTree
+class TreeTernary extends BaseTree
 {
 
     //use Singleton
 
-    protected $table = 'binary_tree';
+    protected $table = 'tree_ternary';
 
 
     /**
@@ -25,22 +25,6 @@ class TreeBinary extends BaseTree
      */
     protected $userKey;
 
-    /**
-     * @param $parentId
-     * @param $position
-     * @param $userId
-     *
-     * @return array
-     */
-    public static function addToParent($parentId, $position, $userId)
-    {
-        $result = DB::select('SELECT bt_add_to_parent(:parentId,:position, :userId)',[
-            'parentId'=>$parentId,
-            'position'=>$position,
-            'userId'=>$userId
-        ]);
-        return $result;
-    }
 
     /**
      * @return bool
@@ -87,89 +71,11 @@ class TreeBinary extends BaseTree
 
     public function countPartners()
     {
-        $descentants = DB::select('SELECT count(*) FROM bt_get_descendants(:id,:level)',['id'=>$this->userId,'level'=>100]);
+        $descentants = DB::select('SELECT count(*) FROM ternary_get_descendants(:id,:level)',['id'=>$this->userId,'level'=>100]);
         return $descentants[0]->count;
     }
 
-    public static function extractParentRowJson($rows,$parentId)
-    {
-        if (count($rows)>0) {
-            $revesedArray = array_reverse($rows, TRUE);
-            return array_pop($revesedArray);
-        }
-            // no children
 
-            $parent = new \stdClass();
-            $parent->user_id = $parentId;
-            $parent->name = user()->email;
-            return $parent;
-    }
-
-
-    /**
-     * @param $userId
-     *
-     * @return array
-     */
-    public static function generateJson($rows, $parentId)
-    {
-
-        if (count($rows) == 0) {
-            return json_encode([]);
-        }
-
-        /**
-         * If remove first element from rows, to make it parent
-         *      then buildRigidArrayTreeStructureForTreant fails
-
-         */
-        //$revesedArray = array_reverse($rows, TRUE);
-        //$parent = array_pop($revesedArray);
-        //unset($rows[0]);
-
-        //$items = (new TreeDecorator([]))::stdClassToArray($rows);
-        $items = TreeDecorator::stdClassToArray($rows);
-
-
-        return json_encode(static::buildRigidArrayTreeStructureForTreant($items, $parentId));
-
-    }
-
-    /**
-     * @param $elements
-     * @param int   $parentId
-     *
-     * @return array
-     */
-    public static function buildRigidArrayTreeStructureForTreant($elements, $parentId = 1)
-    {
-
-        $branch = [];
-
-        foreach ($elements as $n) {
-            $stringPosition = $n['bt_position'];
-
-            $n['text'] = [
-                'title' => $stringPosition,
-                'desc' =>'ID:' . $n['user_id'] . ' LEV:' . $n['level'], //$n['name'] . ,
-
-            ];
-            //$n['link'] = ['href' => url('/tree/binary/show', $n['user_id'])];
-            $n['HTMLclass'] = 'partner partner-'.$stringPosition;
-
-            if ($n['parent_id'] == $parentId) {
-
-                $children = static::buildRigidArrayTreeStructureForTreant($elements, $n['user_id']);
-                if ($children) {
-                    $n['children'] = $children;
-                }
-                $branch[] = $n;
-            }
-        }
-
-
-        return $branch;
-    }
 
 
 
@@ -198,7 +104,7 @@ class TreeBinary extends BaseTree
      */
     public function queryParents()
     {
-        $this->userKey = 'ancestor';
+        $this->userKey = 't.id';
         $this->query = static::ancestors($this->userId);
         return $this;
     }
@@ -246,7 +152,7 @@ class TreeBinary extends BaseTree
      */
     private static function getAncestors(int $id)
     {
-        $ancestors = DB::select('SELECT ancestor, bt_position FROM public.bt_get_ancestors(:id)',['id'=>$id]);
+        $ancestors = DB::select('SELECT id FROM public.ternary_get_ancestors(:id)',['id'=>$id]);
         return $ancestors;
     }
 
@@ -261,8 +167,8 @@ class TreeBinary extends BaseTree
      */
     private static function getDescendants($userId, $level = 100)
     {
-        $descentants = DB::select('SELECT user_id, parent_id, bt_position, depth, level 
-          FROM bt_get_descendants_with_parent(:id,:level)',['id'=>$userId,'level'=>100]);
+        $descentants = DB::select('SELECT parent_id,user_id,  t_position, depth, level_rel,path_to_root 
+          FROM ter ternary_get_descendants(:id,:level)',['id'=>$userId,'level'=>100]);
         return $descentants;
     }
 
@@ -274,8 +180,8 @@ class TreeBinary extends BaseTree
      */
     public static function descendants(int $parentId,int $depth = 5) {
 
-        $fnc = sprintf('bt_get_descendants_with_parent(%d,%d) as t',$parentId,$depth);
-        return DB::query()->addSelect(['t.user_id','t.parent_id','t.level','t.bt_position','t.level'])->from(DB::raw($fnc));
+        $fnc = sprintf('ternary_get_descendants(%d,%d) as t',$parentId,$depth);
+        return DB::query()->addSelect(['t.user_id','t.parent_id','t.depth','t.t_position','t.level_rel','t.path_to_root'])->from(DB::raw($fnc));
     }
 
     /**
@@ -283,8 +189,8 @@ class TreeBinary extends BaseTree
      */
     public static function ancestors($parentId) {
 
-        $fnc = sprintf('bt_get_ancestors(%d) as t',$parentId);
-        return DB::query()->addSelect(['t.ancestor as user_id','t.bt_position as pos'])->from(DB::raw($fnc));
+        $fnc = sprintf('ternary_get_ancestors(%d) as t',$parentId);
+        return DB::query()->addSelect(['t.id'])->from(DB::raw($fnc));
     }
 
 

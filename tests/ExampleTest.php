@@ -32,18 +32,9 @@ class ExampleTest extends TestCase
     }
 
 
-    public function testWithUser()
+    public function test_logged_with_user()
     {
-        $credentials = [
-            'email'    => 'top@btcc.vgt',
-            'password' => '123456',
-        ];
-
-
-
-        $user = User::where(['email'=>$credentials['email']])->first();
-
-        \Auth::setUser($user);
+        $user= $this->loadTopUser();
 
         $this->actingAs($user)->visit('/')
             ->see($user->email)->see('Logout');

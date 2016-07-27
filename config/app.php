@@ -233,6 +233,7 @@ return [
         'Debugbar'=>Barryvdh\Debugbar\Facade::class,
         'Flash' => Laracasts\Flash\Flash::class,
 
+        'Subscription' => \Btcc\Services\Subscriptions\SubscriptionFacade::class,
         'JavaScript'=>\Laracasts\Utilities\JavaScript\JavaScriptFacade::class,
         //'Clockwork'=>\Clockwork\Support\Laravel\Facade::class
 

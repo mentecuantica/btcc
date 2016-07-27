@@ -13,9 +13,8 @@ use Btcc\Models\Transaction\BaseTransaction;
 
 /**
  * Class CalculationTransaction
- *
+ * 
  * This Class should be used on from Calculations Service (or Helper or ServiceProvider)
- *
  *
  * @package app\Models
  * Btcc\Models\Transaction
@@ -55,6 +54,7 @@ use Btcc\Models\Transaction\BaseTransaction;
  * @property integer $reciever_id
  * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\UserTransaction whereSenderId($value)
  * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\UserTransaction whereRecieverId($value)
+ * @property-read \Btcc\Models\User $issuedBy
  */
 class CalculationTransaction extends BaseTransaction {
 

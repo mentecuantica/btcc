@@ -1,19 +1,49 @@
 <?php
 
 use \Btcc\Models\Tree\TreeBinary;
+use Btcc\Models\User;
+
 /**
  * Class BinaryTreeTest
  * @package tests
  */
 class BinaryTreeTest extends TestCase{
 
-    public function testGetUserNestedArrayModels()
+
+    
+    public function test_is_top_user()
     {
-        $parentUser = 1;
-        $usersCollection = TreeBinary::getUserDescendantsModels($parentUser);
+        $user = $this->loadTopUser();
+        $this->actingAs($user);
 
-        $this->assertInstanceOf(\Illuminate\Database\Eloquent\Collection::class,$usersCollection);
+        $result = $user->binary->isTopUser();
 
-        TreeBinary::buildNestedUserArray($usersCollection,$parentUser);
+
+        $this->assertTrue($result);
+
+
+
+    }
+
+
+    public function test_has_partners()
+    {
+        $user = $this->loadTopUser();
+        $this->actingAs($user);
+
+        $result = $user->binary->hasPartners();
+
+
+        $this->assertTrue($result);
+
+
+
+    }
+
+    public function test_something_binary()
+    {
+        $user = $this->loadTopUser();
+
+
     }
 }

@@ -19,27 +19,11 @@ class LinearController extends Controller
 
     public function index()
     {
-        /**
-         * 1. Выбрать
-         *
-         * $user->linear->getDescendants
-         *
-         *
-         *
-         */
 
-        $currentUser = \Auth::user();
+        $hierarchy = $this->queryBuilderMethod(\Auth::id());
 
-        $nl = $this->queryBuilderMethod();
+        $htmlList = static::ulLi($hierarchy);
 
-        //dd($nl);
-        $htmlList = static::ulLi($nl);
-        //$array = $nl->toArray();
-
-        //dd($array);
-
-
-        // echo \Html::ul($array);
 
         return view('tree.linear.index',compact('htmlList'));
     }
@@ -74,13 +58,10 @@ class LinearController extends Controller
     /**
      * @return mixed
      */
-    protected function queryBuilderMethod()
+    protected function queryBuilderMethod(int $userId)
     {
-        $nl = User::find(1)->linear->descendantsAndSelf()
+        return User::find($userId)->linear->descendantsAndSelf()
             ->join('users', 'tree_linear.user_id', '=', 'users.id')
-           // ->rightJoin('profiles', 'tree_linear.user_id', '=', 'profiles.user_id','outer')
-           // ->rightJoin('profiles', 'tree_linear.user_id', '=', 'profiles.user_id','outer')
-           // ->get(['tree_linear.user_id','users.name','users.id','users.email','profiles.package_id'])->toHierarchy();
             ->get(['tree_linear.user_id',
                'parent_id','lft','rgt','depth',
                'users.name','first_name',
@@ -88,13 +69,12 @@ class LinearController extends Controller
             //->get()
             ->toHierarchy();
 
-        return $nl;
     }
 
     /**
      * @return mixed
      */
-    protected function modelRelationsMethod()
+/*    protected function modelRelationsMethod()
     {
         $ns = TreeLinear::find('1');
 
@@ -103,6 +83,6 @@ class LinearController extends Controller
      ->get()->toHierarchy();
 
         return $nl;
-    }
+    }*/
 
 }

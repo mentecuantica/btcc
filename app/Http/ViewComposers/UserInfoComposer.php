@@ -78,7 +78,7 @@ class UserInfoComposer {
             ],
             'stat'=>
             [
-                'registeredUsers'=>User::count(),
+                'registeredUsers'=>user()->linear->countPartners(),
 
 
             ],

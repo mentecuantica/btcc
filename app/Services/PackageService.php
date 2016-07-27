@@ -56,6 +56,11 @@ class PackageService implements Countable, IteratorAggregate, JsonSerializable {
 
     }
 
+    public function instance()
+    {
+        return $this;
+    }
+
     /**
      * @return Collection
      */

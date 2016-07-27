@@ -9,7 +9,7 @@
 
     <div class="panel panel-default">
     	<div class="panel-body">
-    	   Binary partners count: {{ $binaryPartnersCount }}
+    	   Partners count: {{ $partnersCount }}
     	</div>
     </div>
 

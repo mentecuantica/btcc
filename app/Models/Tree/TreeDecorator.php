@@ -45,7 +45,7 @@ class TreeDecorator implements TreeDecorable{
      * @return void
      * @link http://php.net/manual/en/language.oop5.decon.php
      */
-    public function __construct($items)
+    public function __construct($items = [])
     {
         static::$e = new Exporter();
         $this->items=$items;
@@ -66,6 +66,8 @@ class TreeDecorator implements TreeDecorable{
 
         return (new static($items));
     }
+
+
 
     public function setPlainArray($items)
     {
@@ -96,22 +98,11 @@ class TreeDecorator implements TreeDecorable{
      */
     public static function stdClassToArray($objects = [])
     {
-        return collect($objects)->map(function($item,$key) {
-            return static::$e->toArray($item);
+        $exporter = new Exporter();
+        return collect($objects)->map(function($item,$key) use ($exporter) {
+            return $exporter->toArray($item);
         });
 
-    }
-
-    /**
-     * @param $objects
-     *
-     * @return Collection
-     */
-    public static function stdClassToArray2($objects = [])
-    {
-         return collect($objects)->transform(function($item,$key) {
-            return static::$e->toArray($item);
-        });
     }
 
 
@@ -174,18 +165,31 @@ class TreeDecorator implements TreeDecorable{
         return $newNode;
     }
 
-
-
+    /**
+     * Parent field name
+     *
+     * @return string
+     */
     public static function p()
     {
         return static::$attributes[0];
     }
 
+    /**
+     * Children field name
+     *
+     * @return string
+     */
     public static function c()
     {
         return static::$attributes[1];
     }
 
+    /**
+     * Nested field name
+     *
+     * @return string
+     */
     public static function n()
     {
         return static::$attributes[2];

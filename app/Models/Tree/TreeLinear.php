@@ -4,8 +4,8 @@ namespace Btcc\Models\Tree;
 
 use Baum\Node;
 use Btcc\Models\User;
-use Btcc\Traits\LinearTreeable;
-use Btcc\Traits\Singleton;
+
+//use Btcc\Traits\LinearTreeable;
 
 /**
  * TreeLinear

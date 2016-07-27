@@ -12,6 +12,7 @@ use Baum\Extensions\Eloquent\Collection;
 use Btcc\Models\Transaction\UserTransaction;
 use Btcc\Models\Tree\TreeBinary;
 use Btcc\Models\Tree\TreeLinear;
+use Btcc\Models\Tree\TreeTernary;
 use Btcc\Models\Wallet;
 use Btcc\Services\BinaryTreeTrait;
 use Btcc\Services\PackageService;
@@ -35,6 +36,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property \Carbon\Carbon                                                               $updated_at
  * @property-read \Btcc\Models\Tree\TreeBinary                                            $binary
  * @property-read \Btcc\Models\Tree\TreeLinear                                            $linear
+ * @property-read \Btcc\Models\Tree\TreeTernary                                           $ternary
  * @property-read \Btcc\Models\Profile                                                    $profile
  * @property-read \Btcc\Models\Wallet                                                     $wallet
  * @property-read \Illuminate\Database\Eloquent\Collection|\Btcc\Models\Invite[]          $invitesIssued
@@ -62,6 +64,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\User whereRole($value)
  * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\User wherePackageId($value)
  * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\User whereRememberToken($value)
+ * @property-read mixed $total_stupud_sum
  */
 class User  extends Authenticatable {
 
@@ -109,16 +112,6 @@ class User  extends Authenticatable {
 
 
 
-    /**
-     * Returns a nested collection
-     *
-     * @return Collection
-     */
-    public function getLinearTreeCollection()
-    {
-        return $this->linear->descendantsAndSelf()->with('user')->get()->toHierarchy();
-
-    }
 
     public function setPasswordPlain($value)
     {
@@ -205,10 +198,12 @@ class User  extends Authenticatable {
      */
     public function getPackageAttribute()
     {
-        $package = app(PackageService::class)->find($this->package_id);
+        return \Subscription::find($this->package_id);
+
+        //$package = app(PackageService::class)->find($this->package_id);
 
 
-        return $package;
+        //return $package;
 
     }
 
@@ -232,15 +227,37 @@ class User  extends Authenticatable {
 
 
     /**
-     * @todo Wrong relation
      *
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return TreeBinary
      */
-    /* public function binary()
+     public function getBinaryAttribute()
      {
-         return $this->hasOne(TreeBinary::class,'parent_id','id');
-     }*/
+         return $this->getTreeBinary();
+     }
+
+
+    /**
+     *
+     *
+     * @return TreeTernary
+     */
+     public function getTernaryAttribute()
+     {
+         return $this->getTreeTernary();
+     }
+
+    /**
+     * Returns a nested collection
+     *
+     * @return Collection
+     */
+    public function getLinearTreeCollection()
+    {
+        return $this->linear->descendantsAndSelf()->with('user')->get()->toHierarchy();
+
+    }
+
 
     /* public function transactionsTotalSum()
    {

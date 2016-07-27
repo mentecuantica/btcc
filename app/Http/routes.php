@@ -73,7 +73,10 @@ Route::get('/phpinfo', function() {
 
 Route::get('/test', function() {
 
-    return \Btcc\Models\Transaction\UserTransaction::getSummary(1);
+  // \Btcc\Models\User::find(1)->linear->countPartners();
+ dd(\Btcc\Models\User::find(3)->binary->queryParents()->joinUsers()->getAsModels());
+
+
 
 
 });

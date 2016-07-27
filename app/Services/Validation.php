@@ -51,14 +51,10 @@ class Validation extends Validator {
     {
 
 
-        /**
-         * @var  PackageService $packageService
-         */
-        $packageService = app(PackageService::class);
 
         $userFinances = user()->totalSum;
 
-        $packageToBuy = $packageService->find($value);
+        $packageToBuy = \Subscription::find($value);
 
         $repreat = $packageToBuy->price - $userFinances;
 

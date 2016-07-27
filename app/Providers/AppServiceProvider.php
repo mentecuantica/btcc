@@ -64,12 +64,14 @@ class AppServiceProvider extends ServiceProvider
 
 
 
-        $this->app->singleton(PackageService::class, function($app) {
+        $this->app->singleton('subscription', function($app) {
             $this->mergeConfigFrom(config_path('subscription_packages.php'),'subscription_packages');
 
 
             return new PackageService(config('subscription_packages.packages'));
         });
+
+        $this->app->alias('subscription', PackageService::class);
 
 
         $this->app->singleton('SystemWallet', function ($app) {

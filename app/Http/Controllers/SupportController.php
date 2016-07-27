@@ -23,7 +23,6 @@ class SupportController extends Controller
     {
 
 
-
         return view('support.create',['ticket'=>new SupportTicket()]);
     }
 

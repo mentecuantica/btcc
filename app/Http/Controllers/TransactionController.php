@@ -8,7 +8,6 @@ use Btcc\Models\User;
 use Illuminate\Http\Request;
 
 use Btcc\Http\Requests;
-use Illuminate\Support\Facades\Session;
 use Mockery\CountValidator\Exception;
 
 class TransactionController extends Controller

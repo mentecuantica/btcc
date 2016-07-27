@@ -28,11 +28,11 @@ class ViewComposerServiceProvicer extends ServiceProvider {
     public function boot()
     {
         // Using class based composers...
-        $packageService = app(PackageService::class);
+        $packageService = \Subscription::getFacadeRoot();
 
         // view()->composer('*', SubmenuComposer::class);
 
-        view()->composer(['layouts.app'], UserInfoComposer::class);
+        view()->composer(['layouts.app','partner.create'], UserInfoComposer::class);
 
   //      dd($packageService->getPackagesIds());
 

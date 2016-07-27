@@ -253,4 +253,28 @@ class AuthController extends Controller
         return property_exists($this, 'guard') ? $this->guard : null;
     }
 
+
+    /*public function postLogin(Request $request)
+    {
+        $credentials = $request->only([
+            'email',
+            'password'
+        ]);
+
+        $loginValidator = \Validator::make($credentials, [
+            'password' => 'required|max:255',
+            'email'    => 'required|email|max:255',
+        ]);
+
+        if ($loginValidator->valid()) {
+            if (\Auth::authenticate($credentials)) {
+                return redirect('/dashboard')->with(['message'=>'Welcome']);
+
+            }
+
+        }
+        return back()->withErrors($loginValidator)->withInput(['email']);
+
+
+    }*/
 }

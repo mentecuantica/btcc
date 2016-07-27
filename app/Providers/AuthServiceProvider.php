@@ -16,7 +16,6 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'Btcc\Model' => 'Btcc\Policies\ModelPolicy',
         User::class => UserPolicy::class,
     ];
 
@@ -31,6 +30,12 @@ class AuthServiceProvider extends ServiceProvider
 
      
         $this->registerPolicies($gate);
+
+
+        $gate->define('add-partner', function ($user) {
+            return ($user->totalSum >= 100);
+        });
+
 
         //
     }
