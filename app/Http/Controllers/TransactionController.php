@@ -10,53 +10,52 @@ use Illuminate\Http\Request;
 use Btcc\Http\Requests;
 use Mockery\CountValidator\Exception;
 
-class TransactionController extends Controller
-{
+class TransactionController extends Controller {
     /**
      * Display a listing of the resource.
-     *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
         //todo List transactions
 
-
-
+        $user = user();
         //$transactions = UserTransaction::with('reciever')->whereSenderId(\Auth::id())->get();
-        $transactions = User::with('transactions')->find(user()->id)->transactions;
+        $transactions = UserTransaction::with([
+            'reciever',
+            'sender'
+        ])->whereUserId($user->id)->get();
 
 
+      //  dd($transactions);
 
-        return view('transaction.index')->with('transactions',$transactions);
+        return view('transaction.index')->with('transactions', $transactions);
     }
 
     /**
      * Show the form for creating a new resource.
-     *
      * @return \Illuminate\Http\Response
      */
     public function refund()
     {
-        $t =  new UserTransaction();
+        $t = new UserTransaction();
 
         $t->type = Transactable::TYPE_CASHIN_FUNDING;
         $t->status = Transactable::STATUS_NEW;
 
-
-        return view('transaction.refund',['transaction'=>new UserTransaction()]);
+        return view('transaction.refund', ['transaction' => new UserTransaction()]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Requests\CreateTransactionRequest $request)
     {
         //$request->possibleTypes = (new UserTransaction)->getPossibleTypes();
-        
 
         $input = $request->all();
 
@@ -65,19 +64,19 @@ class TransactionController extends Controller
         $t->user_id = \Auth::id();
         $t->sender_id = \Auth::id();
         $t->reciever_id = \Auth::id();
-        $t->debit_flag = true;
-        $t->credit_flag = false;
+        $t->debit_flag = TRUE;
+        $t->credit_flag = FALSE;
         $t->type = Transactable::TYPE_CASHIN_FUNDING;
         $t->status = Transactable::STATUS_NEW;
 
         if ($t->save()) {
             \Flash::success('Transaction successfully added!');
+
             return redirect('transaction');
 
         };
 
         return back()->withErrors();
-
 
         //
     }
@@ -85,7 +84,8 @@ class TransactionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -95,28 +95,26 @@ class TransactionController extends Controller
 
     public function withdraw(Request $request)
     {
-        $t =  new UserTransaction();
+        $t = new UserTransaction();
 
         $t->type = Transactable::TYPE_CASHOUT_WITHDRAW;
         $t->status = Transactable::STATUS_NEW;
 
-        if ($request->getMethod()=='POST') {
+        if ($request->getMethod() == 'POST') {
             return $this->withdrawProcess($request);
         }
 
-
-        return view('transaction.withdraw',['transaction'=>$t]);
+        return view('transaction.withdraw', ['transaction' => $t]);
     }
 
     protected function withdrawProcess(Request $request)
     {
         $rules = [
-            'wallet'=>'required|bitcoinAddress',
-            'amount'=>'required|hasEnoughFunds'
+            'wallet' => 'required|bitcoinAddress',
+            'amount' => 'required|hasEnoughFunds'
         ];
 
         $this->validate($request, $rules);
-
 
         $input = $request->all();
 
@@ -126,43 +124,39 @@ class TransactionController extends Controller
         $t->sender_id = \Auth::id();
         $t->reciever_id = \Auth::id();
         $t->debit_flag = FALSE;
-        $t->credit_flag = true;
+        $t->credit_flag = TRUE;
         $t->type = Transactable::TYPE_CASHOUT_WITHDRAW;
         $t->status = Transactable::STATUS_NEW;
         $t->comment = $input['wallet'];
 
-
         if ($t->save()) {
-            \Flash::success('Funds have been sent to: '.$input['wallet']);
+            \Flash::success('Funds have been sent to: ' . $input['wallet']);
+
             return redirect('transaction');
         };
-
 
         return redirect()->back();
     }
 
-
     public function transfer(Request $request)
     {
-        $t =  new UserTransaction();
+        $t = new UserTransaction();
 
         $t->type = Transactable::TYPE_CASHOUT_WITHDRAW;
         $t->status = Transactable::STATUS_NEW;
 
-        if ($request->getMethod()=='POST') {
+        if ($request->getMethod() == 'POST') {
             return $this->transferProcess($request);
         }
 
-
-        return view('transaction.transfer',['transaction'=>$t]);
+        return view('transaction.transfer', ['transaction' => $t]);
     }
-
 
     protected function transferProcess(Request $request)
     {
         $rules = [
-            'email'=>'required|exists:users,email',
-            'amount'=>'required|hasEnoughFunds'
+            'email' => 'required|exists:users,email',
+            'amount' => 'required|hasEnoughFunds'
         ];
 
         $this->validate($request, $rules);
@@ -175,6 +169,7 @@ class TransactionController extends Controller
 
         if (!$receiverUser) {
             \Flash::error('Reciever user not found');
+
             return redirect()->back();
         }
 
@@ -189,11 +184,10 @@ class TransactionController extends Controller
             $tCredit->sender_id = \Auth::id();
             $tCredit->reciever_id = $receiverUser->id;
             $tCredit->debit_flag = FALSE;
-            $tCredit->credit_flag = true;
+            $tCredit->credit_flag = TRUE;
             $tCredit->type = Transactable::TYPE_CASHOUT_WITHDRAW;
             $tCredit->status = Transactable::STATUS_NEW;
             $tCredit->comment = $input['email'];
-
 
             // DEBIT TRANSACTION
             $tDebit = new UserTransaction();
@@ -201,8 +195,8 @@ class TransactionController extends Controller
             $tDebit->user_id = $receiverUser->id;
             $tDebit->sender_id = \Auth::id();
             $tDebit->reciever_id = $receiverUser->id;
-            $tDebit->debit_flag = true;
-            $tDebit->credit_flag = false;
+            $tDebit->debit_flag = TRUE;
+            $tDebit->credit_flag = FALSE;
             $tDebit->type = Transactable::TYPE_CASHIN_FUNDING;
             $tDebit->status = Transactable::STATUS_NEW;
 
@@ -210,7 +204,8 @@ class TransactionController extends Controller
 
             \DB::commit();
 
-            \Flash::success('Funds have been sent to: '.$input['email']);
+            \Flash::success('Funds have been sent to: ' . $input['email']);
+
             return redirect('transaction');
 
         }
@@ -219,12 +214,6 @@ class TransactionController extends Controller
 
             \Flash::error('Error while transasctional saving ');
         }
-
-
-
-
-
-
 
         return redirect()->back();
 

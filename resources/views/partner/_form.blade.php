@@ -77,7 +77,7 @@
     <hr/>
 
     <div class="alert alert-success">
-        <p>Your balance is: {{ $wallet['balance'] or '0.0' }}</p>
+        <p>Your balance is: {{ $userInfo['wallet']['balance'] or '0.0' }}</p>
     </div>
 
 

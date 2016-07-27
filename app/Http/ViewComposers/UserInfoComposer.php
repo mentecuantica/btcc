@@ -9,26 +9,23 @@
 
 namespace Btcc\Http\ViewComposers;
 
-
 use Btcc\Models\User;
-use Btcc\Services\PackageService;
 use Illuminate\Contracts\View\View;
 
 /**
  * @todo Only for registered users
- *
  * Class ViewComposers
  * @package Btcc\Http\ViewComposers
  */
 class UserInfoComposer {
-
 
     protected $partners;
     protected $partnersCount;
     //protected $wallet = [];
 
     protected $packages = [];
-    private $isUserLoaded = false;
+    private $isUserLoaded = FALSE;
+    protected static $data;
 
     /**
      * PHP 5 allows developers to declare constructor methods for classes.
@@ -38,52 +35,67 @@ class UserInfoComposer {
      * In order to run a parent constructor, a call to parent::__construct() within the child constructor is required.
      * param [ mixed $args [, $... ]]
      *
-     * @param \Btcc\Services\PackageService    $packages
+     * @param \Btcc\Services\PackageService $packages
      *
      * @link http://php.net/manual/en/language.oop5.decon.php
      */
     public function __construct(User $user)
     {
-        if (\Auth::guest() == true) {
-            return false;
+        if (\Auth::guest() == TRUE) {
+            return FALSE;
 
         }
+      //  \Debugbar::addMessage('Construct view composer');
 
-        $this->isUserLoaded = true;
-
-       // $this->packages= collect($packages);
+        $this->isUserLoaded = TRUE;
 
 
+
+
+        // $this->packages= collect($packages);
 
         //$view->with(['packages'=>$packages]);
 
     }
 
+    /**
+     * @return mixed
+     */
+    public function getData()
+    {
+        if (static::$data==NULL) {
+            static::$data = [
+                'model'=>user(),
+                'profile' => [
+                    'package' => user()->getPackageAttribute(),
+                ],
+
+                'wallet' => [
+                    'balance' => user()->totalSum,
+
+                ],
+                'stat'   => [
+                    'registeredUsers' => user()->linear->countPartners(),
+
+                ]];
+
+        }
+        return self::$data;
+    }
+
+
+
     public function compose(View $view)
     {
-        if ($this->isUserLoaded == false) {
+       // \Debugbar::addMessage('Compose view composer');
+        if ($this->isUserLoaded == FALSE) {
             return;
-
 
         }
 
         $view->with([
-            'profile'=>[
-                'package'=>user()->getPackageAttribute(),
-            ],
 
-            'wallet'=>[
-                'balance'=>user()->totalSum,
-
-            ],
-            'stat'=>
-            [
-                'registeredUsers'=>user()->linear->countPartners(),
-
-
-            ],
-
-            
+            'userInfo' => $this->getData()
 
         ]);
 

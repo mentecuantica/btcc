@@ -1,4 +1,4 @@
-{!! Form::model($profile, ['route'=>['acoount.profile.update',$user->id]]) !!}
+{!! Form::model($profile, ['route'=>['account.profile.update',$user->id]]) !!}
 
 
 <div class="form-group">
@@ -22,6 +22,14 @@
     {{ Form::label('Country')}}
     {{ Form::select('country_code', \Btcc\Utilities\Countries::getCountries(), $profile->country_code, ['class' => 'form-control']) }}
 </div>
+
+@foreach($profile->additional_info as $key=>$value)
+<div class="form-group">
+    {{ Form::label($key)}}
+    {{ Form::text('additional_info['.$key.']' , $value, ['class' => 'form-control']) }}
+</div>
+@endforeach
+
 
 
 

@@ -9,8 +9,7 @@
 
 namespace Btcc\Models\Transaction;
 
-use Btcc\Models\Transaction\BaseTransaction;
-use Illuminate\Database\Eloquent\Builder;
+use Cache;
 
 /**
  * Class Transaction
@@ -89,7 +88,17 @@ class UserTransaction extends BaseTransaction {
 WHEN debit_flag=FALSE THEN (-amount) END as amount 
 FROM users_transactions WHERE user_id =:userId) as dc_transactions';
 
-        return  \DB::selectOne('SELECT sum(amount) FROM '.$subQuery,['userId'=>$userId])->sum;
+
+
+        if (Cache::has('btcc.summary')) {
+            return Cache::get('btcc.summary');
+        }
+
+        $result =  \DB::selectOne('SELECT sum(amount) FROM '.$subQuery,['userId'=>$userId])->sum;
+
+        Cache::put('btcc.summary', $result,2);
+
+        return $result;
 
         //dd($result);
         //return \DB::selectOne('sum(amount) FROM '.$subQuery,['userId'=>$userId])

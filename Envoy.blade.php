@@ -17,6 +17,7 @@ links
     git clone -b todeploy git@bitbucket.org:cagenic/btcc.git
 @endtask
 
+
 @task('folders')
 cd /home/deploy
 chown -hR www-data btcc
@@ -30,16 +31,16 @@ chmod -R 777 storage/
 
 @task('mybad')
 cd /home/deploy
-cd btcc
-chmod -R 777 bootstrap/cache
-chmod -R 777 storage/
+mkdir btcc
+{{--chmod -R 777 bootstrap/cache
+chmod -R 777 storage/--}}
 @endtask
 
 @task('composer')
-    cd /home/deploy/btcc
-    composer install
-
+cd /home/deploy/btcc
+composer install
 @endtask
+
 
 @task('db')
 cd /home/deploy/btcc
@@ -59,9 +60,9 @@ php artisan db:seed
 
 @task('artisan')
 cd /home/deploy/btcc
-php artisan migrate
 php artisan db:seed
 @endtask
+
 
 @task('links')
 cd /home/deploy/btcc

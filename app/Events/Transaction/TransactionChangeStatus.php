@@ -9,7 +9,7 @@
 
 namespace Btcc\Events\Transaction;
 use Btcc\Events\Event;
-use Btcc\Models\UserTransaction;
+use Btcc\Models\Transaction\UserTransaction;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 /**

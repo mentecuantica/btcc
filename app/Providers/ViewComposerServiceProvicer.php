@@ -10,8 +10,6 @@
 namespace Btcc\Providers;
 
 use Btcc\Http\ViewComposers\UserInfoComposer;
-use Btcc\Http\ViewComposers\SubmenuComposer;
-use Btcc\Services\PackageService;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\View;
 
@@ -30,12 +28,8 @@ class ViewComposerServiceProvicer extends ServiceProvider {
         // Using class based composers...
         $packageService = \Subscription::getFacadeRoot();
 
-        // view()->composer('*', SubmenuComposer::class);
 
-        view()->composer(['layouts.app','partner.create'], UserInfoComposer::class);
-
-  //      dd($packageService->getPackagesIds());
-
+        view()->composer(['layouts.app'], UserInfoComposer::class);
 
 
         // Using Closure based composers...

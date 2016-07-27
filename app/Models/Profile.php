@@ -26,6 +26,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $country_code
  * @property string $phone
  * @property string $city_id
+ * @property array $options
+ * @property object $additional_info
  * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\Profile whereCountryCode($value)
  * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\Profile wherePhone($value)
  * @method static \Illuminate\Database\Query\Builder|\Btcc\Models\Profile whereCityId($value)
@@ -33,8 +35,12 @@ use Illuminate\Database\Eloquent\Model;
 class Profile extends Model
 {
 
-    protected $fillable = ['name','surname','country_code','phone'];
+    protected $fillable = ['name','surname','country_code','phone','additional_info','options'];
 
+    protected $casts = [
+        'additional_info'=>'object',
+        'options'=>'array'
+    ];
     /**
      * New inline validation from
      * use Watson\Validating\ValidatingTrait;
@@ -53,8 +59,16 @@ class Profile extends Model
         return $this->belongsTo(User::class);
     }
 
-  /*  public function package()
+    public function setVirtualAttribute($value)
     {
-        return $this->hasOne(Package::class);
-    }*/
+        $temp = $this->additional_info;
+
+        $pair = each($value);
+        $key = $pair[0];
+        $temp->{$key} = $pair[1];
+
+        $this->additional_info = $temp;
+
+    }
+
 }

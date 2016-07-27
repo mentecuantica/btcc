@@ -30,6 +30,10 @@ class AuthController extends Controller
      */
     protected $redirectTo = '/';
 
+    protected static $loginRules = [
+        'email'=>  'required',
+        'password'=>'required',
+    ];
     /**
      * Create a new authentication controller instance.
      *
@@ -41,7 +45,6 @@ class AuthController extends Controller
     }
 
 
-    use RedirectsUsers;
 
     /**
      * Show the application login form.
@@ -49,16 +52,6 @@ class AuthController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function getLogin()
-    {
-        return $this->showLoginForm();
-    }
-
-    /**
-     * Show the application login form.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function showLoginForm()
     {
         $view = property_exists($this, 'loginView')
             ? $this->loginView : 'auth.authenticate';
@@ -69,6 +62,8 @@ class AuthController extends Controller
 
         return view('auth.login');
     }
+
+
 
     /**
      * Handle a login request to the application.
@@ -89,7 +84,7 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        $this->validateLogin($request);
+        $this->validate($request, static::$loginRules);
 
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
         // the login attempts for this application. We'll key this by the username and
@@ -102,7 +97,7 @@ class AuthController extends Controller
             return $this->sendLockoutResponse($request);
         }
 
-        $credentials = $this->getCredentials($request);
+        $credentials = $request->only($this->loginUsername(), 'password');
 
         if (Auth::guard($this->getGuard())->attempt($credentials, $request->has('remember'))) {
             return $this->handleUserWasAuthenticated($request, $throttles);
@@ -118,18 +113,7 @@ class AuthController extends Controller
         return $this->sendFailedLoginResponse($request);
     }
 
-    /**
-     * Validate the user login request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return void
-     */
-    protected function validateLogin(Request $request)
-    {
-        $this->validate($request, [
-            $this->loginUsername() => 'required', 'password' => 'required',
-        ]);
-    }
+
 
     /**
      * Send the response after the user was authenticated.
@@ -178,16 +162,7 @@ class AuthController extends Controller
             : 'These credentials do not match our records.';
     }
 
-    /**
-     * Get the needed authorization credentials from the request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
-     */
-    protected function getCredentials(Request $request)
-    {
-        return $request->only($this->loginUsername(), 'password');
-    }
+
 
     /**
      * Log the user out of the application.

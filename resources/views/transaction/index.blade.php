@@ -34,7 +34,7 @@
                     <td>{{$t->amount}}</td>
                     <td>{{$t->debit_flag}}</td>
                     <td>{{$t->credit_flag}}</td>
-                    <td>{{$t->reciever->email}}</td>
+                    <td>{{$t->reciever->email}}
                 </tr>
                     @endforeach
             </tbody>

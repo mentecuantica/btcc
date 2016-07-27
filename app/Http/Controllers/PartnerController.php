@@ -2,21 +2,13 @@
 
 namespace Btcc\Http\Controllers;
 
-use Btcc\Events\Event;
 use Btcc\Events\UserRegisteredPartner;
 use Btcc\Http\Requests\AddNewUserRequest;
 use Btcc\Jobs\PayForNewUserPackage;
 use Btcc\Models\Tree\TreeBinary;
 use Btcc\Models\User;
-use Gate;
-use ClassPreloader\Factory;
 use Faker\Generator;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Validator;
 use JavaScript;
-use Btcc\Http\Requests;
-use Illuminate\Support\Facades\Session;
-use Laracasts\Flash\Flash;
 
 class PartnerController extends Controller {
 

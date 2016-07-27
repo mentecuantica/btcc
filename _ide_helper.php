@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.2.39 on 2016-07-25.
+ * Generated for Laravel 5.2.39 on 2016-07-27.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -13027,6 +13027,146 @@ namespace {
          */
         public static function important(){
             return \Laracasts\Flash\FlashNotifier::important();
+        }
+        
+    }
+
+
+    class Subscription extends \Btcc\Services\Subscriptions\SubscriptionFacade{
+        
+        /**
+         * 
+         *
+         * @return \Btcc\Services\Collection 
+         * @static 
+         */
+        public static function getPackagesIds(){
+            return \Btcc\Services\PackageService::getPackagesIds();
+        }
+        
+        /**
+         * Create a new package instance.
+         *
+         * @param string $name
+         * @param string $id
+         * @return \Btcc\Services\Subscriptions\Package 
+         * @static 
+         */
+        public static function create($name, $id){
+            return \Btcc\Services\PackageService::create($name, $id);
+        }
+        
+        /**
+         * Get package matching a given ID.
+         *
+         * @param string $id
+         * @return \Btcc\Services\Subscriptions\Package 
+         * @throws \Exception
+         * @static 
+         */
+        public static function find($id){
+            return \Btcc\Services\PackageService::find($id);
+        }
+        
+        /**
+         * Add a package to the package collection.
+         *
+         * @param \Btcc\Services\Subscriptions\Package $package
+         * @return \Btcc\Services\Subscriptions\Package 
+         * @static 
+         */
+        public static function add($package){
+            return \Btcc\Services\PackageService::add($package);
+        }
+        
+        /**
+         * Determine if the package collection has paid packages.
+         *
+         * @return bool 
+         * @static 
+         */
+        public static function hasPaidPackages(){
+            return \Btcc\Services\PackageService::hasPaidPackages();
+        }
+        
+        /**
+         * Get all of the packages that require payment (price > 0).
+         *
+         * @return array 
+         * @static 
+         */
+        public static function paid(){
+            return \Btcc\Services\PackageService::paid();
+        }
+        
+        /**
+         * Get all of the monthly packages for a given tier.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function tier($tier){
+            return \Btcc\Services\PackageService::tier($tier);
+        }
+        
+        /**
+         * Get all of the monthly packages for the application.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function monthly(){
+            return \Btcc\Services\PackageService::monthly();
+        }
+        
+        /**
+         * Get all of the yearly packages for the application.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function yearly(){
+            return \Btcc\Services\PackageService::yearly();
+        }
+        
+        /**
+         * Get all of the packages that are active.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function active(){
+            return \Btcc\Services\PackageService::active();
+        }
+        
+        /**
+         * Determine the number of packages in the collection.
+         *
+         * @return int 
+         * @static 
+         */
+        public static function count(){
+            return \Btcc\Services\PackageService::count();
+        }
+        
+        /**
+         * Get an iterator for the collection.
+         *
+         * @return \ArrayIterator 
+         * @static 
+         */
+        public static function getIterator(){
+            return \Btcc\Services\PackageService::getIterator();
+        }
+        
+        /**
+         * Get the JSON serializable fields for the object.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function jsonSerialize(){
+            return \Btcc\Services\PackageService::jsonSerialize();
         }
         
     }

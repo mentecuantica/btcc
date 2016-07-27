@@ -3,6 +3,7 @@
 namespace Btcc\Http\Controllers\Auth;
 
 use Btcc\Http\Controllers\Controller;
+use Btcc\Http\Requests\ChangePasswordRequest;
 use Illuminate\Foundation\Auth\RedirectsUsers;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -32,7 +33,8 @@ class PasswordController extends Controller
      */
     public function __construct()
     {
-        $this->middleware($this->guestMiddleware());
+        $this->middleware($this->guestMiddleware(),
+            ['except' => ['actionChangePassword','changePassword']]);
     }
 
     /**
@@ -370,4 +372,31 @@ class PasswordController extends Controller
     {
         return property_exists($this, 'guard') ? $this->guard : null;
     }
+
+    public function actionChangePassword()
+    {
+
+        return view('auth.passwords.change');
+    }
+
+    public function changePassword(ChangePasswordRequest $request)
+    {
+        $user = $request->user();
+
+
+        if (\Hash::check($request->get('old_password'), $user->password)) {
+            $user->password = bcrypt($request->get('password'));
+            if($user->save()) {
+
+                \Flash::success('Password updated');
+                return redirect('/account');
+            };
+        }
+
+        return redirect()->back()
+            ->withErrors(['password' => trans('You old password is incorrect')]);
+
+    }
+
+
 }

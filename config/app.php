@@ -16,6 +16,17 @@ return [
     'env' => env('APP_ENV', 'production'),
 
     /*
+ |--------------------------------------------------------------------------
+ | Application Name
+ |--------------------------------------------------------------------------
+ |
+ | The application name for use within the UI of the application
+ |
+ */
+
+    'name' => 'BTCC',
+
+    /*
     |--------------------------------------------------------------------------
     | Application Debug Mode
     |--------------------------------------------------------------------------
@@ -162,6 +173,7 @@ return [
 
 
         Collective\Html\HtmlServiceProvider::class,
+        \Btcc\Providers\FormMacroServiceProvider::class,
         Watson\BootstrapForm\BootstrapFormServiceProvider::class,
 
         Laracasts\Utilities\JavaScript\JavaScriptServiceProvider::class,

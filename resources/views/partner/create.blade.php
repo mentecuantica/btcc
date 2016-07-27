@@ -22,11 +22,10 @@
 
                         {{ csrf_field() }}
 
-                            @include('partner._form',['wallet'=>$wallet]);
+                            @include('partner._form');
 
 
                         {!! Form::close() !!}
-                        @include('_partials._errors')
                     </div>
 
                 </div>

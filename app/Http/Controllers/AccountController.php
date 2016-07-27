@@ -2,16 +2,17 @@
 
 namespace Btcc\Http\Controllers;
 
-use Btcc\Events\Event;
 use Btcc\Events\ProfileWasUpdated;
-use Btcc\Http\Requests;
 use Btcc\Http\Requests\ProfileUpdateRequest;
 use Btcc\Models\Profile;
 use Btcc\Models\User;
+use Btcc\Utilities\ProfileInfo;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Input;
 
 class AccountController extends Controller {
+
+
+
 
     /**
      * Show the application dashboard.
@@ -28,8 +29,15 @@ class AccountController extends Controller {
 
     public function profile(Request $request)
     {
+        $profile = $request->user()->profile;
+        $user = $request->user();
 
-        return view('account.profile', ['profile'=>$request->user()->profile,'user'=>$request->user()]);
+        if ($profile->additional_info == NULL) {
+            $profile->additional_info = new ProfileInfo();
+        }
+
+
+        return view('account.profile', compact('profile','user'));
 
     }
 
@@ -40,9 +48,20 @@ class AccountController extends Controller {
 
         /**@var  User $user **/;
 
-        $user->fill($request->only(['first_name','last_name']));
-        $user->profile->fill($request->only(['country_code','phone']));
+        $data = $request->get('additional_info');
 
+
+        $v = \Validator::make($data, ProfileInfo::getValidationRules());
+
+        if ($v->fails()) {
+            $this->throwValidationException($request, $v);
+
+        }
+
+
+
+        $user->fill($request->only(['first_name','last_name']));
+        $user->profile->fill($request->only(['country_code','phone','additional_info']));
         if ($user->update() && $user->profile->update()) {
 
             \Flash::success('Profile been updated');

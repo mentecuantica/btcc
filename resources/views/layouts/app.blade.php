@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>BTCC</title>
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    {{ Html::style('css/app.css') }}
 
 
     @stack('scripts')
@@ -13,10 +13,11 @@
 
 </head>
 <body id="app-layout">
-<script src="{{ asset('js/vendor.js') }}"></script>
+{{ Html::script('js/vendor.js') }}
 @include('_partials._navbar')
 
 @include('flash::message')
+@include('_partials._errors')
 
 
 

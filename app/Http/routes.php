@@ -1,7 +1,7 @@
 <?php
 
 
-Route::get('login', 'Auth\AuthController@showLoginForm');
+Route::get('login', 'Auth\AuthController@getLogin');
 Route::post('login', 'Auth\AuthController@login');
 Route::get('logout', 'Auth\AuthController@logout');
 
@@ -14,37 +14,39 @@ Route::post('password/reset', 'Auth\PasswordController@reset');
 
 
 Route::group(['middleware' => ['auth']], function () {
+
     Route::get('/dashboard', 'DashboardController@index');
-    Route::get('/account', 'AccountController@index');
+
+
 
     Route::get('/tree', function() {
          return view('tree.index',[]);
 
     });
-    Route::get('/tree/linear/index', 'Tree\LinearController@index');
-    Route::get('/tree/ternary/index', 'Tree\TernaryController@index');
-    Route::get('/tree/binary/index', 'Tree\BinaryController@index');
-    Route::get('/tree/binary/show/{id}', 'Tree\BinaryController@show');
+    Route::get('tree/linear', 'Tree\LinearController@index');
+    Route::get('tree/ternary', 'Tree\TernaryController@index');
+    Route::get('tree/binary', 'Tree\BinaryController@index');
+    Route::get('tree/binary/show/{id}', 'Tree\BinaryController@show');
 
 
-   // Route::get('transactions', 'TransactionController@index');
     Route::get('transaction/refund', 'TransactionController@refund');
     Route::any('transaction/withdraw', 'TransactionController@withdraw');
     Route::any('transaction/transfer', 'TransactionController@transfer');
     Route::resource('transaction', 'TransactionController',['only'=>['index','show','store']]);
 
+
     Route::resource('partner', 'PartnerController');
 
-    Route::get('account/profile', ['as'   => 'acoount.profile',
-                                   'uses' => 'AccountController@profile'
-    ]);
 
+    Route::get('account', 'AccountController@index');
+    Route::get('account/password', 'Auth\PasswordController@actionChangePassword')->name('account.password');
+    Route::post('account/password', 'Auth\PasswordController@changePassword')->name('account.password-change');
+    Route::get('account/profile', 'AccountController@profile')->name('account.profile');
+    Route::post('account/profile/update','AccountController@profileUpdate')->name('account.profile.update');
 
-    Route::post('account/profile/update', ['as'   => 'acoount.profile.update',
-                                   'uses' => 'AccountController@profileUpdate'
-    ]);
 
     Route::resource('supportTicket', 'SupportController',['only'=>['index','create','store']]);
+
     Route::get('/faq', 'PagesController@faq');
 
 
@@ -73,9 +75,13 @@ Route::get('/phpinfo', function() {
 
 Route::get('/test', function() {
 
-  // \Btcc\Models\User::find(1)->linear->countPartners();
- dd(\Btcc\Models\User::find(3)->binary->queryParents()->joinUsers()->getAsModels());
 
+
+
+
+});
+
+Route::get('/test2', function() {
 
 
 
