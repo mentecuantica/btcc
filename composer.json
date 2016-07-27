@@ -14,7 +14,8 @@
         "baum/baum": "~1.1",
         "typicms/nestablecollection": "^1.1",
         "watson/bootstrap-form": "^1.0",
-        "linusu/bitcoin-address-validator": "^0.1.2"
+        "linusu/bitcoin-address-validator": "^0.1.2",
+        "pda/pheanstalk": "^3.1"
 
 
     },

@@ -5,6 +5,7 @@ namespace Btcc\Http\Controllers;
 use Btcc\Events\UserRegisteredPartner;
 use Btcc\Http\Requests\AddNewUserRequest;
 use Btcc\Jobs\PayForNewUserPackage;
+use Btcc\Jobs\SendInviteEmail;
 use Btcc\Models\Tree\TreeBinary;
 use Btcc\Models\User;
 use Faker\Generator;
@@ -71,6 +72,10 @@ class PartnerController extends Controller {
 
         $partners = [] ; // user()->linear->getPartners();
 
+        
+        \Debugbar::addMessage('Sending eeeeeeee job');
+        $job = (new SendInviteEmail())->delay(60*2);
+        $this->dispatch($job);
 
 
 

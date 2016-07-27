@@ -13037,6 +13037,15 @@ namespace {
         /**
          * 
          *
+         * @static 
+         */
+        public static function instance(){
+            return \Btcc\Services\PackageService::instance();
+        }
+        
+        /**
+         * 
+         *
          * @return \Btcc\Services\Collection 
          * @static 
          */

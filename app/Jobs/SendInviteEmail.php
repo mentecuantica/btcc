@@ -3,6 +3,7 @@
 namespace Btcc\Jobs;
 
 use Btcc\Jobs\Job;
+use Btcc\Models\User;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -11,6 +12,7 @@ class SendInviteEmail extends Job implements ShouldQueue
 {
     use InteractsWithQueue, SerializesModels;
 
+    protected $user;
     /**
      * Create a new job instance.
      *
@@ -18,7 +20,7 @@ class SendInviteEmail extends Job implements ShouldQueue
      */
     public function __construct()
     {
-        //
+        $this->user = User::find(1);
     }
 
     /**
@@ -28,7 +30,18 @@ class SendInviteEmail extends Job implements ShouldQueue
      */
     public function handle()
     {
-        //
+        \Log::warning('Sleeping failed');
+        sleep(10);
+
+        $user = $this->user;
+        $data = ['login'    => $user->email,
+                 'password' => str_random(8),
+        ];
+        \Mail::send('emails.invite', $data, function ($message) use ($user) {
+            $message->from('no-reply@btcc.vgt', 'Btcc');
+
+            $message->to('calif@orni.aa');
+        });
     }
 
 
@@ -39,7 +52,7 @@ class SendInviteEmail extends Job implements ShouldQueue
      */
     public function failed()
     {
-        // Called when the job is failing...
+        \Log::warning('SendInviteMail failed');
     }
 
 }
