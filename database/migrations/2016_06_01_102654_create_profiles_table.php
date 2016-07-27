@@ -19,7 +19,8 @@ class CreateProfilesTable extends Migration
             $table->string('country_code',4)->nullable();
             $table->string('phone',20)->nullable();
             $table->string('city_id')->nullable();
-            //$table->json('additional')->nullable();
+            $table->json('additional_info')->nullable();
+            $table->text('options')->nullable();
             $table->timestamps();
         });
     }
