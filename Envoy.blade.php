@@ -14,7 +14,7 @@ links
     cd  /home/deploy
     rm -rf btcc-old
     mv -f btcc btcc-old
-    git clone -b todeploy git@bitbucket.org:cagenic/btcc.git
+    git clone -b blankon-template git@bitbucket.org:cagenic/btcc.git
 @endtask
 
 
@@ -45,7 +45,7 @@ composer install
 @task('db')
 cd /home/deploy/btcc
 php artisan down
-php artisan migrate
+php artisan migrate:refresh
 php artisan db:seed
 php artisan up
 @endtask
