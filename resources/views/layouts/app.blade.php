@@ -5,9 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>BTCC</title>
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700" rel="stylesheet">
-    <link href="http://fonts.googleapis.com/css?family=Oswald:700,400" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:400,300,600,700" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Oswald:700,400" rel="stylesheet">
 
+    {{ Html::style('//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css') }}
     {{ Html::style('css/blankon.css') }}
 
 
@@ -32,8 +33,10 @@
 --}}
 
     @include('layouts._header')
-    @include('layouts._sidebar_left')
 
+    @if(\Auth::check())
+        @include('layouts._sidebar_left')
+    @endif
 
 
 @include('flash::message')
@@ -47,7 +50,7 @@
     <i class="fa fa-angle-up"></i>
 </div>
 <!-- JavaScripts -->
-{{--@include('_partials._footer')--}}
+@include('_partials._footer')
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('js/blankon.js') }}"></script>
 </body>

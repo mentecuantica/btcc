@@ -31,7 +31,9 @@
 
     </div>
 
+{{--
     @include('layouts._footer-admin')
+--}}
 
 </section>
 @stop

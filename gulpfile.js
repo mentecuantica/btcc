@@ -19,15 +19,15 @@ elixir(function(mix) {
         '../bower/lodash/dist/lodash.min.js',
         '../bower/bootstrap/dist/js/bootstrap.js',
         '../bower/raphael/raphael.min.js',
+        '../vendor/treant/treant.js',
         '../bower/jquery-cookie/jquery.cookie.js',
         '../bower/jquery-nicescroll/jquery.nicescroll.min.js',
-        '../bower/jquery-easing-original/jquery.easing.js',
-       // '../bower/bootbox/bootbox.js',
+      //  '../bower/jquery-easing-original/jquery.easing.js',
+        // '../bower/bootbox/bootbox.js',
         '../bower/bootstrap-session-timeout/dist/bootstrap-session-timeout.min.js',
-        '../bower/jquery.gritter/js/jquery.gritter.min.js',
 
-        '../vendor/treant/treant.js'
-        
+        '../bower/jquery.gritter/js/jquery.gritter.min.js'
+
 
     ],'public/js/vendor.js');
 

@@ -1,4 +1,4 @@
-<aside id="sidebar-left" class="{{ $sidebarClass or 'sidebar-circle' }}">
+<aside id="sidebar-left" class="sidebar-circle">
 
     <div class="sidebar-content">
         <div class="media">
@@ -7,8 +7,8 @@
                 <i class="online"></i>
             </a>--}}
             <div class="media-body">
-                <h4 class="media-heading">Hello, <span>Lee</span></h4>
-                <small>Web Designer</small>
+                <h4 class="media-heading">Profit: <span> {{ $userInfo['wallet']['balance'] or '0.0' }} $ </span></h4>
+                <small>some text</small>
             </div>
         </div>
     </div>

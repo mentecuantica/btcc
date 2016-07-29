@@ -23,7 +23,7 @@ class BinaryController extends Controller
     {
         $userId = \Auth::id();
 
-        $rows = \Auth::user()->binary->queryChildren()->joinUsers()->get();
+        $rows = \Auth::user()->binary->queryChildren()->joinUsers()->getAsArray();
 
         //$rows = $this->treeRepo->binaryChildren($userId,100)->joinUsers()->get();
 

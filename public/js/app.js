@@ -28293,7 +28293,7 @@ new Vue({
     }
 });
 
-window.Btcc = window.Btcc || { tree: 'nullable' };
+window.Btcc = window.Btcc || {};
 
 /*if (Btcc == {}) {
 

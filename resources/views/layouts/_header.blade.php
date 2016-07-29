@@ -38,7 +38,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <span class="meta">
                             <span class="avatar">
-                                {{ $userInfo['wallet']['balance'] or '0.0' }} $ {{ $userInfo['profile']['package']->name }}
+                               {{ $userInfo['profile']['package']->name }}
                             </span>
                             <span class="caret"></span>
                         </span>

@@ -43,7 +43,7 @@
 
             <div class="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <strong><a href="{{ route('supportTicket.create') }}">Create!</a></strong>
+                <strong><a class="btn btn-success" href="{{ route('supportTicket.create') }}">Create!</a></strong>
             </div>
     </div>
 
