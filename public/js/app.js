@@ -28268,17 +28268,17 @@ if (module.hot) {(function () {  module.hot.accept()
 },{"vue":5,"vue-hot-reload-api":3}],7:[function(require,module,exports){
 'use strict';
 
-var _ternaryInit = require('./trees/ternary-init.js');
+var _CurrencyInformer = require('./components/CurrencyInformer.vue');
 
-var _ternaryInit2 = _interopRequireDefault(_ternaryInit);
+var _CurrencyInformer2 = _interopRequireDefault(_CurrencyInformer);
 
 var _binaryTree = require('./trees/binary-tree');
 
 var _binaryTree2 = _interopRequireDefault(_binaryTree);
 
-var _CurrencyInformer = require('./components/CurrencyInformer.vue');
+var _ternaryInit = require('./trees/ternary-init.js');
 
-var _CurrencyInformer2 = _interopRequireDefault(_CurrencyInformer);
+var _ternaryInit2 = _interopRequireDefault(_ternaryInit);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -28286,30 +28286,25 @@ var Vue = require('vue');
 var VueResource = require('vue-resource');
 Vue.use(VueResource);
 
-window.Btcc = window.Btcc || {};
-
-if (Btcc == {}) {} else {
-    if (Btcc.tree == 'binary') {
-        var b = new _binaryTree2.default(Btcc.childrenNodes, Btcc.parent);
-    }
-    if (Btcc.tree == 'ternary') {
-        (0, _ternaryInit2.default)("#tree-container", Btcc.parent, Btcc.childrenNodes);
-    }
-}
-
 new Vue({
     el: "#app-layout",
     components: {
         currencyinformer: _CurrencyInformer2.default
     }
 });
-/*
-new Vue({
-    el: "#life-widgets",
-    data: window.Btcc,
-    
 
-});*/
+window.Btcc = window.Btcc || { tree: 'nullable' };
+
+/*if (Btcc == {}) {
+
+ }
+ else {*/
+if (Btcc.tree == 'binary') {
+    var b = new _binaryTree2.default(Btcc.childrenNodes, Btcc.parent);
+}
+if (Btcc.tree == 'ternary') {
+    (0, _ternaryInit2.default)("#tree-container", Btcc.parent, Btcc.childrenNodes);
+}
 
 },{"./components/CurrencyInformer.vue":6,"./trees/binary-tree":8,"./trees/ternary-init.js":9,"vue":5,"vue-resource":4}],8:[function(require,module,exports){
 "use strict";
@@ -28403,8 +28398,6 @@ var BinaryTreeOutput = function () {
                     existingPostion = void 0,
                     childrenLength = void 0;
 
-                // Children есть
-
                 if (!node.hasOwnProperty('children')) {
                     _this.getVirtualFreeNode(node.user_id, binaryPositions);
                     return;
@@ -28421,8 +28414,6 @@ var BinaryTreeOutput = function () {
                     singlePositionArray = existingPostion == 'R' ? ['L'] : ['R']; // RUDE EXCLUSION, IF existing = L, then ['R']
 
                     _this.getVirtualFreeNode(node.user_id, singlePositionArray);
-                    //
-
                     _this.analyzeTree(node.children);
                 }
 
@@ -28466,7 +28457,6 @@ var BinaryTreeOutput = function () {
 
                         if (newChildren.length == 2) {
                             // if children.lenght =2 , then inject to node and leave (2 IS MAX)
-                            console.log('Modify by adding 2 this: ', newChildren);
                             node.children = newChildren; // if children.lenght =2 , then inject to node and leave (2 IS MAX)
                             return;
                         }

@@ -15,7 +15,7 @@
    <a class="navbar-brand" href="{{ url('/') }}">
     Btcc
    </a>
-    <currencyinformer></currencyinformer>
+
   </div>
 
   <div class="collapse navbar-collapse" id="app-navbar-collapse">
