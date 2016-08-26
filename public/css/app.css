@@ -6601,7 +6601,8 @@ button.close {
   border-color: #d3e0e9;
 }
 #sidebar-left {
-  margin-right: 100px;
+  /*margin-right: 100px;
+  */
 }
 
 #landing-layout {

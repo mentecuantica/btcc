@@ -2,7 +2,7 @@
 
 
 @section('content')
-    <div class="container">
+    <section id="page-content">
 
         <div class="page-header">
             <h1>Tickets<small>feel free ask out support</small></h1>
@@ -45,6 +45,6 @@
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                 <strong><a class="btn btn-success" href="{{ route('supportTicket.create') }}">Create!</a></strong>
             </div>
-    </div>
+    </section>
 
 @endsection

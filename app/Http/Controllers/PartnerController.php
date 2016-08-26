@@ -96,7 +96,7 @@ class PartnerController extends Controller {
 
         $this->validate($request, [
             'package_id' => 'enoughMoney'
-        ], ['error' => 'Not enough money'], ['packages' => $this->packageService]);
+        ], ['error' => 'Not enough money'], ['packages' => \Subscription::getPackagesIds()]);
 
         $newUser = $this->userService->addNewUser($request);
 

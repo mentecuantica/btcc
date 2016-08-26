@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <section id="page-content">
         <h1>{!! trans('Your partners') !!}</h1>
 
 
@@ -33,6 +33,6 @@
                 <strong>You have no partners</strong>
             </div>
         @endif
-    </div>
+    </section>
 
 @stop
