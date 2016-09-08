@@ -4,14 +4,14 @@
 <div class="form-group">
     {{ Form::label('subject', 'Subject', ['class' => 'control-label']) }}
     <div class="col-sm-10">
-        {{ Form::text('subject', '', ['class' => 'form-control','required'=>true]) }}
+        {{ Form::text('subject', '', ['class' => 'form-control','placeholder'=>'Please name the issue you request about','required'=>true]) }}
 
     </div>
 </div>
 <div class="form-group">
     {{ Form::label('message', 'Message', ['class' => 'control-label']) }}
     <div class="col-sm-10">
-        {{ Form::textarea('message', '', ['class' => 'form-control','placeholder'=>'Message']) }}
+        {{ Form::textarea('message', '', ['class' => 'form-control','placeholder'=>'Message','required'=>true]) }}
 
     </div>
 </div>

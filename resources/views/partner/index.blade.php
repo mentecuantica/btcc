@@ -14,13 +14,12 @@
             </div>
         </div>
 
-        @if (count($partners)>0)
+        @if (count($partnersCount)>0)
 
 
             <ul>
                 @foreach($partners as $partner)
                     <li><a href="{{ route('partner.show',['partner'=>$partner]) }}">{{ $partner->email }}</a></li>
-
                 @endforeach
             </ul>
 

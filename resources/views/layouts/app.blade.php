@@ -39,17 +39,20 @@
     @endif
 
 
-    @include('flash::message')
-    @include('_partials._errors')
 
 
     <section id="page-content">
+        @include('flash::message')
+        @include('_partials._errors')
+
         @yield('content')
     </section>
 </section>
+
 <div id="back-top" class="animated pulse circle">
     <i class="fa fa-angle-up"></i>
 </div>
+
 <!-- JavaScripts -->
 @include('_partials._footer')
 <script src="{{ asset('js/app.js') }}"></script>

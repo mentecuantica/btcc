@@ -73,9 +73,9 @@ class PartnerController extends Controller {
         $partners = [] ; // user()->linear->getPartners();
 
         
-        \Debugbar::addMessage('Sending eeeeeeee job');
-        $job = (new SendInviteEmail())->delay(60*2);
-        $this->dispatch($job);
+       // \Debugbar::addMessage('Sending eeeeeeee job');
+      //  $job = (new SendInviteEmail())->delay(60*2);
+     //   $this->dispatch($job);
 
 
 

@@ -4,6 +4,7 @@ namespace Btcc\Events;
 
 use Btcc\Events\Event;
 use Btcc\Models\User;
+use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
@@ -22,7 +23,7 @@ class UserRegisteredPartner extends Event
      */
     public function __construct(User $newPartner, string $passwordPlain = '1')
     {
-        $this->passwordPlain = $passwordPlain;
+        $this->passwordPlain = $newPartner->passwordPlain;
         $this->newPartner = $newPartner;
 
      //   \Debugbar::addMessage('UserRegisteredPartner event fired ');
