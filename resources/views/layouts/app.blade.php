@@ -12,11 +12,11 @@
     {{ Html::style('css/blankon.css') }}
 
 
- {{--   {{ Html::style('/assets/global/plugins/bower_components/bootstrap/dist/css/bootstrap.min.css') }}
-    {{ Html::style('/assets/global/plugins/bower_components/fontawesome/css/font-awesome.min.css') }}
-    {{ Html::style('/assets/global/plugins/bower_components/animate.css/animate.min.css') }}
-    {{ Html::style('/assets/global/plugins/bower_components/jquery.gritter/css/jquery.gritter.css') }}
---}}
+    {{--   {{ Html::style('/assets/global/plugins/bower_components/bootstrap/dist/css/bootstrap.min.css') }}
+       {{ Html::style('/assets/global/plugins/bower_components/fontawesome/css/font-awesome.min.css') }}
+       {{ Html::style('/assets/global/plugins/bower_components/animate.css/animate.min.css') }}
+       {{ Html::style('/assets/global/plugins/bower_components/jquery.gritter/css/jquery.gritter.css') }}
+   --}}
 
 
     @stack('scripts')
@@ -28,9 +28,9 @@
 <section id="wrapper">
 
 
-{{--
-@include('_partials._navbar')
---}}
+    {{--
+    @include('_partials._navbar')
+    --}}
 
     @include('layouts._header')
 
@@ -39,12 +39,13 @@
     @endif
 
 
-@include('flash::message')
-@include('_partials._errors')
+    @include('flash::message')
+    @include('_partials._errors')
 
 
-
-@yield('content')
+    <section id="page-content">
+        @yield('content')
+    </section>
 </section>
 <div id="back-top" class="animated pulse circle">
     <i class="fa fa-angle-up"></i>

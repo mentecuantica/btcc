@@ -29,7 +29,7 @@ class ViewComposerServiceProvicer extends ServiceProvider {
         $packageService = \Subscription::getFacadeRoot();
 
 
-        view()->composer(['layouts.app'], UserInfoComposer::class);
+        view()->composer(['layouts.app','dashboard.*','partner.*'], UserInfoComposer::class);
 
 
         // Using Closure based composers...

@@ -72,6 +72,7 @@ class UserInfoComposer {
 
                 'wallet' => [
                     'balance' => user()->totalSum,
+                    'transactionsCount'=>user()->transactions->count(),
 
                 ],
                 'stat'   => [

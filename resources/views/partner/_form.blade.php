@@ -51,6 +51,11 @@
 </div>
 
 <hr/>
+
+<div class="alert alert-success">
+    <p>Your balance is: {{ $userInfo['wallet']['balance'] or '0.0' }} $</p>
+</div>
+
 <div class="row">
     <h3>Select package</h3>
     <div class="subscription-packages-group">
@@ -76,15 +81,14 @@
 
     <hr/>
 
-    <div class="alert alert-success">
-        <p>Your balance is: {{ $userInfo['wallet']['balance'] or '0.0' }}</p>
-    </div>
+
 
 
 </div>
 <div class="row">
     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
         <div class="form-group">
+            <a href="#">Read User Agreement</a>
             {!! Form::label('user_agreement',trans('User agreement')) !!}
             {!! Form::checkbox('user_agreement', 1, false,
             ['required',
@@ -98,8 +102,12 @@
 
 <div class="row">
     <div class="form-group">
-        <div class="col-sm-offset-10 col-sm-2">
+        <div class="col-sm-offset-8 col-sm-2">
+            <a href="#" class="btn btn-primary">Cancel</a>
+
+        </div>  <div class="col-sm-2">
             <button type="submit" class="btn btn-danger">Add partner</button>
+
         </div>
     </div>
 

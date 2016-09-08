@@ -6805,7 +6805,7 @@ body.page-boxed.page-sidebar-right-show #back-top {
     display: none;
   }
   body.page-boxed.page-sidebar-right-show #back-top {
-    right: 280px;
+    right: 240px;
   }
 }
 @media (max-width: 800px) {
@@ -6825,7 +6825,7 @@ body.page-boxed.page-sidebar-right-show #back-top {
     right: 30px;
   }
   body.page-boxed.page-sidebar-right-show #header .header-right {
-    right: 220px !important;
+    right: 180px !important;
   }
   body.page-boxed.page-sidebar-right-show #header .header-right .navbar-toolbar .navbar-form input {
     min-width: 225px !important;
@@ -6836,7 +6836,7 @@ body.page-boxed.page-sidebar-right-show #back-top {
 }
 @media (max-width: 768px) {
   body.page-boxed #sidebar-left {
-    left: -230px;
+    left: -190px;
   }
   body.page-boxed #back-top {
     right: 40px;
@@ -6849,12 +6849,12 @@ body.page-boxed.page-sidebar-right-show #back-top {
   }
   body.page-boxed.page-sidebar-right-show #sidebar-left,
   body.page-boxed.page-sidebar-right-show #sidebar-left:after {
-    left: -250px;
+    left: -210px;
   }
 }
 @media (max-width: 540px) {
   body.page-boxed.page-sidebar-right-show #header .header-right {
-    left: -220px !important;
+    left: -180px !important;
   }
 }
 /* ========================================================================
@@ -6866,7 +6866,7 @@ body.page-header-fixed .header-right {
 }
 body.page-header-fixed .header-right {
   right: 0px;
-  left: 220px;
+  left: 180px;
 }
 body.page-header-fixed.page-sidebar-minimize .header-right,
 body.page-header-fixed.page-sidebar-minimize-auto .header-right {
@@ -6881,7 +6881,7 @@ body.page-header-fixed #sidebar-right .panel .panel-heading {
   z-index: 1000;
   top: 0px;
   right: 0px;
-  width: 220px;
+  width: 180px;
 }
 body.page-header-fixed #sidebar-right .panel .panel-body {
   margin-top: 53px;
@@ -6894,7 +6894,7 @@ body.page-header-fixed #sidebar-right .panel .panel-body {
     position: fixed;
   }
   body.page-header-fixed.page-sidebar-left-show .navbar-toolbar {
-    left: 220px;
+    left: 180px;
   }
 }
 /* ========================================================================
@@ -6912,7 +6912,7 @@ body.page-sidebar-fixed #sidebar-right {
 }
 body.page-sidebar-fixed.page-sidebar-minimize #sidebar-left .sidebar-menu:hover,
 body.page-sidebar-fixed.page-sidebar-minimize-auto #sidebar-left .sidebar-menu:hover {
-  min-width: 250px;
+  min-width: 210px;
 }
 body.page-sidebar-fixed.page-sidebar-minimize #sidebar-left .sidebar-menu:hover > .active,
 body.page-sidebar-fixed.page-sidebar-minimize-auto #sidebar-left .sidebar-menu:hover > .active,
@@ -6922,19 +6922,19 @@ body.page-sidebar-fixed.page-sidebar-minimize-auto #sidebar-left .sidebar-menu:h
 }
 body.page-sidebar-fixed.page-sidebar-minimize #sidebar-left .sidebar-menu > .active:hover,
 body.page-sidebar-fixed.page-sidebar-minimize-auto #sidebar-left .sidebar-menu > .active:hover {
-  width: 250px;
+  width: 210px;
 }
 @media (max-width: 768px) {
   body.page-sidebar-fixed.page-sidebar-left-show #header .header-right {
     left: 0px;
-    right: -220px;
+    right: -180px;
   }
   body.page-sidebar-fixed.page-sidebar-right-show #header .header-right {
-    left: -220px;
-    right: 220px;
+    left: -180px;
+    right: 180px;
   }
   body.page-sidebar-fixed #sidebar-left {
-    left: -220px;
+    left: -180px;
   }
 }
 /* ========================================================================
@@ -6993,11 +6993,11 @@ body.page-sidebar-minimize-auto #sidebar-left:after {
 }
 body.page-sidebar-minimize #sidebar-left:hover .sidebar-menu,
 body.page-sidebar-minimize-auto #sidebar-left:hover .sidebar-menu {
-  width: 1025px !important;
+  width: 985px !important;
 }
 body.page-sidebar-minimize #sidebar-left:hover .sidebar-menu > li,
 body.page-sidebar-minimize-auto #sidebar-left:hover .sidebar-menu > li {
-  width: 250px;
+  width: 210px;
 }
 body.page-sidebar-minimize #sidebar-left:hover .sidebar-menu > li.sidebar-category,
 body.page-sidebar-minimize-auto #sidebar-left:hover .sidebar-menu > li.sidebar-category,
@@ -7007,7 +7007,7 @@ body.page-sidebar-minimize-auto #sidebar-left:hover .sidebar-menu > li.active {
 }
 body.page-sidebar-minimize #sidebar-left:hover .sidebar-menu > li.active:hover,
 body.page-sidebar-minimize-auto #sidebar-left:hover .sidebar-menu > li.active:hover {
-  width: 250px;
+  width: 210px;
 }
 body.page-sidebar-minimize #sidebar-left .sidebar-content .media .media-body,
 body.page-sidebar-minimize-auto #sidebar-left .sidebar-content .media .media-body {
@@ -7023,7 +7023,7 @@ body.page-sidebar-minimize-auto #sidebar-left .sidebar-menu:after {
 }
 body.page-sidebar-minimize #sidebar-left .sidebar-menu > li:hover,
 body.page-sidebar-minimize-auto #sidebar-left .sidebar-menu > li:hover {
-  min-width: 220px;
+  min-width: 180px;
   background-color: #1d1d1d;
 }
 body.page-sidebar-minimize #sidebar-left .sidebar-menu > li:hover > a > .text,
@@ -7260,12 +7260,12 @@ body.page-sidebar-minimize-auto #page-content {
     min-width: 225px;
   }
   body.page-sidebar-left-show #page-content {
-    margin-right: -220px;
+    margin-right: -180px;
   }
 }
 @media (max-width: 768px) {
   body.page-sidebar-left-show #header {
-    left: 220px;
+    left: 180px;
   }
   body.page-sidebar-left-show #header .navbar-toolbar .navbar-form input {
     min-width: 400px;
@@ -7278,29 +7278,29 @@ body.page-sidebar-minimize-auto #page-content {
     left: 0px;
   }
   body.page-sidebar-left-show #page-content {
-    margin-left: 220px !important;
+    margin-left: 180px !important;
   }
 }
 /* ========================================================================
  * PAGE SIDEBAR RIGHT SHOW
  * ======================================================================== */
 body.page-sidebar-right-show #header .header-right {
-  right: 220px !important;
+  right: 180px !important;
 }
 body.page-sidebar-right-show #sidebar-right {
   right: 0px;
   visibility: inherit;
 }
 body.page-sidebar-right-show #page-content {
-  margin-right: 220px !important;
+  margin-right: 180px !important;
 }
 body.page-sidebar-right-show #back-top {
-  right: 250px;
+  right: 210px;
 }
 @media (max-width: 800px) {
   body.page-sidebar-right-show #header .header-right {
     left: 0px;
-    right: 220px;
+    right: 180px;
   }
   body.page-sidebar-right-show #header .navbar-toolbar .navbar-form input {
     min-width: 225px;
@@ -7315,22 +7315,22 @@ body.page-sidebar-right-show #back-top {
     left: 0px;
   }
   body.page-sidebar-right-show #sidebar-left:after {
-    left: -220px;
+    left: -180px;
   }
   body.page-sidebar-right-show #back-top {
-    right: 250px !important;
+    right: 210px !important;
   }
 }
 @media (max-width: 768px) {
   body.page-sidebar-right-show #header .header-left,
   body.page-sidebar-right-show #header .header-right {
-    left: -220px;
+    left: -180px;
   }
   body.page-sidebar-right-show #header .navbar-toolbar .navbar-form input {
     min-width: 400px;
   }
   body.page-sidebar-right-show #sidebar-left {
-    left: -220px;
+    left: -180px;
   }
   body.page-sidebar-right-show #sidebar-right {
     top: 0px;
@@ -7338,7 +7338,7 @@ body.page-sidebar-right-show #back-top {
     visibility: inherit;
   }
   body.page-sidebar-right-show #page-content {
-    margin-left: -220px !important;
+    margin-left: -180px !important;
     margin-right: 0px !important;
   }
   body.page-sidebar-right-show #page-content .header-content .breadcrumb-wrapper {
@@ -7364,19 +7364,19 @@ body.page-footer-fixed #page-content .footer-content {
   position: fixed;
   bottom: 0px;
   right: 0px;
-  left: 220px;
+  left: 180px;
 }
 @media (max-width: 768px) {
   body.page-footer-fixed #page-content .footer-content {
     left: 0px;
   }
   body.page-footer-fixed.page-sidebar-left-show #page-content .footer-content {
-    left: 220px;
-    right: -220px;
+    left: 180px;
+    right: -180px;
   }
   body.page-footer-fixed.page-sidebar-right-show #page-content .footer-content {
-    right: 220px;
-    left: -220px;
+    right: 180px;
+    left: -180px;
   }
 }
 /* ========================================================================
@@ -7523,7 +7523,7 @@ body.page-footer-fixed #page-content .footer-content {
 }
 .header-left .navbar-header {
   height: 51px;
-  width: 220px;
+  width: 180px;
   left: 0;
 }
 .header-left .navbar-header .navbar-brand {
@@ -7549,7 +7549,7 @@ body.page-footer-fixed #page-content .footer-content {
 .header-right {
   float: left;
   position: absolute;
-  left: 220px;
+  left: 180px;
   right: 0px;
 }
 .header-right .navbar-toolbar:before {
@@ -8356,7 +8356,7 @@ body.page-footer-fixed #page-content .footer-content {
  * ======================================================================== */
 #page-content {
   background-color: #F3F3F4;
-  margin-left: 220px;
+  margin-left: 180px;
   z-index: 100;
 }
 @media (max-width: 1024px) {
@@ -8525,7 +8525,7 @@ body.page-footer-fixed #page-content .footer-content {
  * SIDEBAR LEFT
  * ======================================================================== */
 #sidebar-left {
-  width: 220px;
+  width: 180px;
   float: left;
   z-index: 200;
   position: absolute;
@@ -8539,18 +8539,18 @@ body.page-footer-fixed #page-content .footer-content {
   bottom: 0px;
   display: block;
   content: "";
-  width: 220px;
+  width: 180px;
   z-index: -2;
 }
 @media (max-width: 768px) {
   #sidebar-left {
     top: 100px;
-    left: -220px;
+    left: -180px;
     z-index: 9999;
     position: absolute;
   }
   #sidebar-left:after {
-    left: -220px;
+    left: -180px;
   }
   #sidebar-left .sidebar-content {
     padding: 23px 10px;
@@ -8564,9 +8564,9 @@ body.page-footer-fixed #page-content .footer-content {
  * ======================================================================== */
 #sidebar-right {
   top: 0px;
-  right: -220px;
+  right: -180px;
   visibility: hidden;
-  width: 220px;
+  width: 180px;
   position: fixed;
   z-index: 500;
 }
@@ -8578,7 +8578,7 @@ body.page-footer-fixed #page-content .footer-content {
   bottom: 0px;
   display: block;
   content: "";
-  width: 220px;
+  width: 180px;
   z-index: -1;
 }
 #sidebar-right .panel {
@@ -10051,7 +10051,7 @@ body.page-footer-fixed #page-content .footer-content {
   font-weight: 400;
 }
 .sidebar-profile .media-list {
-  width: 220px;
+  width: 180px;
   height: auto;
   padding: 5px 0px;
 }
@@ -10203,7 +10203,7 @@ body.page-footer-fixed #page-content .footer-content {
   background-color: #323232;
 }
 .sidebar-chat .media-list {
-  width: 220px;
+  width: 180px;
   height: auto;
   padding: 10px 0px;
 }

@@ -92,3 +92,4 @@ clockwork
 /.phpstorm.meta.php
 /public/static/vendor/
 /resources/assets/bower/
+/resources/views/partner/_form.blade.php___jb_tmp___

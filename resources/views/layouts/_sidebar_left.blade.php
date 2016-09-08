@@ -14,11 +14,11 @@
     </div>
     <ul class="sidebar-menu">
 
-        <li {!! Request::is('dashboard', 'dashboard/index') ? 'class="active"' : NULL !!}>
-            <a href="{{url('dashboard/index')}}">
+        <li {!! Request::is('dashboard', 'dashboard') ? 'class="active"' : NULL !!}>
+            <a href="{{url('dashboard')}}">
                 <span class="icon"><i class="fa fa-home"></i></span>
                 <span class="text">Dashboard</span>
-                {!! Request::is('dashboard', 'dashboard/index') ? '<span class="selected"></span>' : NULL !!}
+                {!! Request::is('dashboard', 'dashboard') ? '<span class="selected"></span>' : NULL !!}
             </a>
         </li>
 
