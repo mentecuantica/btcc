@@ -7,7 +7,7 @@ var BlankonDashboard = function () {
         // =========================================================================
         init: function () {
             BlankonDashboard.callModal1();
-            BlankonDashboard.gritterNotification();
+            //BlankonDashboard.gritterNotification();
         },
 
 
