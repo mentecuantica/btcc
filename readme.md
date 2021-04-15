@@ -1,7 +1,7 @@
-## HOW TO ##
+## HOW TO RUN ##
 
 
-### Migrations ###
+### Firtst the Migrations ###
 
 
 
